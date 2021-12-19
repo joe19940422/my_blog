@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+    <title>tag：{{ tag }} - Fei</title>
+{% endblock %}
+
+{% block content %}
+    <section class="mysection">
+        <h4 class="index-title">
+            <a href="{% url "blog:tag" name=tag %}"><i class="el-tag"></i> tag<b class="lable">{{ tag }}</b></a>
+            <span style="float:right;margin-right:10px;">Total:
+                <a class="orange-text"> {{ page_info.total_number }} </a>Article</span>
+        </h4>
+        {% if blog_list %}
+            {% include "blog/component/blog_list.html" with blogs=blog_list %}
+            {% include "blog/component/pagination.html" with pages=page_info %}
+        {% else %}
+            <p>暂时没有文章..</p>
+        {% endif %}
+    </section>
+
+{% endblock %}
