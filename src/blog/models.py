@@ -1,15 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
--------------------------------------------------
-   File Name：     models.py
-   Description :
-   Author :       JHao
-   date：          2016/11/18
--------------------------------------------------
-   Change Activity:
-                   2016/11/18:
--------------------------------------------------
-"""
 
 from django.db import models
 from django.conf import settings

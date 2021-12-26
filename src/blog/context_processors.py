@@ -1,16 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
--------------------------------------------------
-   File Name：     context_processors.py  
-   Description :  
-   Author :       JHao
-   date：          2017/4/14
--------------------------------------------------
-   Change Activity:
-                   2017/4/14: 
--------------------------------------------------
-"""
-__author__ = 'JHao'
 
 import importlib
 from django_blog import blogroll

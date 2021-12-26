@@ -23,12 +23,12 @@
             <h3 class="arc-title index-title">{{ blog.title }} </h3>
             <div class="post-line bg-color">
                 <ul>
-                    <li><a title="{{ blog.author }}发表于{{ blog.date_time }}"><i class="el-time"></i>
+                    <li><a title="{{ blog.author }}published in{{ blog.date_time }}"><i class="el-time"></i>
                         <time>{{ blog.date_time }}</time>
                     </a></li>
                     <li><a href="#"><i class="el-user"></i>{{ blog.author }}</a></li>
-                    <li><a href="#Coon" title="转到评论"><i class="el-comment"></i>{{ blog.comment }}条</a></li>
-                    <li><a title="已有 {{ blog.view }} 次浏览"><i class="el-eye-open"></i>{{ blog.view }}</a></li>
+                    <li><a href="#Coon" title="转到评论"><i class="el-comment"></i>{{ blog.comment }}row</a></li>
+                    <li><a title="已有 {{ blog.view }} Views"><i class="el-eye-open"></i>{{ blog.view }}</a></li>
                 </ul>
             </div>
 
@@ -37,7 +37,7 @@
                 <div class="post-content" style="padding: 10px 20px 20px 10px">
                     <div class="BlogAnchor" style="text-indent: 20px; font-size: 14px; margin-bottom: 30px">
                         <p>
-                            <b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录[-]</b>
+                            <b id="AnchorContentToggle" title="收起" style="cursor:pointer;">content[-]</b>
                         </p>
                         <div class="AnchorContent" id="AnchorContent"></div>
                     </div>

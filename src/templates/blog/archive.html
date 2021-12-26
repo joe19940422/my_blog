@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 
 {% block title %}
-    <title>文章归档｜Fei</title>
+    <title>Article Archive｜Fei</title>
 {% endblock %}
 
 {% block css %}
@@ -25,7 +25,7 @@
 {% block content %}
     <section class="mysection">
         <div class="layui-card">
-            <div class="layui-card-header">文章归档</div>
+            <div class="layui-card-header">Article Archive</div>
             <div class="layui-card-body">
                 <ul class="layui-timeline">
                     {% for blog_list in data %}
@@ -36,7 +36,7 @@
                                 <ul>
                                     {% for blog in blog_list.blogs %}
                                         <li>
-                                            <em>{{ blog.date_time |date:"d" }}日</em>
+                                            <em>{{ blog.date_time |date:"d" }}th</em>
                                             <a href="{% url "blog:detail" blog.id %}">{{ blog.title }}</a>
                                         </li>
                                     {% endfor %}

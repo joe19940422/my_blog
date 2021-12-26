@@ -73,7 +73,7 @@ def archive(request):
     _blog_list = Article.objects.values("id", "title", "date_time").order_by('-date_time')
     archive_dict = {}
     for blog in _blog_list:
-        pub_month = blog.get("date_time").strftime("%Y年%m月")
+        pub_month = blog.get("date_time").strftime("%Y-%m-")
         if pub_month in archive_dict:
             archive_dict[pub_month].append(blog)
         else:
