@@ -45,11 +45,9 @@
                     "bdSize": "32"
                 }, "share": {}
             };
-            with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-            </script>
+            with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
         </div>
     </div>
-
 
     <!--最新咨询-->
     <div class="clos-new bg-color animation-div">
@@ -60,14 +58,8 @@
 
             <li><i class="el-cloud"></i>weather
                 <br>
-                <!-- Start WX Widget Code -->
-                <div style="color: #455052; max-width: 290px; width: 100%; border: 1px solid #428bca; background-image: radial-gradient(circle, #fff, #f5faff, #e5efff);">
-                    <script src="https://www.weatherwx.com/weather-js-current/nl/rotterdam.js"></script>
-                </div><!-- End WX Widget Code -->
-                <!-- Start WX Widget Code -->
-                <div style="color: #455052; max-width: 290px; width: 100%; border: 1px solid #428bca; background-image: radial-gradient(circle, #fff, #f5faff, #e5efff);">
-                    <script src="https://www.weatherwx.com/weather-js-current/tw/taipei.js"></script>
-                </div><!-- End WX Widget Code -->
+                <!-- Start WX Widget Code --><div style="color: #455052; max-width: 290px; width: 100%; border: 1px solid #428bca; background-image: radial-gradient(circle, #fff, #f5faff, #e5efff);"><script src="https://www.weatherwx.com/weather-js-current/nl/rotterdam.js"></script></div><!-- End WX Widget Code -->
+            <!-- Start WX Widget Code --><div style="color: #455052; max-width: 290px; width: 100%; border: 1px solid #428bca; background-image: radial-gradient(circle, #fff, #f5faff, #e5efff);"><script src="https://www.weatherwx.com/weather-js-current/tw/taipei.js"></script></div><!-- End WX Widget Code -->
             </li>
 
             <li><i class="el-calendar"></i>visitors：
@@ -80,13 +72,12 @@
 
     <!--搜索-->
     <div class="search animation-div">
-        <form action="{% url " blog:search
-        " %}" method="get">
-        <div class="search-index">
-            <input name="key" type="text" placeholder="Please input key words" onfocus="this.placeholder=''"
-                   onblur="this.placeholder='Please input key words'"/>
-            <i class="el-search"><input value=" " type="submit"/></i>
-        </div>
+        <form action="{% url "blog:search" %}" method="get">
+            <div class="search-index">
+                <input name="key" type="text" placeholder="Please input key words" onfocus="this.placeholder=''"
+                       onblur="this.placeholder='Please input key words'"/>
+                <i class="el-search"><input value=" " type="submit"/></i>
+            </div>
         </form>
     </div>
 
@@ -96,14 +87,14 @@
                 class="ph-btn" href="javascript:;"><i class="el-signal"></i>article ranking</a></div>
         <ul class="hudong-ul">
             {% for comment in comment_list %}
-            <li>
-                <div class="sd-name">
-                    <span><i class="el-book"></i>{{ comment.title }}</span>
-                    <a class="blue-text" href="{{ comment.url }}"
-                       title="{{ comment.comment }}">{{ comment.comment }}</a>
-                    <span style="text-align: right">— &nbsp;<i class="el-user"></i>{{ comment.user_name }}</span>
-                </div>
-            </li>
+                <li>
+                    <div class="sd-name">
+                        <span><i class="el-book"></i>{{ comment.title }}</span>
+                        <a class="blue-text" href="{{ comment.url }}"
+                           title="{{ comment.comment }}">{{ comment.comment }}</a>
+                        <span style="text-align: right">— &nbsp;<i class="el-user"></i>{{ comment.user_name }}</span>
+                    </div>
+                </li>
             {% endfor %}
 
 
@@ -111,12 +102,12 @@
         <!--文章排行-->
         <ul class="paihang-ul">
             {% for blog in blog_top %}
-            <li>
-                <span></span>
-                <a href="{% url " blog:detail" blog.id %}" title="{{ blog.title }}">{{ blog.title }}
-                <b><i class="el-eye-open"></i>({{ blog.view }})</b>
-                </a>
-            </li>
+                <li>
+                    <span></span>
+                    <a href="{% url "blog:detail" blog.id %}" title="{{ blog.title }}">{{ blog.title }}
+                        <b><i class="el-eye-open"></i>({{ blog.view }})</b>
+                    </a>
+                </li>
             {% endfor %}
         </ul>
 
@@ -129,21 +120,18 @@
         </h4>
         <ul id="3dcloud">
             {% for tag in tag_list %}
-            <li><a href="{% url " blog:tag" name=tag.tag_name %}"
-                title="tags：{{ tag.tag_name }} ">{{ tag.tag_name }}</a></li>
+                <li><a href="{% url "blog:tag" name=tag.tag_name %}"
+                       title="tags：{{ tag.tag_name }} ">{{ tag.tag_name }}</a></li>
             {% endfor %}
         </ul>
     </div>
-
+            <div id="cyPoll" role="cylabs" data-use="poll_new" data-pollId="2521" ></div>
+        <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+        <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+        <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+        <script type="text/javascript" charset="utf-8" src="http://cy-cdn.kuaizhan.com/js/??lib/jquery.js,changyan.labs.js?appid=cyvPnJxDV"></script>
     <!--友情链接-->
     {% include "blog/blogroll.html" %}
-
-    <div id="cyPoll" role="cylabs" data-use="poll_new" data-pollId="2521"></div>
-    <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
-    <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
-    <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
-    <script type="text/javascript" charset="utf-8"
-            src="http://cy-cdn.kuaizhan.com/js/??lib/jquery.js,changyan.labs.js?appid=cyvPnJxDV"></script>
 </aside>
 
 <script>
@@ -157,5 +145,4 @@
         });
         e.stopPropagation();
     });
-
 </script>
