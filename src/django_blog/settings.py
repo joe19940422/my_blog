@@ -25,7 +25,7 @@ SECRET_KEY = '85bus3!*+_3t1ks)&&o(u-liuhucshja!-44a1squ93=#+v+4r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pengfeiqiao.com','www.pengfeiqiao.com','ec2-15-236-211-95.eu-west-3.compute.amazonaws.com','35.180.248.118']
+ALLOWED_HOSTS = ['*']
 
 # HOST = "http://www.spiderpy.cn"
 
