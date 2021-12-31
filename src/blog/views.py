@@ -173,7 +173,7 @@ def bbc(request):
     desc = []
     news = []
     img = []
-    content = []
+    publishedAt = []
 
     for i in range(len(articles)):
         myarticles = articles[i]
@@ -181,8 +181,8 @@ def bbc(request):
         news.append(myarticles['title'])
         desc.append(myarticles['description'])
         img.append(myarticles['urlToImage'])
-        content.append(myarticles['content'])
+        publishedAt.append(myarticles['publishedAt'])
 
-    mylist = zip(news, desc,content, img)
+    mylist = zip(news, desc,publishedAt, img)
     print(request)
     return render(request, 'bbc.html', context={"mylist": mylist})
