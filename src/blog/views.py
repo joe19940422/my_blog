@@ -166,7 +166,7 @@ def Index(request):
 
 def bbc(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='tw')
+    topheadlines = newsapi.get_top_headlines(country='us')
 
     articles = topheadlines['articles']
 
