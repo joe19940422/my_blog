@@ -1,12 +1,4 @@
-{% extends "blog/base.html" %}
-
-
-{% block title %}
-    <title>Blog bbc｜Fei</title>
-{% endblock %}
-
-{% block content %}
-        <section class="mysection">
-            {% include "blog/bbc.html" with blogs=blog_list %}
-        </section>
-{% endblock %}
+<h3 class="form-btn blue-text"><a href="javascript:;"><i class="el-edit"></i>Message him / show list</a></h3>
+<div id="Coon" class="form-zd form-in">
+    {% include 'blog/component/bbc.html' %}
+</div>
