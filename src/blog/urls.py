@@ -15,7 +15,8 @@ urlpatterns = [
     path('message/', views.message, name='message'),
     path('getComment/', views.get_comment, name='get_comment'),
     path('',views.Index, name='Index'),
-    path('bbc/', views.bbc, name = 'BBC')
+    path('bbc/', views.bbc, name = 'BBC'),
+    path('bbc2/', views.Index, name = 'Index')
 
 ]
 
