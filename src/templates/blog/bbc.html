@@ -1,44 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>BBC News</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-
-<style>
-h1 {text-align: center;}
-p {text-align: center;}
-div {text-align: center;}
-</style>
-
-<div class="jumbotron" style="color:black">
-    <h1 style="color:red">
-        This is the latest news
-    </h1>
-
-</div>
+{% extends "blog/base.html" %}
 
 
-<div class="container">
-    {% for new, des, i in mylist %}
-    <img src="{{i}}" alt="">
-    <h3>News:</h3> {{new}}
-    {{value | linebreaks}}
+{% block title %}
+    <title>Blog bbc｜Fei</title>
+{% endblock %}
 
-    <h4>Description:</h4> {{des}}
-    {{value | linebreaks}}
-
-
-
-    {% endfor %}
-
-
-
-
-</div>
-
-</body>
-</html>
+{% block content %}
+        <section class="mysection">
+            {% include "blog/bbc.html" with blogs=blog_list %}
+        </section>
+{% endblock %}
