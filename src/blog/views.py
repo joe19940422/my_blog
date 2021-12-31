@@ -7,6 +7,48 @@ from django_blog.util import PageInfo
 from blog.models import Article, Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
+from newsapi import NewsApiClient
+
+def Index(request):
+    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+    topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
+
+    articles = topheadlines['articles']
+
+    desc = []
+    news = []
+    img = []
+
+    for i in range(len(articles)):
+        myarticles = articles[i]
+
+        news.append(myarticles['titile'])
+        desc.append(myarticles['description'])
+        img.append(myarticles['urlToImage'])
+    mylist = zip(news,desc,img)
+    return render(request, 'index.html', context={"mylist":mylist})
+
+
+def bbc(request):
+    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+    topheadlines = newsapi.get_top_headlines(sources='bbc-news')
+
+    articles = topheadlines['articles']
+
+    desc = []
+    news = []
+    img = []
+
+    for i in range(len(articles)):
+        myarticles = articles[i]
+
+        news.append(myarticles['title'])
+        desc.append(myarticles['description'])
+        img.append(myarticles['urlToImage'])
+
+    mylist = zip(news, desc, img)
+
+    return render(request, 'bbc.html', context={"mylist": mylist})
 
 
 def get_page(request):

@@ -14,6 +14,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('message/', views.message, name='message'),
     path('getComment/', views.get_comment, name='get_comment'),
+    path('',views.Index, name='Index'),
+    path('bbc/', bbc, name = 'BBC')
 
 ]
 

@@ -1,16 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
--------------------------------------------------
-   File Name：     custom_filter.py  
-   Description :  
-   Author :       JHao
-   date：          2017/4/14
--------------------------------------------------
-   Change Activity:
-                   2017/4/14: 
--------------------------------------------------
-"""
-__author__ = 'JHao'
+
 
 import markdown
 from django import template
