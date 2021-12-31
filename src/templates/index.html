@@ -19,15 +19,12 @@
 
 
 <div class="container">
-    {% for new, des,con,i in mylist %}
+    {% for new, des, i in mylist %}
     <img src="{{i}}" alt="">
     <h3>News:</h3> {{new}}
     {{value | linebreaks}}
 
     <h4>Description:</h4> {{des}}
-    {{value | linebreaks}}
-
-    <h4>content:</h4> {{con}}
     {{value | linebreaks}}
 
 
