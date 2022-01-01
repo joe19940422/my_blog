@@ -25,7 +25,7 @@ div {text-align: center;}
 
 
 <div class="container">
-    {% for new, des,time, i in mylist %}
+    {% for new, des, time,author, i in mylist %}
     <img src="{{i}}" alt="">
     <h3>News:</h3> {{new}}
     {{value | linebreaks}}
@@ -36,6 +36,8 @@ div {text-align: center;}
     <h4>publishedAt:</h4> {{time}}
     {{value | linebreaks}}
 
+     <h4>author:</h4> {{author}}
+    {{value | linebreaks}}
     {% endfor %}
 
 

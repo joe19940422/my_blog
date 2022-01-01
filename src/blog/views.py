@@ -154,6 +154,7 @@ def China(request):
     news = []
     img = []
     publishedAt = []
+    author = []
     for i in range(len(articles)):
         myarticles = articles[i]
 
@@ -161,7 +162,8 @@ def China(request):
         desc.append(myarticles['description'])
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
-    mylist = zip(news,desc,publishedAt,img)
+        author.append(myarticles['author'])
+    mylist = zip(news,desc,publishedAt,author,img)
     return render(request, 'china.html', context={"mylist":mylist})
 
 
