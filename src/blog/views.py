@@ -144,9 +144,9 @@ def page_not_found_error(request, exception):
 def page_error(request):
     return render(request, "404.html", status=500)
 
-def Index(request):
+def china(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
+    topheadlines = newsapi.get_top_headlines(country='cn',language='zh')
 
     articles = topheadlines['articles']
 
@@ -166,7 +166,7 @@ def Index(request):
 
 def bbc(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='tw',language='zh',category='health')
+    topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
 
     articles = topheadlines['articles']
 
