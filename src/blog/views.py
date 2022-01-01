@@ -146,7 +146,7 @@ def page_error(request):
 
 def China(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='cn',language='zh',page=25)
+    topheadlines = newsapi.get_top_headlines(country='cn',language='zh')
 
     articles = topheadlines['articles']
 
