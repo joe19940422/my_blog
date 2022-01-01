@@ -215,3 +215,30 @@ def taiwan(request):
         author.append(myarticles['author'])
     mylist = zip(news,desc,publishedAt,author,img)
     return render(request, 'taiwan.html', context={"mylist":mylist})
+
+
+def dutch(request):
+    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+    topheadlines = newsapi.get_top_headlines(country='nl',language='nl')
+
+    articles = topheadlines['articles']
+
+    desc = []
+    desc_tw = []
+    news = []
+    img = []
+    publishedAt = []
+    author = []
+    for i in range(len(articles)):
+        myarticles = articles[i]
+
+        news.append(myarticles['title'])
+        desc.append(myarticles['description'])
+        result = translator.translate(myarticles['description'], dest='zh-tw').text
+        desc_tw.append(result)
+        img.append(myarticles['urlToImage'])
+        publishedAt.append(myarticles['publishedAt'])
+        author.append(myarticles['author'])
+    mylist = zip(news,desc,desc_tw,publishedAt,author,img)
+    return render(request, 'dutch.html', context={"mylist":mylist})
+

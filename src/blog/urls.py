@@ -17,7 +17,8 @@ urlpatterns = [
     #path('',views.Index, name='Index'),
     path('bbc/', views.bbc, name = 'BBC'),
     path('china/', views.China, name = 'China'),
-    path('taiwan/', views.taiwan, name = 'Taiwan')
+    path('taiwan/', views.taiwan, name = 'Taiwan'),
+    path('dutch/', views.dutch, name = 'Dutch')
 
 ]
 
