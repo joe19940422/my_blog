@@ -8,10 +8,16 @@
 </head>
 <body>
 
+<style>
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+</style>
+
 <div class="jumbotron" style="color:black">
 
     <h1 style="color:black">
-        This is the latest news
+        This is the latest China news
 
     </h1>
 
@@ -27,7 +33,7 @@
     <h4>Description:</h4> {{des}}
     {{value | linebreaks}}
 
-    <h4>publishedAt:</h4> {{con}}
+    <h4>publishedAt:</h4> {{time}}
     {{value | linebreaks}}
 
     {% endfor %}
