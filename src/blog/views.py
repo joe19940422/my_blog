@@ -8,7 +8,8 @@ from blog.models import Article, Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from newsapi import NewsApiClient
-
+from googletrans import Translator
+translator = Translator()
 
 def get_page(request):
     page_number = request.GET.get("page")
@@ -159,7 +160,8 @@ def China(request):
         myarticles = articles[i]
 
         news.append(myarticles['title'])
-        desc.append(myarticles['description'])
+        result = translator.translate(myarticles['description'], dest='zh-tw').text
+        desc.append(result)
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
         author.append(myarticles['author'])
