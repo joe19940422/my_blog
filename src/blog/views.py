@@ -157,7 +157,7 @@ def China(request):
     for i in range(len(articles)):
         myarticles = articles[i]
 
-        news.append(myarticles['titile'])
+        news.append(myarticles['title'])
         desc.append(myarticles['description'])
         img.append(myarticles['urlToImage'])
     mylist = zip(news,desc,img)
