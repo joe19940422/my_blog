@@ -146,7 +146,7 @@ def page_error(request):
 
 def China(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='cn',language='zh',page=50)
+    topheadlines = newsapi.get_top_headlines(country='cn',language='zh',page=25)
 
     articles = topheadlines['articles']
 
@@ -162,7 +162,7 @@ def China(request):
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
     mylist = zip(news,desc,publishedAt,img)
-    return render(request, 'index.html', context={"mylist":mylist})
+    return render(request, 'china.html', context={"mylist":mylist})
 
 
 def bbc(request):
@@ -186,4 +186,4 @@ def bbc(request):
 
     mylist = zip(news, desc,publishedAt, img)
     print(request)
-    return render(request, 'china.html', context={"mylist": mylist})
+    return render(request, 'bbc.html', context={"mylist": mylist})
