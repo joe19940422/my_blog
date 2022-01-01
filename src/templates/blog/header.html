@@ -36,7 +36,7 @@
                 <li><a href="{% url "blog:archive" %}">Archive</a></li>
                 <li><a href="{% url "blog:message" %}">Message</a></li>
                 <li><a href="{% url "blog:BBC" %}">BBC News</a></li>
-                <li><a href="{% url "blog:China" %}">China News</a></li>
+<!--                <li><a href="{% url "blog:China" %}">China News</a></li>-->
                 <li><a href="{% url "blog:Taiwan" %}">Taiwan News</a></li>
 
                 <li class='drop'>
@@ -81,8 +81,18 @@
 
 
                 <li><a href="{% url "blog:BBC" %}">BBC NEWS</a></li>
-                <li><a href="{% url "blog:China" %}">China NEWS</a></li>
+<!--                <li><a href="{% url "blog:China" %}">China NEWS</a></li>-->
                 <li><a href="{% url "blog:Taiwan" %}">Taiwan NEWS</a></li>
+
+                <li class='mob-drop'>
+                    <a href="JavaScript:;">分类</a>
+                    <ul class="mob-dropmenu">
+
+                            <li><a href="{% url "blog:China" %}">China NEWS</a></li>
+                            <li><a href="{% url "blog:Taiwan" %}">Taiwan NEWS</a></li>
+
+                    </ul>
+                </li>
 
             </ul>
         </div>
