@@ -146,100 +146,144 @@ def page_error(request):
     return render(request, "404.html", status=500)
 
 
-def China(request):
-    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='cn',language='zh')
+class News():
+    def __init__(self, page, country='', language='', translate='zh-tw'):
+        self.page = page
+        self.country = country
+        self.language = language
+        self.translate = translate
 
-    articles = topheadlines['articles']
+    @classmethod
+    def new(cls,request):
+        newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+        if cls.page == 'bbc':
+            topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
+        else:
+            topheadlines = newsapi.get_top_headlines(country=cls.country, language=cls.language)
+        articles = topheadlines['articles']
 
-    desc = []
-    news = []
-    img = []
-    publishedAt = []
-    author = []
-    for i in range(len(articles)):
-        myarticles = articles[i]
+        desc = []
+        news = []
+        img = []
+        publishedAt = []
+        author = []
+        for i in range(len(articles)):
+            myarticles = articles[i]
 
-        news.append(myarticles['title'])
-        result = translator.translate(myarticles['description'], dest='zh-tw').text
-        desc.append(result)
-        img.append(myarticles['urlToImage'])
-        publishedAt.append(myarticles['publishedAt'])
-        author.append(myarticles['author'])
-    mylist = zip(news,desc,publishedAt,author,img)
-    return render(request, 'china.html', context={"mylist":mylist})
-
-
-def bbc(request):
-    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
-
-    articles = topheadlines['articles']
-
-    desc = []
-    news = []
-    img = []
-    publishedAt = []
-    author = []
-
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        img.append(myarticles['urlToImage'])
-        publishedAt.append(myarticles['publishedAt'])
-        author.append(myarticles['author'])
-    mylist = zip(news, desc,publishedAt,author, img)
-    print(request)
-    return render(request, 'bbc.html', context={"mylist": mylist})
+            news.append(myarticles['title'])
+            if cls.page in ['bbc','taiwan']:
+                desc.append(myarticles['description'])
+            else:
+                result = translator.translate(myarticles['description'], dest='zh-tw').text
+                desc.append(result)
+            img.append(myarticles['urlToImage'])
+            publishedAt.append(myarticles['publishedAt'])
+            author.append(myarticles['author'])
+        mylist = zip(news, desc, publishedAt, author, img)
+        print(request)
+        return render(request, cls.page+'html', context={"mylist": mylist})
 
 
-def taiwan(request):
-    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='tw',language='zh')
-
-    articles = topheadlines['articles']
-
-    desc = []
-    news = []
-    img = []
-    publishedAt = []
-    author = []
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        img.append(myarticles['urlToImage'])
-        publishedAt.append(myarticles['publishedAt'])
-        author.append(myarticles['author'])
-    mylist = zip(news,desc,publishedAt,author,img)
-    return render(request, 'taiwan.html', context={"mylist":mylist})
+China = News(page='china',country='cn',language='zh')
+bbc = News(page='bbc')
+taiwan = News(page='taiwan',country='cn',language='zh-tw')
+dutch = News(page='dutch',country='cn',language='nl')
 
 
-def dutch(request):
-    newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='nl',language='nl')
-
-    articles = topheadlines['articles']
-
-    desc = []
-    desc_tw = []
-    news = []
-    img = []
-    publishedAt = []
-    author = []
-    for i in range(len(articles)):
-        myarticles = articles[i]
-
-        news.append(myarticles['title'])
-        desc.append(myarticles['description'])
-        result = translator.translate(myarticles['description'], dest='zh-tw').text
-        desc_tw.append(result)
-        img.append(myarticles['urlToImage'])
-        publishedAt.append(myarticles['publishedAt'])
-        author.append(myarticles['author'])
-    mylist = zip(news,desc,desc_tw,publishedAt,author,img)
-    return render(request, 'dutch.html', context={"mylist":mylist})
+# def China(request):
+#     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+#     topheadlines = newsapi.get_top_headlines(country='cn',language='zh')
+#
+#     articles = topheadlines['articles']
+#
+#     desc = []
+#     news = []
+#     img = []
+#     publishedAt = []
+#     author = []
+#     for i in range(len(articles)):
+#         myarticles = articles[i]
+#
+#         news.append(myarticles['title'])
+#         result = translator.translate(myarticles['description'], dest='zh-tw').text
+#         desc.append(result)
+#         img.append(myarticles['urlToImage'])
+#         publishedAt.append(myarticles['publishedAt'])
+#         author.append(myarticles['author'])
+#     mylist = zip(news,desc,publishedAt,author,img)
+#     return render(request, 'china.html', context={"mylist":mylist})
+#
+#
+# def bbc(request):
+#     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+#     topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
+#
+#     articles = topheadlines['articles']
+#
+#     desc = []
+#     news = []
+#     img = []
+#     publishedAt = []
+#     author = []
+#
+#     for i in range(len(articles)):
+#         myarticles = articles[i]
+#
+#         news.append(myarticles['title'])
+#         desc.append(myarticles['description'])
+#         img.append(myarticles['urlToImage'])
+#         publishedAt.append(myarticles['publishedAt'])
+#         author.append(myarticles['author'])
+#     mylist = zip(news, desc,publishedAt,author, img)
+#     print(request)
+#     return render(request, 'bbc.html', context={"mylist": mylist})
+#
+#
+# def taiwan(request):
+#     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+#     topheadlines = newsapi.get_top_headlines(country='tw',language='zh')
+#
+#     articles = topheadlines['articles']
+#
+#     desc = []
+#     news = []
+#     img = []
+#     publishedAt = []
+#     author = []
+#     for i in range(len(articles)):
+#         myarticles = articles[i]
+#
+#         news.append(myarticles['title'])
+#         desc.append(myarticles['description'])
+#         img.append(myarticles['urlToImage'])
+#         publishedAt.append(myarticles['publishedAt'])
+#         author.append(myarticles['author'])
+#     mylist = zip(news,desc,publishedAt,author,img)
+#     return render(request, 'taiwan.html', context={"mylist":mylist})
+#
+#
+# def dutch(request):
+#     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
+#     topheadlines = newsapi.get_top_headlines(country='nl',language='nl')
+#
+#     articles = topheadlines['articles']
+#
+#     desc = []
+#     desc_tw = []
+#     news = []
+#     img = []
+#     publishedAt = []
+#     author = []
+#     for i in range(len(articles)):
+#         myarticles = articles[i]
+#
+#         news.append(myarticles['title'])
+#         desc.append(myarticles['description'])
+#         result = translator.translate(myarticles['description'], dest='zh-tw').text
+#         desc_tw.append(result)
+#         img.append(myarticles['urlToImage'])
+#         publishedAt.append(myarticles['publishedAt'])
+#         author.append(myarticles['author'])
+#     mylist = zip(news,desc,desc_tw,publishedAt,author,img)
+#     return render(request, 'dutch.html', context={"mylist":mylist})
 
