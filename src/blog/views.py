@@ -205,8 +205,9 @@ def China(request):
         myarticles = articles[i]
 
         news.append(myarticles['title'])
-        result = translator.translate(myarticles['description'], dest='zh-tw').text
-        desc.append(result)
+        desc.append(myarticles['description'])
+        #result = translator.translate(myarticles['description'], dest='zh-tw').text
+        desc.append(myarticles['description'])
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
         author.append(myarticles['author'])
