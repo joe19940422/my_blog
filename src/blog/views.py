@@ -290,4 +290,4 @@ def dutch(request):
 
 
 def aboutme(request):
-    return render(request, 'blog/aboutme.html')
+    return render(request, 'blog/me/index.html')
