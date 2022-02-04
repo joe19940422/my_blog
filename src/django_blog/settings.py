@@ -130,6 +130,5 @@ MEDIA_URL = '/media/'   #你上传的文件和图片会默认存在/uploads/edit
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    '/my_blog/src/templates/blog'
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
