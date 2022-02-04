@@ -18,7 +18,8 @@ urlpatterns = [
     path('bbc/', views.bbc, name = 'BBC'),
     path('china/', views.China, name = 'China'),
     path('taiwan/', views.taiwan, name = 'Taiwan'),
-    path('dutch/', views.dutch, name = 'Dutch')
+    path('dutch/', views.dutch, name = 'Dutch'),
+    path('aboutme/', views.aboutme, name = 'aboutme')
 
 ]
 

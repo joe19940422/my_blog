@@ -288,3 +288,6 @@ def dutch(request):
     mylist = zip(news,desc,desc_tw,publishedAt,author,img)
     return render(request, 'dutch.html', context={"mylist":mylist})
 
+
+def aboutme(request):
+    return render(request, 'blog/aboutme.html')
