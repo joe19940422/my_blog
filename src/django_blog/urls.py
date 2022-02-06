@@ -21,6 +21,7 @@ from django_blog  import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
+    path('aboutme/', include(('blog.urls', 'aboutme'), namespace='aboutme')),
     path('', views.index, name='index'),
     path('mdeditor',include('mdeditor.urls')),
 
