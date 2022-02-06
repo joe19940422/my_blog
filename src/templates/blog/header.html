@@ -50,13 +50,9 @@
 
                 </li>
 
-
             </ul>
 
-
         </nav>
-
-
 
         <!--这里是手机导航-->
         <div class="mob-menu">
@@ -72,7 +68,8 @@
             </div>
             <!--手机下拉菜单-->
             <ul>
-                <li><a href="{% url "blog:index" %}">Home Page</a></li>
+                <li><a href="{% url "aboutme:aboutme" %}">ME</a></li>
+                <li><a href="{% url "blog:index" %}">Home</a></li>
                 <li><a href="{% url "blog:list" %}">Blog</a></li>
                 <li class='mob-drop'>
                     <a href="JavaScript:;">分类</a>
