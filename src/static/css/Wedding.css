@@ -1,5 +1,5 @@
  .u-section-1 {
-  background-image: url("images/sdzg-min.jpg");
+  background-image: url("/static/images/sdzg-min.jpg");
   background-position: 50% 50%;
 }
 
@@ -554,19 +554,19 @@
 }
 
 .u-section-3 .u-image-1 {
-  background-image: url("images/9b7c834d19acfe80b6d4830db2944b4b.jpeg");
+  background-image: url("/static/images/9b7c834d19acfe80b6d4830db2944b4b.jpeg");
   min-height: 348px;
   background-position: 50% 50%;
 }
 
 .u-section-3 .u-image-2 {
-  background-image: url("images/a37a39c29685b0b0957ac5e5e20cbe54.jpeg");
+  background-image: url("/static/images/a37a39c29685b0b0957ac5e5e20cbe54.jpeg");
   min-height: 347px;
   background-position: 50% 50%;
 }
 
 .u-section-3 .u-image-3 {
-  background-image: url("images/fb1a26751bfd379b93c88b12ac92e84f.jpeg");
+  background-image: url("/static/images/fb1a26751bfd379b93c88b12ac92e84f.jpeg");
   min-height: 297px;
   background-position: 50% 50%;
 }
