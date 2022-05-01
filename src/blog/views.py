@@ -294,4 +294,4 @@ def aboutme(request):
 
 
 def wedding(request):
-    return render(request, 'wedding/Home.html')
+    return render(request, 'wedding/Wedding.html')
