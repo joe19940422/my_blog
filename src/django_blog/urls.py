@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include(('blog.urls', 'blog'), namespace='blog')),
     path('aboutme/', include(('blog.urls', 'aboutme'), namespace='aboutme')),
+    path('wedding/', include(('blog.urls', 'wedding'), namespace='wedding')),
     path('', views.index, name='index'),
     path('mdeditor',include('mdeditor.urls')),
 

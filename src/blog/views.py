@@ -291,3 +291,7 @@ def dutch(request):
 
 def aboutme(request):
     return render(request, 'aboutme/Home.html')
+
+
+def wedding(request):
+    return render(request, 'wedding/Home.html')
