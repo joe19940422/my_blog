@@ -3,6 +3,7 @@
 
 import json
 from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 from django_blog.util import PageInfo
 from blog.models import Article, Comment
 from django.views.decorators.csrf import csrf_exempt
@@ -295,3 +296,7 @@ def aboutme(request):
 
 def wedding(request):
     return render(request, 'wedding/Wedding.html')
+
+
+def url_redirect(request):
+    return HttpResponseRedirect("/wedding/wedding")
