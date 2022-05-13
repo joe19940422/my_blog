@@ -299,4 +299,4 @@ def wedding(request):
 
 
 def url_redirect(request):
-    return HttpResponseRedirect("wedding/Wedding.html")
+    return HttpResponseRedirect("Wedding.html")
