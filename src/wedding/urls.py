@@ -10,7 +10,7 @@ from django.urls import path
 
 urlpatterns = [
     #path('', views.index, name='index'),
-    path('wedding2/', views.wedding, name='wedding')
+    path('/', views.wedding, name='wedding')
     #path('', views.url_redirect, name = 'url_redirect')
 
 ]
