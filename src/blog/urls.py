@@ -19,8 +19,6 @@ urlpatterns = [
     path('taiwan/', views.taiwan, name = 'Taiwan'),
     path('dutch/', views.dutch, name = 'Dutch'),
     path('aboutme/', views.aboutme, name = 'aboutme'),
-    #path('wedding/', views.wedding, name = 'wedding')
-    #path('', views.url_redirect, name = 'url_redirect')
 
 ]
 

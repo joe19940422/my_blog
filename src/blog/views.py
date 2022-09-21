@@ -292,11 +292,3 @@ def dutch(request):
 
 def aboutme(request):
     return render(request, 'aboutme/Home.html')
-
-
-# def wedding(request):
-#     return render(request, 'wedding/Wedding.html')
-
-
-def url_redirect(request):
-    return HttpResponseRedirect("Wedding.html")
