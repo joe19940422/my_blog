@@ -37,15 +37,19 @@
                 <li><a href="{% url "blog:archive" %}">Archive</a></li>
                 <li><a href="{% url "blog:message" %}">Message</a></li>
             </ul>
+
+            
                 <ul class="orange-text">
-                <li class='dropdown'>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">News
-                    <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                <li class='drop'>
+                    <a href="JavaScript:;">News<i class='el-chevron-down'></i></a>
+                    <div class="drop-nav orange-text">
+                    <ul>
                         <li><a href="{% url "blog:BBC" %}">BBC News</a></li>
                             <li><a href="{% url "blog:China" %}">China News</a></li>
                             <li><a href="{% url "blog:Taiwan" %}">Taiwan News</a></li>
                             <li><a href="{% url "blog:Dutch" %}">Dutch News🇳🇱</a></li>
+                    </ul>
+                    </div>
                         </ul>
                     </li>
                 </ul>>
