@@ -21,7 +21,7 @@
         <!--电脑导航开始-->
         <nav class="mynav">
             <ul class="orange-text">
-                <li class=""><a href="{% url "aboutme:aboutme" %}">AboutMe</a></li>
+                <li class=""><a href="{% url "aboutme:aboutme" %}">About Me</a></li>
                 <li class=""><a href="{% url "blog:index" %}">Home Page</a></li>
                 <li><a href="{% url "blog:list" %}">Blog</a></li>
                 <li class='drop'>
@@ -37,11 +37,10 @@
                 <li><a href="{% url "blog:archive" %}">Archive</a></li>
                 <li><a href="{% url "blog:message" %}">Message</a></li>
 
-            </ul>
-                        <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">News
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
+                <li class='drop'>
+                    <a href="JavaScript:;">News<i class='el-chevron-down'></i></a>
+                    <div class="drop-nav orange-text">
+                        <ul>
                             <li><a href="{% url "blog:BBC" %}">BBC News</a></li>
                             <li><a href="{% url "blog:China" %}">China News</a></li>
                             <li><a href="{% url "blog:Taiwan" %}">Taiwan News</a></li>
@@ -49,8 +48,27 @@
                         </ul>
                     </div>
 
+                </li>
+
+            </ul>
 
         </nav>
+
+           <div class="navbar">
+               <div class="dropdown">
+                    <button class="dropbtn">News
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                   <div class="dropdown-content">
+                        <ul>
+                            <li><a href="{% url "blog:BBC" %}">BBC News</a></li>
+                            <li><a href="{% url "blog:China" %}">China News</a></li>
+                            <li><a href="{% url "blog:Taiwan" %}">Taiwan News</a></li>
+                            <li><a href="{% url "blog:Dutch" %}">Dutch News🇳🇱</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         <!--这里是手机导航-->
         <div class="mob-menu">
