@@ -39,7 +39,7 @@
 
                 <li class='drop'>
                     <a href="JavaScript:;">News<i class='el-chevron-down'></i></a>
-                    <div class="drop-nav orange-text">
+                    <div class="dropdown orange-text">
                         <ul>
                             <li><a href="{% url "blog:BBC" %}">BBC News</a></li>
                             <li><a href="{% url "blog:China" %}">China News</a></li>
@@ -54,19 +54,6 @@
 
         </nav>
 
-           <div class="navbar">
-               <div class="dropdown">
-                    <button class="dropbtn">News
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                   <div class="dropdown-content">
-                            <a href="{% url "blog:BBC" %}">BBC News</a>
-                            <a href="{% url "blog:China" %}">China News</a>
-                            <a href="{% url "blog:Taiwan" %}">Taiwan News</a>
-                            <a href="{% url "blog:Dutch" %}">Dutch News🇳🇱</a>
-                    </div>
-                </div>
-            </div>
 
         <!--这里是手机导航-->
         <div class="mob-menu">
