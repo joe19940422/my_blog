@@ -292,20 +292,3 @@ def dutch(request):
 
 def aboutme(request):
     return render(request, 'aboutme/Home.html')
-
-
-import logging
-logger = logging.getLogger("info")
-logger.info('something')
-
-
-import logging
-def foo(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-
-    some_logger = logging.getLogger(__name__)
-    some_logger.warning('Your log message... IP:' + ip)
