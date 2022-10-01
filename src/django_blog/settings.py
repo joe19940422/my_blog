@@ -241,20 +241,10 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
-            "level": "WARNING",
-            'filters': ['add_ip_address'],
-             "handlers": ["request"]
-        },
-        'django.request': {
             "level": "DEBUG",
             'filters': ['add_ip_address'],
              "handlers": ["request"]
-        },
-        'django.request': {
-            "level": "INFO",
-            'filters': ['add_ip_address'],
-             "handlers": ["request"]
-        },
+        }
     },
     "disable_existing_loggers": False
 }
