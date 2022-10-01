@@ -200,6 +200,7 @@ LOGGING = {
     },
 }
 """
+
 LOGGING = {
     "version": 1,
     "formatters": {
@@ -220,7 +221,7 @@ LOGGING = {
     },
     'filters': {
         'add_ip_address': {
-            '()': 'settings.IPAddressFilter' # You can move IPAddressFilter class from settings.py to another location (e.g., apps.other.filters.IPAddressFilter)
+            '()': IPAddressFilter # You can move IPAddressFilter class from settings.py to another location (e.g., apps.other.filters.IPAddressFilter)
         }
     },
     "loggers": {
