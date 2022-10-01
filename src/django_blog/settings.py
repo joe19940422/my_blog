@@ -255,5 +255,5 @@ LOGGING = {
              "handlers": ["django_all"]
         },
     },
-    "disable_existing_loggers": True
+    "disable_existing_loggers": False
 }
