@@ -228,19 +228,14 @@ LOGGING = {
     },
     "handlers": {
         "request": {
-            "level": "INFO",
+            "level": "*",
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": LOG_PATH + 'ip.log',
             "maxBytes": 1024000,
             "backupCount": 3
         },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            "filename": LOG_PATH + 'ip.log',
-            'formatter': 'request_formatter',
-        }
+
     },
     'filters': {
         'add_ip_address': {
@@ -249,9 +244,9 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
-            "level": "DEBUG",
+            "level": "*",
             'filters': ['add_ip_address'],
-             "handlers": ["request", "console"]
+             "handlers": ["request"]
         }
     },
     "disable_existing_loggers": False
