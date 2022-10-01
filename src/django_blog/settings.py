@@ -137,6 +137,7 @@ LOG_PATH = os.path.join(BASE_DIR, "log/")
 
 
 import logging
+import geocoder
 
 class IPAddressFilter(logging.Filter):
 
@@ -145,9 +146,14 @@ class IPAddressFilter(logging.Filter):
             x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
                 record.ip = x_forwarded_for.split(',')[0]
+                ip_location = geocoder.ip(f"{record.ip}")
+                print(ip_location.city)
             else:
                 record.ip = record.request.META.get('REMOTE_ADDR')
         return True
+
+
+
 """
 LOGGING = {
     'version': 1,
