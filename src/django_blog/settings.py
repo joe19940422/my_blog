@@ -147,6 +147,7 @@ class IPAddressFilter(logging.Filter):
             if x_forwarded_for:
                 record.ip = x_forwarded_for.split(',')[0]
                 ip_location = geocoder.ip(f"{record.ip}")
+                record.location = ip_location.city
                 print(ip_location.city)
             else:
                 record.ip = record.request.META.get('REMOTE_ADDR')
