@@ -235,7 +235,7 @@ LOGGING = {
         },
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'standard',
+            'formatter': 'request_formatter',
         }
     },
     'filters': {
