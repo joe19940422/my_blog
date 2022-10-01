@@ -213,7 +213,6 @@ LOGGING = {
     },
 }
 """
-
 LOGGING = {
     "version": 1,
     "formatters": {
@@ -239,7 +238,7 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
-            "level": "INFO",
+            "level": "DEBUG",
             'filters': ['add_ip_address'],
              "handlers": ["console"]
         },
