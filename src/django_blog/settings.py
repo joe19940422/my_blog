@@ -161,7 +161,7 @@ class IPAddressFilter(logging.Filter):
                 record.country = ip_location.country
                 record.province = ip_location.province
                 record.city = ip_location.city
-        return True
+        return record.level == logging.INFO
 
 
 
@@ -247,7 +247,6 @@ LOGGING = {
             #"level": "DEBUG",
             'filters': ['add_ip_address'],
              "handlers": ["request"],
-            'propagate': True,
         }
     },
     "disable_existing_loggers": False
