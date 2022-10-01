@@ -214,7 +214,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s  - %(name)s - %(ip)s - %(levelname)s -  %(message)s",
+            "format": "%(asctime)s  - %(name)s - %(ip)s - %(location)s - %(levelname)s -  %(message)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
