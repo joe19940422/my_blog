@@ -228,7 +228,7 @@ LOGGING = {
     },
     "handlers": {
         "request": {
-            "level": "*",
+            #"level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": LOG_PATH + 'ip.log',
@@ -244,7 +244,7 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
-            "level": "*",
+            #"level": "DEBUG",
             'filters': ['add_ip_address'],
              "handlers": ["request"]
         }
