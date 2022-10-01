@@ -234,7 +234,9 @@ LOGGING = {
             "backupCount": 3
         },
         'console': {
-            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            "filename": LOG_PATH + 'ip.log',
             'formatter': 'request_formatter',
         }
     },
