@@ -295,6 +295,11 @@ def aboutme(request):
 
 
 import logging
+logger = logging.getLogger("info")
+logger.info('something')
+
+
+import logging
 def foo(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
