@@ -224,7 +224,7 @@ LOGGING = {
     },
     "handlers": {
         "request": {
-            "level": "INFO",
+            "level": "DEBUG",
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": LOG_PATH + 'ip.log',
