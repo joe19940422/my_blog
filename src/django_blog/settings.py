@@ -240,7 +240,7 @@ LOGGING = {
         }
     },
     "loggers": {
-        'django.request': {
+        'django.request1': {
             "level": "WARNING",
             'filters': ['add_ip_address'],
              "handlers": ["request"]
