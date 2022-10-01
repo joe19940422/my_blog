@@ -246,7 +246,8 @@ LOGGING = {
         'django.request': {
             #"level": "DEBUG",
             'filters': ['add_ip_address'],
-             "handlers": ["request"]
+             "handlers": ["request"],
+            'propagate': True,
         }
     },
     "disable_existing_loggers": False
