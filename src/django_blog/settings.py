@@ -232,6 +232,10 @@ LOGGING = {
             "filename": LOG_PATH + 'ip.log',
             "maxBytes": 1024000,
             "backupCount": 3
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
         }
     },
     'filters': {
@@ -243,7 +247,7 @@ LOGGING = {
         'django.request': {
             "level": "DEBUG",
             'filters': ['add_ip_address'],
-             "handlers": ["request"]
+             "handlers": ["request", "console"]
         }
     },
     "disable_existing_loggers": False
