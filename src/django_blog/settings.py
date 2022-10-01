@@ -147,12 +147,16 @@ class IPAddressFilter(logging.Filter):
             if x_forwarded_for:
                 record.ip = x_forwarded_for.split(',')[0]
                 ip_location = geocoder.ip(f"{record.ip}")
-                record.location = ip_location.city
+                record.country = ip_location.country
+                record.province = ip_location.province
+                record.city = ip_location.city
 
             else:
                 record.ip = record.request.META.get('REMOTE_ADDR')
                 ip_location = geocoder.ip(f"{record.ip}")
-                record.location = ip_location.city
+                record.country = ip_location.country
+                record.province = ip_location.province
+                record.city = ip_location.city
         return True
 
 
@@ -214,7 +218,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s  - %(name)s - %(ip)s - %(location)s - %(levelname)s -  %(message)s",
+            "format": "%(asctime)s  - %(name)s - %(ip)s - %(country)s - %(province)s - %(city)s - %(levelname)s -  %(message)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
