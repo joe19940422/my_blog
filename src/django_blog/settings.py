@@ -138,7 +138,7 @@ LOG_PATH = os.path.join(BASE_DIR, "log/")
 
 import logging
 import geocoder
-logging.root.level = 'INFO'
+logging.root.level = 20
 class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
