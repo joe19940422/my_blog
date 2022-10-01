@@ -225,7 +225,7 @@ LOGGING = {
     "handlers": {
         "request": {
             "level": "DEBUG",
-            "class": "logging.StreamHandler",
+            "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": LOG_PATH + 'ip.log',
             "maxBytes": 1024000,
