@@ -241,6 +241,16 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
+            "level": "WARNING",
+            'filters': ['add_ip_address'],
+             "handlers": ["request"]
+        },
+        'django.request2': {
+            "level": "DEBUG",
+            'filters': ['add_ip_address'],
+             "handlers": ["request"]
+        },
+        'django.request3': {
             "level": "INFO",
             'filters': ['add_ip_address'],
              "handlers": ["request"]
