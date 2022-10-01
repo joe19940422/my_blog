@@ -173,7 +173,7 @@ LOGGING = {
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['django_error', 'console'],
+            'handlers': ['django_all'],
             'level': 'DEBUG',
             'propagate': True,
         },
