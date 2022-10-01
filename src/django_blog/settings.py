@@ -174,7 +174,7 @@ LOGGING = {
         },
         'django.request': {
             'handlers': ['django_all'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         'django.db.backends': {
