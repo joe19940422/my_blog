@@ -161,7 +161,7 @@ class IPAddressFilter(logging.Filter):
                 record.country = ip_location.country
                 record.province = ip_location.province
                 record.city = ip_location.city
-        return record.levelname == logging.INFO
+        return True
 
 
 
