@@ -245,12 +245,12 @@ LOGGING = {
             'filters': ['add_ip_address'],
              "handlers": ["request"]
         },
-        'django.request2': {
+        'django.request': {
             "level": "DEBUG",
             'filters': ['add_ip_address'],
              "handlers": ["request"]
         },
-        'django.request3': {
+        'django.request': {
             "level": "INFO",
             'filters': ['add_ip_address'],
              "handlers": ["request"]
