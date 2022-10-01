@@ -134,6 +134,21 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
 
 LOG_PATH = os.path.join(BASE_DIR, "log/")
+
+
+import logging
+
+class IPAddressFilter(logging.Filter):
+
+    def filter(self, record):
+        if hasattr(record, 'request'):
+            x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                record.ip = x_forwarded_for.split(',')[0]
+            else:
+                record.ip = record.request.META.get('REMOTE_ADDR')
+        return True
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -173,8 +188,8 @@ LOGGING = {
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['django_all'],
-            'level': 'INFO',
+            'handlers': ['django_error', 'console'],
+            'level': 'DEBUG',
             'propagate': True,
         },
         'django.db.backends': {
@@ -183,4 +198,37 @@ LOGGING = {
             'propagate': True,
         }
     },
+}
+"""
+LOGGING = {
+    "version": 1,
+    "formatters": {
+        "request_formatter": {
+            "format": "%(asctime)s  - %(name)s - %(ip)s - %(levelname)s -  %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        },
+    },
+    "handlers": {
+        "request": {
+            "level": "WARNING",
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "request_formatter",
+            "filename": LOG_PATH + 'ip.log',
+            "maxBytes": 1024000,
+            "backupCount": 3
+        }
+    },
+    'filters': {
+        'add_ip_address': {
+            '()': 'settings.IPAddressFilter' # You can move IPAddressFilter class from settings.py to another location (e.g., apps.other.filters.IPAddressFilter)
+        }
+    },
+    "loggers": {
+        'django.request': {
+            "level": "WARNING",
+            'filters': ['add_ip_address'],
+             "handlers": ["request"]
+        },
+    },
+    "disable_existing_loggers": False
 }
