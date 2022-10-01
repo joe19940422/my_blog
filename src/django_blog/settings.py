@@ -138,7 +138,7 @@ LOG_PATH = os.path.join(BASE_DIR, "log/")
 
 import logging
 import geocoder
-logging.root.level = 20
+
 class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
@@ -228,13 +228,14 @@ LOGGING = {
     },
     "handlers": {
         "request": {
-            #"level": "INFO",
+
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": LOG_PATH + 'ip.log',
             "maxBytes": 1024000,
             "backupCount": 3
         },
+
 
     },
     'filters': {
@@ -244,10 +245,11 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
-            #"level": "DEBUG",
+            "level": "DEBUG",
             'filters': ['add_ip_address'],
              "handlers": ["request"],
-        }
+            'propagate': False,
+        },
     },
     "disable_existing_loggers": False
 }
