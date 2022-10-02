@@ -259,6 +259,7 @@ LOGGING = {
 """
 
 LOGGING = {
+    "version": 1,
     'filters': {
         # Add an unbound RequestFilter.
         'request': {
