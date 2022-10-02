@@ -149,8 +149,7 @@ class IPAddressFilter(logging.Filter):
         if hasattr(record, 'request'):
             x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
-                #record.user = record.request.user
-                record.user ='HTTP_X_FORWARDED_FOR'
+                record.user = record.request.user
                 record.ip = x_forwarded_for.split(',')[0]
                 ip_location = geocoder.ip(f"{record.ip}")
                 record.country = ip_location.country
@@ -158,8 +157,7 @@ class IPAddressFilter(logging.Filter):
                 record.city = ip_location.city
 
             else:
-                #record.user = record.request.user
-                record.user = 'REMOTE_ADDR'
+                record.user = record.request.user
                 record.ip = record.request.META.get('REMOTE_ADDR')
                 ip_location = geocoder.ip(f"{record.ip}")
                 record.country = ip_location.country
@@ -250,7 +248,7 @@ LOGGING = {
     },
     "loggers": {
         'django.request': {
-            "level": "DEBUG",
+            "level": "INFO",
             'filters': ['add_ip_address'],
              "handlers": ["request"],
             'propagate': False,
