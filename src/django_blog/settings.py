@@ -271,6 +271,7 @@ LOGGING = {
         'add_ip_address': {
             '()': IPAddressFilter # You can move IPAddressFilter class from settings.py to another location (e.g., apps.other.filters.IPAddressFilter)
         }
+
     },
     'formatters': {
         'request_format': {
@@ -283,7 +284,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'filters': ['request'],
+            'filters': ['add_ip_address'],
             'formatter': 'request_format',
         },
         "file": {
@@ -297,7 +298,8 @@ LOGGING = {
     'loggers': {
         'django': {
             # Add your handlers that have the unbound request filter
-            'handlers': [ 'file'],
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
             # Optionally, add the unbound request filter to your
             # application.
             'filters': ['add_ip_address'],
