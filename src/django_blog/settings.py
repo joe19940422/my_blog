@@ -277,12 +277,17 @@ LOGGING = {
         'request_format': {
             "format": "%(asctime)s  - %(name)s - %(ip)s - %(country)s - %(province)s - %(city)s - %(levelname)s -  %(message)s",
         },
+        'console_format': {
+            'format': '%(remote_addr)s %(username)s "%(request_method)s '
+            '%(path_info)s %(server_protocol)s" %(http_user_agent)s '
+            '%(message)s %(asctime)s',
+        }
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
             'filters': ['add_ip_address'],
-            'formatter': 'request_format',
+            'formatter': 'console_format',
         },
         "file": {
             "level": "INFO",
