@@ -268,13 +268,13 @@ LOGGING = {
         'request': {
             '()': 'django_requestlogging.logging_filters.RequestFilter',
         },
-
     },
     'formatters': {
         'request_format': {
-            'format': '%(remote_addr)s %(username)s "%(request_method)s '
-            '%(path_info)s %(server_protocol)s" %(http_user_agent)s '
-            '%(message)s %(asctime)s',
+            # 'format': '%(remote_addr)s %(username)s "%(request_method)s '
+            # '%(path_info)s %(server_protocol)s" %(http_user_agent)s '
+            # '%(message)s %(asctime)s',
+            "format": "%(asctime)s  - %(name)s  - %(user)s - %(ip)s - %(country)s - %(province)s - %(city)s - %(levelname)s -  %(message)s",
         },
     },
     'handlers': {
@@ -295,7 +295,6 @@ LOGGING = {
         'django': {
             # Add your handlers that have the unbound request filter
             'handlers': ['console', 'file'],
-            'level': 'DEBUG',
             # Optionally, add the unbound request filter to your
             # application.
             'filters': ['request'],
