@@ -295,7 +295,7 @@ LOGGING = {
     'loggers': {
         'django': {
             # Add your handlers that have the unbound request filter
-            'handlers': ['file'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
             # Optionally, add the unbound request filter to your
             # application.
