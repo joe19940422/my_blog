@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'mdeditor',
+    'django_requestlogging '
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'request_logging.middleware.LoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'django_blog.urls'
@@ -217,7 +219,8 @@ LOGGING = {
     },
 }
 """
-
+## below config is only work 4XX and 5XX
+"""
 LOGGING = {
     "version": 1,
     "formatters": {
@@ -252,4 +255,37 @@ LOGGING = {
         },
     },
     "disable_existing_loggers": False
+}
+"""
+
+LOGGING = {
+    'filters': {
+        # Add an unbound RequestFilter.
+        'request': {
+            '()': 'django_requestlogging.logging_filters.RequestFilter',
+        },
+    },
+    'formatters': {
+        'request_format': {
+            'format': '%(remote_addr)s %(username)s "%(request_method)s '
+            '%(path_info)s %(server_protocol)s" %(http_user_agent)s '
+            '%(message)s %(asctime)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'filters': ['request'],
+            'formatter': 'request_format',
+        },
+    },
+    'loggers': {
+        'myapp': {
+            # Add your handlers that have the unbound request filter
+            'handlers': ['console'],
+            # Optionally, add the unbound request filter to your
+            # application.
+            'filters': ['request'],
+        },
+    },
 }
