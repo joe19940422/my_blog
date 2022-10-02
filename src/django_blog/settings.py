@@ -262,6 +262,7 @@ LOGGING = {
 
 LOGGING = {
     "version": 1,
+    'disable_existing_loggers': False,
     'filters': {
         # Add an unbound RequestFilter.
         'request': {
@@ -290,9 +291,10 @@ LOGGING = {
         },
     },
     'loggers': {
-        'myapp': {
+        'django': {
             # Add your handlers that have the unbound request filter
             'handlers': ['console', 'file'],
+            'level': 'DEBUG',
             # Optionally, add the unbound request filter to your
             # application.
             'filters': ['request'],
