@@ -300,7 +300,7 @@ LOGGING = {
             'handlers': ['console', 'file'],
             # Optionally, add the unbound request filter to your
             # application.
-            'filters': ['add_ip_address'],
+            'filters': ['add_ip_address', 'request'],
         },
     },
 }
