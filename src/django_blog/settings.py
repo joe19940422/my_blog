@@ -284,7 +284,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'filters': ['request'],
+            'filters': ['add_ip_address'],
             'formatter': 'request_format',
         },
         "file": {
