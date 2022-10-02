@@ -268,6 +268,10 @@ LOGGING = {
         'request': {
             '()': 'django_requestlogging.logging_filters.RequestFilter',
         },
+        'add_ip_address': {
+            '()': IPAddressFilter # You can move IPAddressFilter class from settings.py to another location (e.g., apps.other.filters.IPAddressFilter)
+        }
+
     },
     'formatters': {
         'request_format': {
@@ -297,7 +301,7 @@ LOGGING = {
             'level': 'DEBUG',
             # Optionally, add the unbound request filter to your
             # application.
-            'filters': ['request'],
+            'filters': ['add_ip_address'],
         },
     },
 }
