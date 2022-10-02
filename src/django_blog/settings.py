@@ -222,7 +222,7 @@ LOGGING = {
 }
 """
 ## below config is only work 4XX and 5XX
-"""
+
 LOGGING = {
     "version": 1,
     "formatters": {
@@ -258,8 +258,9 @@ LOGGING = {
     },
     "disable_existing_loggers": False
 }
-"""
 
+
+"""
 LOGGING = {
     "version": 1,
     'disable_existing_loggers': False,
@@ -308,3 +309,4 @@ LOGGING = {
         },
     },
 }
+"""
