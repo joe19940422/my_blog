@@ -142,6 +142,7 @@ LOG_PATH = os.path.join(BASE_DIR, "log/")
 import logging
 import geocoder
 
+
 class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
@@ -280,9 +281,9 @@ LOGGING = {
             'filters': ['request'],
             'formatter': 'request_format',
         },
-         "request": {
-
-            "class": "logging.handlers.RotatingFileHandler",
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.FileHandler",
             "formatter": "request_format",
             "filename": LOG_PATH + 'ip.log',
             "maxBytes": 1024000,
@@ -292,7 +293,7 @@ LOGGING = {
     'loggers': {
         'myapp': {
             # Add your handlers that have the unbound request filter
-            'handlers': ['console', 'request'],
+            'handlers': ['console', 'file'],
             # Optionally, add the unbound request filter to your
             # application.
             'filters': ['request'],
