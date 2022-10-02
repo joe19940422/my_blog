@@ -286,8 +286,7 @@ LOGGING = {
             "class": "logging.FileHandler",
             "formatter": "request_format",
             "filename": LOG_PATH + 'ip.log',
-            "maxBytes": 1024000,
-            "backupCount": 3
+
         },
     },
     'loggers': {
