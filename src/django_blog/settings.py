@@ -280,11 +280,19 @@ LOGGING = {
             'filters': ['request'],
             'formatter': 'request_format',
         },
+         "request": {
+
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "request_format",
+            "filename": LOG_PATH + 'ip.log',
+            "maxBytes": 1024000,
+            "backupCount": 3
+        },
     },
     'loggers': {
         'myapp': {
             # Add your handlers that have the unbound request filter
-            'handlers': ['console'],
+            'handlers': ['console', 'request'],
             # Optionally, add the unbound request filter to your
             # application.
             'filters': ['request'],
