@@ -297,10 +297,10 @@ LOGGING = {
     'loggers': {
         'django': {
             # Add your handlers that have the unbound request filter
-            'handlers': ['console', 'file'],
+            'handlers': [ 'file'],
             # Optionally, add the unbound request filter to your
             # application.
-            'filters': ['add_ip_address', 'request'],
+            'filters': ['add_ip_address'],
         },
     },
 }
