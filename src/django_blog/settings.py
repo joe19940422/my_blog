@@ -278,7 +278,7 @@ LOGGING = {
             # 'format': '%(remote_addr)s %(username)s "%(request_method)s '
             # '%(path_info)s %(server_protocol)s" %(http_user_agent)s '
             # '%(message)s %(asctime)s',
-            "format": "%(asctime)s  - %(name)s  - %(user)s - %(ip)s - %(country)s - %(province)s - %(city)s - %(levelname)s -  %(message)s",
+            "format": "%(asctime)s  - %(name)s - %(ip)s - %(country)s - %(province)s - %(city)s - %(levelname)s -  %(message)s",
         },
     },
     'handlers': {
