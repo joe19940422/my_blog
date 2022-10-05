@@ -305,7 +305,7 @@ def pie_chart(request):
         labels.append(city.name)
         data.append(city.population)
 
-    return render(request, 'pie_chart.html', {
+    return render(request, 'blog/pie_chart.html', {
         'labels': labels,
         'data': data,
     })
