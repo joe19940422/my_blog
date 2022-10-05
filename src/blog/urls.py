@@ -14,11 +14,11 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('message/', views.message, name='message'),
     path('getComment/', views.get_comment, name='get_comment'),
-    path('bbc/', views.bbc, name = 'BBC'),
-    path('china/', views.China, name = 'China'),
-    path('taiwan/', views.taiwan, name = 'Taiwan'),
-    path('dutch/', views.dutch, name = 'Dutch'),
-    path('aboutme/', views.aboutme, name = 'aboutme'),
-
+    path('bbc/', views.bbc, name='BBC'),
+    path('china/', views.China, name='China'),
+    path('taiwan/', views.taiwan, name='Taiwan'),
+    path('dutch/', views.dutch, name='Dutch'),
+    path('aboutme/', views.aboutme, name='aboutme'),
+    path('pie-chart/', views.pie_chart, name='pie-chart'),
 ]
 

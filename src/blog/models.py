@@ -75,3 +75,13 @@ class Comment(models.Model):
     user_name = models.CharField('评论用户', max_length=25)
     url = models.CharField('链接', max_length=100)
     comment = models.CharField('评论内容', max_length=500)
+
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=30)
+
+class City(models.Model):
+    name = models.CharField(max_length=30)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    population = models.PositiveIntegerField()

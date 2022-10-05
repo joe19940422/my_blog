@@ -3,13 +3,15 @@
 
 import json
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django_blog.util import PageInfo
-from blog.models import Article, Comment
+from blog.models import Article, Comment, City
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from newsapi import NewsApiClient
 from googletrans import Translator
+
 translator = Translator()
 
 def get_page(request):
@@ -292,3 +294,18 @@ def dutch(request):
 
 def aboutme(request):
     return render(request, 'aboutme/Home.html')
+
+
+def pie_chart(request):
+    labels = []
+    data = []
+
+    queryset = City.objects.order_by('-population')[:5]
+    for city in queryset:
+        labels.append(city.name)
+        data.append(city.population)
+
+    return render(request, 'pie_chart.html', {
+        'labels': labels,
+        'data': data,
+    })
