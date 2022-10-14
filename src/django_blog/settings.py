@@ -149,6 +149,7 @@ class IPAddressFilter(logging.Filter):
         if hasattr(record, 'request'):
             x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
+                record.record = record
                 record.meta = record.request.META
                 record.data = record.request #
                 record.user = record.request.user
@@ -159,6 +160,7 @@ class IPAddressFilter(logging.Filter):
                 record.city = ip_location.city
 
             else:
+                record.record = record
                 record.meta = record.request.META
                 record.data = record.request #
                 record.user = record.request.user
@@ -229,7 +231,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(data)s#%(meta)s",
+            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(data)s#%(record)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
