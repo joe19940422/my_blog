@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '85bus3!*+_3t1ks)&&o(u-liuhucshja!-44a1squ93=#+v+4r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['172.31.23.191','35.180.248.118','www.pengfeiqiao.com','*','pengfeiqiao.com']
 
@@ -225,7 +225,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s  - %(name)s  - %(user)s - %(ip)s - %(country)s - %(province)s - %(city)s - %(levelname)s -  %(message)s",
+            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(message)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
@@ -235,7 +235,7 @@ LOGGING = {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": LOG_PATH + 'ip.log',
-            "maxBytes": 1024000,
+            "maxBytes": 10240000,
             "backupCount": 3
         },
 
