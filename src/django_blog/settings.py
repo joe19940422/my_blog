@@ -149,26 +149,30 @@ class IPAddressFilter(logging.Filter):
         if hasattr(record, 'request'):
             x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
-                record.record = record
-                record.meta = record.request.META
-                record.data = record.request #
-                record.user = record.request.user
-                record.ip = x_forwarded_for.split(',')[0]
-                ip_location = geocoder.ip(f"{record.ip}")
-                record.country = ip_location.country
-                record.province = ip_location.province
-                record.city = ip_location.city
+                if '200' in record:
+                    record.record = record
+                    record.meta = record.request.META
+                    record.data = record.request  #
+                    record.user = record.request.user
+                    record.ip = x_forwarded_for.split(',')[0]
+                    ip_location = geocoder.ip(f"{record.ip}")
+                    record.country = ip_location.country
+                    record.province = ip_location.province
+                    record.city = ip_location.city
+
 
             else:
-                record.record = record
-                record.meta = record.request.META
-                record.data = record.request #
-                record.user = record.request.user
-                record.ip = record.request.META.get('REMOTE_ADDR')
-                ip_location = geocoder.ip(f"{record.ip}")
-                record.country = ip_location.country
-                record.province = ip_location.province
-                record.city = ip_location.city
+                if '200' in record:
+                    record.record = record
+                    record.meta = record.request.META
+                    record.data = record.request  #
+                    record.user = record.request.user
+                    record.ip = record.request.META.get('REMOTE_ADDR')
+                    ip_location = geocoder.ip(f"{record.ip}")
+                    record.country = ip_location.country
+                    record.province = ip_location.province
+                    record.city = ip_location.city
+
         return True
 
 
