@@ -234,7 +234,7 @@ LOGGING = {
 
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
-            "filename": LOG_PATH + 'ip.log',
+            "filename": LOG_PATH + 'user.log',
             "maxBytes": 10240000,
             "backupCount": 3
         },
