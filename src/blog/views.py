@@ -310,7 +310,11 @@ def pie_chart(request):
     for city in queryset:
         labels.append(city.name)
         data.append(city.population)
-
+    demo = {
+        'labels': labels,
+        'data': data,
+    }
+    print(demo)
     return render(request, 'blog/pie_chart.html', {
         'labels': labels,
         'data': data,
@@ -331,7 +335,11 @@ def visitor_chart(request):
     for result in queryset:
         country_code.append(result['country_code'])
         data.append(result['Count'])
-
+    demo ={
+        'country_code': country_code,
+        'data': data,
+    }
+    print(demo)
     return render(request, 'blog/visitor_chart.html', {
         'country_code': country_code,
         'data': data,
