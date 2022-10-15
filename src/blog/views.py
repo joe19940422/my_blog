@@ -303,6 +303,9 @@ def pie_chart(request):
 
     queryset = City.objects.order_by('-population')[:5]
     print(queryset)
+    """
+    <QuerySet [<City: City object (1)>, <City: City object (2)>, <City: City object (3)>, <City: City object (4)>, <City: City object (5)>]>
+    """
     print(type(queryset))
     for city in queryset:
         labels.append(city.name)
@@ -325,9 +328,9 @@ def visitor_chart(request):
     <QuerySet [{'country_code': 'TW', 'Count': 1}, {'country_code': 'NL', 'Count': 1}, {'country_code': '', 'Count': 1}, {'country_code': 'UA', 'Count': 1}, {'country_code': 'RU', 'Count': 1}, {'country_code': 'DE', 'Count': 2}]>
     """
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    for country in queryset:
-        country_code.append(country.country_code)
-        data.append(country.Count)
+    for result in queryset:
+        country_code.append(result['country_code'])
+        data.append(result['Count'])
 
     return render(request, 'blog/visitor_chart.html', {
         'country_code': country_code,
