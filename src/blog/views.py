@@ -322,7 +322,7 @@ def pie_chart(request):
 
 
 def visitor_chart(request):
-    country_code = []
+    labels = []
     data = []
     # select count(DISTINCT ip), v.country_code  from visitor v group by v.country_code
     queryset = Visitor.objects.exclude(country_code__isnull=True).values("country_code").annotate(Count=Count("ip", distinct=True)).order_by("Count")
@@ -333,14 +333,14 @@ def visitor_chart(request):
     """
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     for result in queryset:
-        country_code.append(result['country_code'])
+        labels.append(result['country_code'])
         data.append(result['Count'])
     demo ={
-        'country_code': country_code,
+        'labels': labels,
         'data': data,
     }
     print(demo)
     return render(request, 'blog/visitor_chart.html', {
-        'country_code': country_code,
+        'labels': labels,
         'data': data,
     })
