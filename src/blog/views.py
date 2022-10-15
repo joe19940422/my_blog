@@ -316,7 +316,7 @@ def visitor_chart(request):
     country_code = []
     data = []
     # select count(DISTINCT ip), v.country_code  from visitor v group by v.country_code
-    queryset = Visitor.objects.values("country_code").annotate(Count=Count("ip", distinct=True)).order_by("_Count")
+    queryset = Visitor.objects.values("country_code").annotate(Count=Count("ip", distinct=True)).order_by("Count")
 
     for country in queryset:
         country_code.append(country.country_code)
