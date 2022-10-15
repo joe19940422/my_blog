@@ -302,6 +302,8 @@ def pie_chart(request):
     data = []
 
     queryset = City.objects.order_by('-population')[:5]
+    print(queryset)
+    print(type(queryset))
     for city in queryset:
         labels.append(city.name)
         data.append(city.population)
@@ -318,6 +320,10 @@ def visitor_chart(request):
     # select count(DISTINCT ip), v.country_code  from visitor v group by v.country_code
     queryset = Visitor.objects.values("country_code").annotate(Count=Count("ip", distinct=True)).order_by("Count")
     print(queryset)
+    print(type(queryset))
+    """
+    <QuerySet [{'country_code': 'TW', 'Count': 1}, {'country_code': 'NL', 'Count': 1}, {'country_code': '', 'Count': 1}, {'country_code': 'UA', 'Count': 1}, {'country_code': 'RU', 'Count': 1}, {'country_code': 'DE', 'Count': 2}]>
+    """
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     for country in queryset:
         country_code.append(country.country_code)
