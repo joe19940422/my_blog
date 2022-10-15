@@ -20,5 +20,6 @@ urlpatterns = [
     path('dutch/', views.dutch, name='Dutch'),
     path('aboutme/', views.aboutme, name='aboutme'),
     path('pie-chart/', views.pie_chart, name='pie-chart'),
+    path('visitor-chart/', views.visitor_chart, name='visitor-chart'),
 ]
 

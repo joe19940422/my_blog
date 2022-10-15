@@ -77,11 +77,24 @@ class Comment(models.Model):
     comment = models.CharField('评论内容', max_length=500)
 
 
-
 class Country(models.Model):
     name = models.CharField(max_length=30)
+
 
 class City(models.Model):
     name = models.CharField(max_length=30)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     population = models.PositiveIntegerField()
+
+
+class Visitor(models.Model):
+    ts = models.CharField(max_length=30)
+    type = models.CharField(max_length=30)
+    user = models.CharField(max_length=30)
+    ip = models.CharField(max_length=30)
+    country_code = models.CharField(max_length=30)
+    province = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    level = models.CharField(max_length=30)
+    info = models.CharField(max_length=100)
+

@@ -6,9 +6,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django_blog.util import PageInfo
-from blog.models import Article, Comment, City
+from blog.models import Article, Comment, City, Visitor
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Count
 from newsapi import NewsApiClient
 from googletrans import Translator
 
@@ -307,5 +308,21 @@ def pie_chart(request):
 
     return render(request, 'blog/pie_chart.html', {
         'labels': labels,
+        'data': data,
+    })
+
+
+def visitor_chart(request):
+    country_code = []
+    data = []
+    # select count(DISTINCT ip), v.country_code  from visitor v group by v.country_code
+    queryset = Visitor.object.values("country_code").annotate(Count=Count("ip", distinct=True)).order_by("_Count")
+
+    for country in queryset:
+        country_code.append(country.country_code)
+        data.append(country.Count)
+
+    return render(request, 'blog/visitor_chart.html', {
+        'country_code': country_code,
         'data': data,
     })
