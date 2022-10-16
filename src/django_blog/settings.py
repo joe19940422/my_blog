@@ -147,7 +147,7 @@ class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
         info = str(record).split(',')[-1]
-        if ('HTTP_COOKIE' in info) or ('%s' in info):
+        if ('HTTP_COOKIE' in info) or ('%s' in info) or ('favicon.ico' in info) or ('b\'\'' in info):
             pass
         else:
             if hasattr(record, 'request'):
