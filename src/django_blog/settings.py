@@ -146,6 +146,7 @@ import geocoder
 class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
+        info = record.split(',')[-1]
         if hasattr(record, 'request'):
             x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
@@ -155,7 +156,7 @@ class IPAddressFilter(logging.Filter):
                 record.country = ip_location.country
                 record.province = ip_location.province
                 record.city = ip_location.city
-                record.record = record
+                record.record = info
 
             else:
                 record.user = record.request.user
@@ -164,7 +165,7 @@ class IPAddressFilter(logging.Filter):
                 record.country = ip_location.country
                 record.province = ip_location.province
                 record.city = ip_location.city
-                record.record = record
+                record.record = info
         return True
 
 
