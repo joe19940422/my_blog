@@ -122,6 +122,39 @@
     </div>
 
     <!--visitor-->
+    <div class="visitor">
+        <div id="container" style="width: 75%;">
+        <canvas id="visitor-chart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#1c9e5f', '#1c9e91', '#1c5d9e', '#C0C0C0', '#D3D3D3'
+          ],
+          label: 'country_code'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('visitor-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+  </script>
+    </div>
+
     <!--标签-->
     <div class="cloud bg-color animation-div">
         <h4 class="index-title"><i class="el-tags"></i>tags
@@ -141,7 +174,6 @@
         <script type="text/javascript" charset="utf-8" src="http://cy-cdn.kuaizhan.com/js/??lib/jquery.js,changyan.labs.js?appid=cyvPnJxDV"></script>
     <!--友情链接-->
     {% include "blog/blogroll.html" %}
-    {% include "blog/visitor_chart.html" %}
 </aside>
 
 <script>
