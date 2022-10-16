@@ -22,6 +22,28 @@
             -->
         </div>
 
+        <!--project show -->
+        <div class="focus-me bg-color animation-div">
+        <h4 class="index-title"><i class="el-heart"></i>Projects
+            <small>Projects show</small>
+        </h4>
+        <div class="xiangguan">
+            <div><a class="visitor chart" href="http://www.pengfeiqiao.com/blog/visitor-chart/" target="_blank">
+                <i class="fa fa-globe" style="font-size:24px;color:red"></i></a><span>visitor chart</span></div>
+            <div><a class="Population chart" href="http://www.pengfeiqiao.com/blog/pie-chart/" target="_blank">
+                <i class="fa fa-users" style="font-size:24px;color:blue"></i></a><span>Population chart</span></div>
+
+            <div><a class="benbo" href="https://twitter.com/iggyazalea/" target="_blank">
+                <i class="fab fa-twitter" style="font-size:24px;color:blue"></i></a><span>Twitter</span></div>
+
+            <div><a class="benbo" href="https://www.facebook.com/Joefly1994" target="_blank">
+                <i class="fab fa-facebook" style="font-size:24px;color:blue"></i></a><span>Facebook</span></div>
+
+            <!--
+            <div><a class="mail-btn" href="javascript:;"><i class="el-envelope"></i></a><span>suscribe</span></div>
+            -->
+        </div>
+
         <div class="mail-dy">
             <form action="#">
                 <input type="hidden" name="t" value="qf_booked_feedback"/>
@@ -121,39 +143,6 @@
 
     </div>
 
-    <!--visitor-->
-    <div class="visitor">
-        <div id="container" style="width: 75%;">
-        <canvas id="visitor-chart"></canvas>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script>
-
-    var config = {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: {{ data|safe }},
-          backgroundColor: [
-            '#1c9e5f', '#1c9e91', '#1c5d9e', '#C0C0C0', '#D3D3D3'
-          ],
-          label: 'country_code'
-        }],
-        labels: {{ labels|safe }}
-      },
-      options: {
-        responsive: true
-      }
-    };
-
-    window.onload = function() {
-      var ctx = document.getElementById('visitor-chart').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-    };
-
-  </script>
-    </div>
 
     <!--标签-->
     <div class="cloud bg-color animation-div">
