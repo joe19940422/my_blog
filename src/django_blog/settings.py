@@ -149,8 +149,6 @@ class IPAddressFilter(logging.Filter):
         info = str(record).split(',')[-1]
         if ('HTTP_COOKIE' in info) or ('%s' in info) or ('b''' in info):
             exit(0)
-        if ('- 200' in info):
-            pass
         else:
             if hasattr(record, 'request'):
                 x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
