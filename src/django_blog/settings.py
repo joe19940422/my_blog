@@ -147,25 +147,27 @@ class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
         info = str(record).split(',')[-1]
-        if hasattr(record, 'request'):
-            x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
-            if x_forwarded_for:
-                record.user = record.request.user
-                record.ip = x_forwarded_for.split(',')[0]
-                ip_location = geocoder.ip(f"{record.ip}")
-                record.country = ip_location.country
-                record.province = ip_location.province
-                record.city = ip_location.city
-                record.record = info
+        if 'HTTP_COOKIE' or '%s' not in info:
+            if hasattr(record, 'request'):
+                x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    record.user = record.request.user
+                    record.ip = x_forwarded_for.split(',')[0]
+                    ip_location = geocoder.ip(f"{record.ip}")
+                    record.country = ip_location.country
+                    record.province = ip_location.province
+                    record.city = ip_location.city
+                    record.record = info
 
-            else:
-                record.user = record.request.user
-                record.ip = record.request.META.get('REMOTE_ADDR')
-                ip_location = geocoder.ip(f"{record.ip}")
-                record.country = ip_location.country
-                record.province = ip_location.province
-                record.city = ip_location.city
-                record.record = info
+                else:
+                    record.user = record.request.user
+                    record.ip = record.request.META.get('REMOTE_ADDR')
+                    ip_location = geocoder.ip(f"{record.ip}")
+                    record.country = ip_location.country
+                    record.province = ip_location.province
+                    record.city = ip_location.city
+                    record.record = info
+
         return True
 
 
