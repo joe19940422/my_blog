@@ -278,6 +278,6 @@ country_list = {
 "YE":"Yemen",
 "ZM":"Zambia",
 "ZW":"Zimbabwe",
-"None": "Unknown"
+None: "Unknown"
 }
 
