@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
+from django_blog.util import country_list
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -156,21 +156,19 @@ class IPAddressFilter(logging.Filter):
                     record.user = record.request.user
                     record.ip = x_forwarded_for.split(',')[0]
                     ip_location = geocoder.ip(f"{record.ip}")
-                    record.country = ip_location.country
+                    record.country = country_list[ip_location.country]
                     record.province = ip_location.province
                     record.city = ip_location.city
                     record.record = info
-                    record.record2 = str(record)
 
                 else:
                     record.user = record.request.user
                     record.ip = record.request.META.get('REMOTE_ADDR')
                     ip_location = geocoder.ip(f"{record.ip}")
-                    record.country = ip_location.country
+                    record.country = country_list[ip_location.country]
                     record.province = ip_location.province
                     record.city = ip_location.city
                     record.record = info
-                    record.record2 = str(record)
                 return True
 
 
@@ -233,7 +231,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(record)s#%(record2)s",
+            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(record)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
