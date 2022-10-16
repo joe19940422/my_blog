@@ -274,7 +274,6 @@ def dutch(request):
     articles = topheadlines['articles']
 
     desc = []
-    desc_tw = []
     news = []
     img = []
     publishedAt = []
@@ -284,12 +283,11 @@ def dutch(request):
 
         news.append(myarticles['title'])
         desc.append(myarticles['description'])
-        result = translator.translate(myarticles['description'], dest='zh-tw').text
-        desc_tw.append(result)
+        #result = translator.translate(myarticles['description'], dest='zh-tw').text
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
         author.append(myarticles['author'])
-    mylist = zip(news,desc,desc_tw,publishedAt,author,img)
+    mylist = zip(news, desc, publishedAt, author, img)
     return render(request, 'dutch.html', context={"mylist":mylist})
 
 
