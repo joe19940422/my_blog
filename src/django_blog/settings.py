@@ -155,6 +155,7 @@ class IPAddressFilter(logging.Filter):
                 record.country = ip_location.country
                 record.province = ip_location.province
                 record.city = ip_location.city
+                record.record = record
 
             else:
                 record.user = record.request.user
@@ -163,6 +164,7 @@ class IPAddressFilter(logging.Filter):
                 record.country = ip_location.country
                 record.province = ip_location.province
                 record.city = ip_location.city
+                record.record = record
         return True
 
 
@@ -225,7 +227,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(message)s",
+            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(record)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
