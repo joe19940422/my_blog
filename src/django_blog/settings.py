@@ -142,12 +142,12 @@ LOG_PATH = os.path.join(BASE_DIR, "log/")
 import logging
 import geocoder
 
-
+#or ('%s' in info) or ('b''' in info):
 class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
         info = str(record).split(',')[-1]
-        if ('HTTP_COOKIE' in info) or ('%s' in info) or ('b''' in info):
+        if ('HTTP_COOKIE' in info):
             pass
         else:
             if hasattr(record, 'request'):
@@ -160,6 +160,7 @@ class IPAddressFilter(logging.Filter):
                     record.province = ip_location.province
                     record.city = ip_location.city
                     record.record = info
+                    record.record2 = str(record)
 
                 else:
                     record.user = record.request.user
@@ -169,6 +170,7 @@ class IPAddressFilter(logging.Filter):
                     record.province = ip_location.province
                     record.city = ip_location.city
                     record.record = info
+                    record.record2 = str(record)
                 return True
 
 
@@ -231,7 +233,7 @@ LOGGING = {
     "version": 1,
     "formatters": {
         "request_formatter": {
-            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(record)s",
+            "format": "%(asctime)s#%(name)s#%(user)s#%(ip)s#%(country)s#%(province)s#%(city)s#%(levelname)s#%(record)s#%(record2)s",
             "datefmt": "%Y-%m-%d %H:%M:%S"
         },
     },
