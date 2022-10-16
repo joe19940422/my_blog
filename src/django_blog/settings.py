@@ -147,7 +147,9 @@ class IPAddressFilter(logging.Filter):
 
     def filter(self, record):
         info = str(record).split(',')[-1]
-        if ('HTTP_COOKIE' not in info) or ('%s' not in info):
+        if ('HTTP_COOKIE' in info) or ('%s' in info):
+            exit(0)
+        else:
             if hasattr(record, 'request'):
                 x_forwarded_for = record.request.META.get('HTTP_X_FORWARDED_FOR')
                 if x_forwarded_for:
@@ -168,8 +170,6 @@ class IPAddressFilter(logging.Filter):
                     record.city = ip_location.city
                     record.record = info
                 return True
-        else:
-            return False
 
 
 
