@@ -1,16 +1,10 @@
 {% extends 'blog/base.html' %}
-{% block additional_styles %}
-<style>
-   body {
-    background-image: url("/static/images/bgimg/bg0.jpg");
-   }
-</style>
-{% endblock %}
 
 {% block content %}
 <br>
 <br>
 <br>
+<h2> Visitor view by country </h2>
   <div id="container" style="width: 75%;">
     <canvas id="visitor-chart"></canvas>
   </div>
@@ -42,6 +36,6 @@
     };
 
   </script>
-<h4>data update every hour since 2022,10,12 </h4>
+<h4>                Data update every hour since 2022/10/12 </h4>
 
 {% endblock %}
