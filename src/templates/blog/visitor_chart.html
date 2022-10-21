@@ -2,7 +2,8 @@
 
 {% block content %}
 <br>
-
+<br>
+<br>
   <div id="container" style="width: 75%;">
     <canvas id="visitor-chart"></canvas>
   </div>
@@ -16,7 +17,8 @@
         datasets: [{
           data: {{ data|safe }},
           backgroundColor: [
-            '#1c9e5f', '#1c9e91', '#1c5d9e', '#C0C0C0', '#D3D3D3'
+            '#1c9e5f', '#1c9e91', '#1c5d9e', '#F712C1', '#316307','#428509',
+            '#53a60b', '#63c70e', '#74e910', '#87f02d'
           ],
           label: 'country_code'
         }],
@@ -33,5 +35,6 @@
     };
 
   </script>
+<h4>data update every hour since 2022,10,12 </h4>
 
 {% endblock %}
