@@ -115,7 +115,7 @@ class Contact(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
-    guest_num = models.CharField(max_length=255)
+    guest_num = models.CharField(max_length=255, default='1', name='guest_number')
     message = models.TextField()
 
     def __str__(self):
