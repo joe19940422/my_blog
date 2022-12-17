@@ -104,15 +104,18 @@ from django import forms
 
 
 class Contact(models.Model):
-    Options = [
-        ('1', 'Hello'),
-        ('2', 'World'),
-    ]
-    name = forms.ChoiceField(label='name', widget=forms.Select, choices=Options)
+    GEEKS_CHOICES = (
+        ("1", "One"),
+        ("2", "Two"),
+        ("3", "Three"),
+        ("4", "Four"),
+        ("5", "Five"),
+    )
+    name = forms.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
-    guest_num = models.CharField(max_length=255, default='1', name='guest_number')
+    guest_num = forms.ChoiceField(choices=GEEKS_CHOICES)
     message = models.TextField()
 
     def __str__(self):
