@@ -99,16 +99,16 @@ class Visitor(models.Model):
     info = models.CharField(max_length=100)
 
 
-STREET_NAME_CHOICES = [
-   ('Street name 1', 'fei'),
-   ('Street name 2', 'joe')
-]
 
 from django import forms
 
 
 class Contact(models.Model):
-    name = forms.CharField(widget=forms.Select(choices=STREET_NAME_CHOICES))
+    Options = [
+        ('1', 'Hello'),
+        ('2', 'World'),
+    ]
+    name = forms.ChoiceField(label='name', widget=forms.Select, choices=Options)
     email = models.EmailField()
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
