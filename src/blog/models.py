@@ -111,11 +111,11 @@ class Contact(models.Model):
         ("4", "Four"),
         ("5", "Five"),
     )
-    name = forms.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
-    guest_num = forms.ChoiceField(choices=GEEKS_CHOICES)
+    guest_num = models.ChoiceField(choices=GEEKS_CHOICES)
     message = models.TextField()
 
     def __str__(self):
