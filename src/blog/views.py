@@ -342,3 +342,16 @@ def visitor_chart(request):
         'labels': labels,
         'data': data,
     })
+
+from .forms import ContactForm
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'blog/success.html')
+    form = ContactForm()
+    context = {'form': form}
+    return render(request, 'blog/contact.html', context)

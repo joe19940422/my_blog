@@ -1,0 +1,17 @@
+* {
+  background-color: rgb(169, 217, 245)
+}
+
+h1 {
+  text-align: center;
+}
+input[type=text], input[type=email], textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  background: white;
+ }
+ form {
+  color: rgb(1, 12, 22);
+ }
