@@ -108,10 +108,7 @@ from django import forms
 
 
 class Contact(models.Model):
-    name = forms.ChoiceField(
-        widget=forms.Select,
-        choices=STREET_NAME_CHOICES
-    )
+    name = forms.CharField(widget=forms.Select(choices=STREET_NAME_CHOICES))
     email = models.EmailField()
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
