@@ -103,6 +103,10 @@ class Visitor(models.Model):
 from django import forms
 
 
+class MY_CHOICES(models.Model):
+    choice = models.CharField(max_length=154, unique=True)
+
+
 class Contact(models.Model):
     GEEKS_CHOICES = (
         ("1", "One"),
@@ -115,7 +119,7 @@ class Contact(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255)
-    guest_num = models.CharField(max_length=255)
+    guest_num = models.CharField(max_length=255,choices=GEEKS_CHOICES)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
