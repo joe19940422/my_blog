@@ -127,7 +127,9 @@ class Contact(models.Model):
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255,
                                   choices=EVENT_TYPE_CHOICES,
-                                  name='event type (for ceremony max=30 persons))')
+                                  name='event type (for ceremony max=30 persons))',
+                                  default='party'
+                                  )
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
