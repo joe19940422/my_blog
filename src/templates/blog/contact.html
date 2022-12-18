@@ -7,6 +7,6 @@
 <h1>Wedding </h1>
 <form action="" method="post">
   {% csrf_token %}
-  {{ form }}
+  {{ form|linebreaks }}
   <input type="submit" value="Submit">
 </form>
