@@ -3,7 +3,7 @@
 
 import json
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django_blog.util import PageInfo
 from blog.models import Article, Comment, City, Visitor
@@ -356,7 +356,8 @@ def contact_view(request):
     context = {'form': form}
     return render(request, 'blog/contact.html', context)
 
-
+from .forms import TableDataForm
+from .models import TableData
 def modelmultiplechoicefield(request):
     form = TableDataForm(request.POST or None)
     if request.POST and form.is_valid():
