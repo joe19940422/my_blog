@@ -7,6 +7,6 @@
 <h1>Wedding RSVP </h1>
 <form action="" method="post">
   {% csrf_token %}
-  {{ form|linebreaks }}
+  {{ form|linebreaks | replace('<br>','') }}
   <input type="submit" value="Submit">
 </form>
