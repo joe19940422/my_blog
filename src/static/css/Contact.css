@@ -1,3 +1,11 @@
+html, body {
+height: 100%;
+width: 100%;
+margin: 0;
+padding: 0;
+background-color: #BDC3C7;
+font-family: 'Raleway';
+}
 .top {
   background-color: #264356;
   height: 200px;
@@ -5,6 +13,7 @@
   padding:0;
   box-shadow: 2px 2px 4px rgb(0, 0, 0, .25);
 }
+
 .form {
   height: 590px;
   width: 400px;
@@ -19,11 +28,13 @@
 .info {
   padding: 10px;
 }
+
 h1, h2, p {
   text-align: center;
   padding: 0px;
   margin: 5px 5px;
 }
+
 h2 {
   font-family: 'Great Vibes', cursive;
   font-weight: 100;
@@ -33,6 +44,7 @@ p.line {
   margin: 0px auto 20px auto;
   color: #999;
 }
+
 .form input {
   font-size: 15px;
   color: #666;
@@ -42,13 +54,41 @@ p.line {
   width: 75%;
 }
 
-input[type=text], input[type=email], textarea {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
+input:focus {
+  outline: 0;
+}
+
+.button button {
   display: inline-block;
-  background: white;
- }
- form {
-  color: rgb(1, 12, 22);
- }
+  width: 400px;
+}
+button {
+  color: #666;
+  background-color: #ffbdc7;
+  border: none;
+  font-family: 'Raleway';
+  font-size: 18px;
+  font-weight: 600;
+  padding: 15px 32px;
+  width: 200px;
+  margin: 20px auto 0px auto;
+  float:left;
+}
+
+button.accept {
+  border-radius: 0px 0px 0px 10px;
+  border-right: solid 1px #cc919a;
+}
+
+button.regret {
+  border-radius: 0px 0px 10px 0px;
+}
+
+button:hover {
+  background-color: #cc919a;
+  transition: .5s;
+}
+
+button:focus {
+  outline: 0;
+}
