@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'mdeditor',
-    'django_requestlogging'
+    'django_requestlogging',
+    'crispy_forms'
 
 ]
 
