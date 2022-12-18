@@ -12,7 +12,8 @@ class ContactForm(ModelForm):
         fields = '__all__'
 
 
-from .models import Characteristics
+from .models import Characteristics, TableData
+
 class TableDataForm(ModelForm):
     name = forms.CharField(label="Name", required=True)
     characteristics = forms.ModelMultipleChoiceField(
