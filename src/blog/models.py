@@ -125,8 +125,13 @@ class Contact(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=255)
-    event_type = models.CharField(max_length=255, name='event type (for ceremony max=30 persons))')
-    guest_num = models.CharField(max_length=255, choices=GUEST_NUM_CHOICES, default='1', name='guest_num(include baby)')
+    event_type = models.CharField(max_length=255,
+                                  choices=EVENT_TYPE_CHOICES,
+                                  name='event type (for ceremony max=30 persons))')
+    guest_num = models.CharField(max_length=255,
+                                 choices=GUEST_NUM_CHOICES,
+                                 default='1',
+                                 name='guest_num(include baby)')
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
