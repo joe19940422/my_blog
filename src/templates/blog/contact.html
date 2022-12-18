@@ -15,12 +15,10 @@
       <p>Chapel of Our Saviour</p>
       <p>8 4th St, Colorado Springs, CO 80906</p>
            <p class= "line">________________________________________</p>
-     <form action="" method="post">
-        {% csrf_token %}
-        {{ form|linebreaks }}
-        <input type="submit" value="Submit<Indienen>">
-     </form>
-
+    <input type="text" placeholder="Name">
+    <input type="number" placeholder="# of Guests">
     </div>
+    <button class ="accept">Accept</button>
+    <button class ="regret">Regret</button>
   </div>
 </body>
