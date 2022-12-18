@@ -356,26 +356,3 @@ def contact_view(request):
     context = {'form': form}
     return render(request, 'blog/contact.html', context)
 
-from .forms import TableDataForm
-from .models import TableData
-def modelmultiplechoicefield(request):
-    form = TableDataForm(request.POST or None)
-    if request.POST and form.is_valid():
-        name = form.cleaned_data['name']
-        stadium = form.cleaned_data['stadium']
-        attendance = form.cleaned_data['attendance']
-
-        obj = TableData(
-            name=name,
-            stadium=stadium,
-            attendance=attendance,
-        )
-
-        obj.save()
-        form2 = TableDataForm(request.POST, instance=obj)
-        form2.save(commit=False)
-        form2.save_m2m()
-        return redirect('home')
-
-    context = {'form': form}
-    return render(request, 'blog/modelmultiplechoicefield.html', context)

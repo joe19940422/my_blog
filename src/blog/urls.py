@@ -22,6 +22,5 @@ urlpatterns = [
     path('pie-chart/', views.pie_chart, name='pie-chart'),
     path('visitor-chart/', views.visitor_chart, name='visitor-chart'),
     path('contact/',views.contact_view, name='contact'),
-    path('multiplechoicefield/', views.modelmultiplechoicefield, name='modelmultiplechoicefield'),
 ]
 
