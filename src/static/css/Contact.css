@@ -1,8 +1,6 @@
-* {
-  background-color: rgb(169, 217, 245)
-}
 
-* {
+
+.bg {
 background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-1230248-png.png');
 }
 h1 {
