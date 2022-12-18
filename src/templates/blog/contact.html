@@ -16,20 +16,23 @@
   		background-size: cover;
 }
 	</style>
-
+<div class ="info">
 <h1>Wedding RSVP </h1>
+<h2>for the wedding of</h2>
+<h1>Lisanne & Fei</h1>
+  <p class= "line">________________________________________</p>
+<h2>The Details</h2>
+      <p>Saturday, Aug 25, 2023</p>
+      <p>5:00 PM</p>
+      <br>
+      <h2>Ceremony & Party</h2>
+      <p>Chapel of Our Saviour</p>
+      <p>8 4th St, Colorado Springs, CO 80906</p>
+  <p class= "line">________________________________________</p>
+</div>
+
 <form action="" method="post">
   {% csrf_token %}
   {{ form|linebreaks }}
-    
-    <div class="form-group">
-  <label class="col-md-4 control-label">First Name</label>
-  <div class="col-md-4 inputGroupContainer">
-  <div class="input-group">
-  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <input  name="first_name" placeholder="First Name" class="form-control"  type="text">
-    </div>
-  </div>
-</div>
   <input type="submit" value="Submit<Indienen>">
 </form>

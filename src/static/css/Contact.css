@@ -1,11 +1,36 @@
-
-h1 {
-  text-align: center;
+.info {
+  padding: 10px;
 }
+h1, h2, p {
+  text-align: center;
+  padding: 0px;
+  margin: 5px 5px;
+}
+h2 {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 100;
+}
+
+p.line {
+  margin: 0px auto 20px auto;
+  color: #999;
+}
+.form input {
+  font-size: 15px;
+  color: #666;
+  padding: 6px;
+  margin: 25px auto 20px;
+  display: block;
+  width: 75%;
+}
+
 input[type=text], input[type=email], textarea {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
   background: white;
+ }
+ form {
+  color: rgb(1, 12, 22);
  }
