@@ -9,6 +9,3 @@ input[type=text], input[type=email], textarea {
   display: inline-block;
   background: white;
  }
- form {
-  color: rgb(1, 12, 22);
- }
