@@ -4,9 +4,9 @@
 
 <link rel="stylesheet" type="text/css" href="/static/css/Contact.css"/>
 
-<h1>Wedding </h1>
+<h1>Wedding RSVP </h1>
 <form action="" method="post">
   {% csrf_token %}
-  {{ form.label|linebreaks }}
+  {{ form|linebreaks }}
   <input type="submit" value="Submit">
 </form>
