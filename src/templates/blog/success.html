@@ -1,30 +1,209 @@
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
-	<link href='https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700' rel='stylesheet' type='text/css'>
-	<style>
-		@import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
-		@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
-	</style>
-	<link rel="stylesheet" href="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/default_thank_you.css">
-	<script src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/jquery-1.9.1.min.js"></script>
-	<script src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/html5shiv.js"></script>
-</head>
-<body>
-	<header class="site-header" id="header">
-		<h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU!</h1>
-	</header>
 
-	<div class="main-content">
-		<i class="fa fa-check main-content__checkmark" id="checkmark"></i>
-		<p class="main-content__body" data-lead-id="main-content-body">Thanks a bunch for filling that out. It means a lot to us, just like you do! We really appreciate you giving us a moment of your time today. Thanks for being you.</p>
-	</div>
 
-	<footer class="site-footer" id="footer">
-		<p class="site-footer__fineprint" id="fineprint">Copyright ©2014 | All Rights Reserved</p>
-	</footer>
-</body>
-</html>
+.rsvp-container
+  .rsvp-inner-container
+    h1 RSVP
+    h2 Kindly reply by July 11th, 2020
+    form
+      fieldset.full-width
+        label Name(s)
+        input type="text"
+        input type="text"
+        input type="text"
+      fieldset.half-width
+        label Total guests:
+        input type="text"
+      fieldset.checkbox
+        <label class="container">Yes, we'll be there!
+          <input type="checkbox" checked="checked">
+          <span class="checkmark"></span>
+        </label>
+      fieldset.checkbox
+        <label class="container">Sorry, we can't make it.
+          <input type="checkbox" checked="checked">
+          <span class="checkmark"></span>
+        </label>
+      fieldset.full-width
+        label Dietary requirements:
+        input.diet type="text"
+      button type="button"
+        i.far.fa-paper-plane
+@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond:400,600&display=swap')
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+body
+  display: grid
+  height: 100vh
+  width: 100vw
+  justify-items: center
+  align-items: center
+  font-family: 'Cormorant Garamond', serif
+  background: #D6D3D4
+
+.rsvp-container
+  margin: 0 auto
+  height: 700px
+  width: 500px
+  background: #D6D3D4
+  position: relative
+  z-index: 1
+  box-shadow: 5px 5px 15px rgba(0,0,0,.3)
+
+  &:after
+    content: ""
+    position: absolute
+    width: 400px
+    height: 600px
+    left: 50px
+    top: 50px
+    background: #fff
+    z-index: 1
+
+  &:before
+    content: ""
+    position: absolute
+    width: 100%
+    height: 100%
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-1230248-png.png") center center no-repeat
+    background-size: cover
+    z-index: 3
+
+.rsvp-inner-container
+  position: relative
+  z-index: 4
+  padding: 130px
+
+h1
+  font-size: 28px
+  font-weight: semi-bold
+  margin: 30px 0 5px 0
+
+h2
+  font-size: 18px
+  margin: 0 0 20px 0
+  font-weight: normal
+
+fieldset
+  border: 0
+  margin-bottom: 20px
+
+.full-width label:nth-of-type(1)
+  display: block
+  font-size: 18px
+
+.full-width input
+  border: 0
+  border-bottom: 2px solid rgba(0,0,0,.5)
+  width: 100%
+  line-height: 28px
+  font-size: 14px
+  outline: none
+  background: transparent
+
+.half-width label
+  display: inline-block
+  margin-right: 20px
+  line-height: 28px
+  font-size: 18px
+
+.half-width input
+  border: 0
+  border-bottom: 2px solid rgba(0,0,0,.5)
+  line-height: 28px
+  font-size: 14px
+  outline: none
+  width: 70px
+  text-align: center
+
+.checkbox input
+  border: 2px solid rgba(0,0,0,.5)
+  height: 28px
+  width: 28px
+  background-color: transparent !important
+
+/* The container */
+.container
+  display: block
+  position: relative
+  padding-left: 35px
+  margin-bottom: 12px
+  cursor: pointer
+  font-size: 18px
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  line-height: 28px
+
+/* Hide the browser's default checkbox */
+.container input
+  position: absolute
+  opacity: 0
+  cursor: pointer
+  height: 0
+  width: 0
+
+/* Create a custom checkbox */
+.checkmark
+  position: absolute
+  top: 0
+  left: 0
+  height: 27px
+  width: 27px
+  background-color: inherit
+  border: 2px solid rgba(0,0,0,.5)
+
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark
+  background-color: #ccc
+
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark
+  background-color: inherit
+
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after
+  content: ""
+  position: absolute
+  display: none
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after
+  display: block
+
+
+/* Style the checkmark/indicator */
+.container .checkmark:after
+  left: 9px
+  top: 5px
+  width: 5px
+  height: 10px
+  border: solid rgba(0,0,0,.5)
+  border-width: 0 3px 3px 0
+  -webkit-transform: rotate(45deg)
+  -ms-transform: rotate(45deg)
+  transform: rotate(45deg)
+
+button
+  position: absolute
+  bottom: 150px
+  right: 140px
+  background: transparent
+  border: none
+  padding: 5px
+  color: rgba(0,0,0,.7)
+  font-size: 22px
+  outline: none
+
+.diet
+  width: 75% !important
+
+input, button
+  font-family: 'Cormorant Garamond', serif
