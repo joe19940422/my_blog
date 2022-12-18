@@ -118,23 +118,24 @@ class Contact(models.Model):
 
     )
     EVENT_TYPE_CHOICES = (
-        ("1", "ceremony"),
-        ("2", "party"),
+        ("1", "party"),
+        ("2", "ceremony"),
 
     )
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, name='phone number')
     event_type = models.CharField(max_length=255,
                                   choices=EVENT_TYPE_CHOICES,
                                   name='event type (for ceremony max=30 persons))',
                                   default='party'
                                   )
+
+    message = models.TextField()
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
-                                 name='guest_num(include baby)')
-    message = models.TextField()
+                                 name='guest_num<Aantal Gasten>(include baby)')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
