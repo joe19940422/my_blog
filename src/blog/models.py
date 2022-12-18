@@ -108,18 +108,25 @@ class MY_CHOICES(models.Model):
 
 
 class Contact(models.Model):
-    GEEKS_CHOICES = (
-        ("1", "One"),
-        ("2", "Two"),
-        ("3", "Three"),
-        ("4", "Four"),
-        ("5", "Five"),
+    GUEST_NUM_CHOICES = (
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+        ("6", "6")
+
+    )
+    EVENT_TYPE_CHOICES = (
+        ("1", "ceremony"),
+        ("2", "party"),
+
     )
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=255)
-    event_type = models.CharField(max_length=255)
-    guest_num = models.CharField(max_length=255,choices=GEEKS_CHOICES)
+    event_type = models.CharField(max_length=255, name='event type (for ceremony max=30 persons))')
+    guest_num = models.CharField(max_length=255, choices=GUEST_NUM_CHOICES, default='1', name='guest_num(include baby)')
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
