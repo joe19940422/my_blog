@@ -128,6 +128,7 @@ class Contact(models.Model):
     event_type = models.CharField(max_length=255,
                                   choices=EVENT_TYPE_CHOICES,
                                   name='event type (for ceremony max=30 persons))',
+                                  db_column='event_type',
                                   default='party'
                                   )
 
@@ -135,6 +136,7 @@ class Contact(models.Model):
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
+                                 db_column='guest_num',
                                  name='guest_num<Aantal Gasten>(include baby)')
     created_at = models.DateTimeField(auto_now_add=True)
 
