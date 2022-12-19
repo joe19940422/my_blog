@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django_blog.util import PageInfo
-from blog.models import Article, Comment, City, Visitor
+from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
@@ -344,7 +344,7 @@ def visitor_chart(request):
     })
 
 from .forms import ContactForm
-from blog.models import Article, Comment, City, Contact
+
 
 def contact_view(request):
     if request.method == 'POST':
