@@ -136,8 +136,9 @@ class Contact(models.Model):
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
-                                 db_column='guest_num',
+                                 db_column='guest_num'
                                  #name='guest_num<Aantal Gasten>(include kids)')
+                                 )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
