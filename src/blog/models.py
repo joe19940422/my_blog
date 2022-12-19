@@ -137,7 +137,7 @@ class Contact(models.Model):
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
                                  db_column='guest_num',
-                                 name='guest_num<Aantal Gasten>(include baby)')
+                                 name='guest_num<Aantal Gasten>(include kids)')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

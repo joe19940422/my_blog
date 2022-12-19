@@ -344,7 +344,7 @@ def visitor_chart(request):
     })
 
 from .forms import ContactForm
-
+from blog.models import Article, Comment, City, Contact
 
 def contact_view(request):
     if request.method == 'POST':
@@ -353,6 +353,15 @@ def contact_view(request):
             form.save()
             return render(request, 'blog/success.html')
     form = ContactForm()
+    queryset = Contact.objects.filter(event_type='ceremony').count()
+    print(queryset)
+    print('haaaaaaaaaaaaaaaaaaaaaaaaa')
+    awai = []
+    for result in queryset:
+        awai.append(result['Count'])
+    demo = {
+        'form': form
+    }
     context = {'form': form}
-    return render(request, 'blog/contact.html', context)
+    return render(request, 'blog/contact.html', demo)
 
