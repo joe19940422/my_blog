@@ -21,7 +21,10 @@
 <form action="" method="post">
   {% csrf_token %}
   {{ form.as_p }}
+    Vanwege het beperkte aantal mensen in de zaal laten we slechts 30 mensen toe om deel te nemen aan de ceremonie.<br>
+    Voor feesten hebben we geen limiet op het aantal mensen <br>
     For Ceremony the number of guests available is {{ num }} !!!
     <br><br>
+
   <input type="submit" value="Submit<Indienen>">
 </form>
