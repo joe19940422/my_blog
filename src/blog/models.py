@@ -132,7 +132,7 @@ class Contact(models.Model):
                                   default='party'
                                   )
 
-    message = models.TextField()
+    message = models.TextField(default='I will join')
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
