@@ -353,15 +353,8 @@ def contact_view(request):
             form.save()
             return render(request, 'blog/success.html')
     form = ContactForm()
-    queryset = Contact.objects.filter(event_type='ceremony').count()
-    print(queryset)
-    print('haaaaaaaaaaaaaaaaaaaaaaaaa')
-    awai = []
-    for result in queryset:
-        awai.append(result['Count'])
-    demo = {
-        'form': form
-    }
-    context = {'form': form}
-    return render(request, 'blog/contact.html', demo)
+    result = Contact.objects.filter(event_type='2').count()
+
+    context = {'form': form, 'num': 30-result}
+    return render(request, 'blog/contact.html', context)
 
