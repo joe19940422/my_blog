@@ -124,7 +124,7 @@ class Contact(models.Model):
     )
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=255, name='phone number')
+    phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255,
                                   choices=EVENT_TYPE_CHOICES,
                                   name='event type (for ceremony max=30 persons))',
