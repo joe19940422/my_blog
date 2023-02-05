@@ -1359,6 +1359,12 @@
   background-position: 50% 50%;
 }
 
+.u-section-7 .u-image-3-1 {
+  min-height: 314px;
+  background-image: url("/static/images/disney.jpg");
+  background-position: 50% 50%;
+}
+
 .u-section-7 .u-container-layout-4 {
   padding: 30px;
 }
