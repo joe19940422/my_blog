@@ -1,4 +1,15 @@
+<table class = 'table'>
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>email</th>
+        <th>phone</th>
+        <th>event_type</th>
+        <th>guest_num</th>
+        <th>created_at</th>
 
+    </tr>>
+    </thead>>
 {% for item in queryset %}
     <tr>
          <td>{{item.name}}</td>
@@ -10,3 +21,4 @@
          <td>{{item.created_at}}</td>
     </tr>
 {% endfor %}
+    </table>
