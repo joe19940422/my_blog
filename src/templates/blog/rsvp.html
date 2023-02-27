@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% for item in queryset %}
+    <tr>
+         <td>{{ item.name }}</td>
+         <td>{{ item.email }}</td>
+         <td>{{ item.phone }}</td>
+         <td>{{ item.event_type }}</td>
+         <td>{{ item.message }}</td>
+         <td>{{ item.guest_num }}</td>
+         <td>{{ item.created_at }}</td>
+    </tr>
+       {% endfor %}

@@ -358,3 +358,12 @@ def contact_view(request):
     context = {'form': form, 'num': 40-result}
     return render(request, 'blog/contact.html', context)
 
+
+def rsvp(request):
+
+    queryset = Contact.objects.all()
+    print(queryset)
+
+    return render(request, 'blog/rsvp.html', {
+        'queryset': queryset
+    })
