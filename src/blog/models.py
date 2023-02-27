@@ -123,7 +123,7 @@ class Contact(models.Model):
 
     )
     name = models.CharField(max_length=255)
-    email = models.EmailField()
+    email = models.EmailField(default='fake@gmail.com')
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255,
                                   choices=EVENT_TYPE_CHOICES,
