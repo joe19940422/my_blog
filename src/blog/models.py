@@ -142,12 +142,12 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'email : ' + self.email \
-               + 'name : ' + self.name +\
-               + 'phone : ' + self.phone + \
-               + 'event_type : ' + self.event_type + \
-               + 'message :' + self.message + \
-               + 'guest_num :' + self.guest_num + \
+        return 'email : ' + str(self.email) \
+               + 'name : ' + str(self.name) +\
+               + 'phone : ' + str(self.phone) + \
+               + 'event_type : ' + str(self.event_type) + \
+               + 'message :' + str(self.message) + \
+               + 'guest_num :' + str(self.guest_num) + \
                + 'created_at:' + str(self.created_at)
 
 
