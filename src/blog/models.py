@@ -148,7 +148,7 @@ class Contact(models.Model):
                + 'event_type : ' + self.event_type + \
                + 'message :' + self.message + \
                + 'guest_num :' + self.guest_num + \
-               + 'created_at:' + self.created_at
+               + 'created_at:' + str(self.created_at)
 
 
 
