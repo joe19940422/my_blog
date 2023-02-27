@@ -118,8 +118,8 @@ class Contact(models.Model):
 
     )
     EVENT_TYPE_CHOICES = (
-        ("1", "party"),
-        ("2", "ceremony"),
+        ("party", "party"),
+        ("ceremony", "ceremony"),
 
     )
     name = models.CharField(max_length=255)
@@ -142,12 +142,13 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'email : ' + str(self.email) \
-               + 'name : ' + str(self.name) +\
-               + 'phone : ' + str(self.phone) + \
-               + 'event_type : ' + str(self.event_type) + \
-               + 'message :' + str(self.message) + \
-               + 'guest_num :' + str(self.guest_num)
+        return  str(self.email) \
+                + str(self.name) +\
+                + str(self.phone) + \
+                + str(self.event_type) + \
+                + str(self.message) + \
+                + str(self.guest_num) + \
+                + str(self.created_at)
 
 
 
