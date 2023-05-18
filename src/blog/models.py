@@ -123,7 +123,7 @@ class Contact(models.Model):
 
     )
     name = models.CharField(max_length=255)
-    email = models.EmailField(default='fake@gmail.com')
+    email = models.EmailField(default='youremail@gmail.com')
     phone = models.CharField(max_length=255)
     event_type = models.CharField(max_length=255,
                                   choices=EVENT_TYPE_CHOICES,
@@ -132,7 +132,7 @@ class Contact(models.Model):
                                   default='party'
                                   )
 
-    message = models.TextField(default='I will join')
+    message = models.TextField(default='Hey Lisanne and Fei i will join....')
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
