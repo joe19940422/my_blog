@@ -118,8 +118,9 @@ class Contact(models.Model):
 
     )
     EVENT_TYPE_CHOICES = (
-        ("1", "party"),
-        ("2", "ceremony"),
+        ("1", "party/feest"),
+        ("2", "ceremony/ceremonie"),
+        ("3", "ceremony and party/ ceremonie en feest")
 
     )
     name = models.CharField(max_length=255)
