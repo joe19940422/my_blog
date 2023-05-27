@@ -3,6 +3,7 @@
 from django.db import models
 from django.conf import settings
 from mdeditor.fields import MDTextField
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -106,6 +107,11 @@ from django import forms
 class MY_CHOICES(models.Model):
     choice = models.CharField(max_length=154, unique=True)
 
+def blocked_content_validator(value):
+    blocked_words = ['https', 'http', 'investment']  # Add the blocked words or content here
+    for word in blocked_words:
+        if word.lower() in value.lower():
+            raise ValidationError(f"The message contains blocked content: {word}")
 
 class Contact(models.Model):
     GUEST_NUM_CHOICES = (
@@ -134,7 +140,7 @@ class Contact(models.Model):
                                   default='party'
                                   )
 
-    message = models.TextField(default='Hey Lisanne and Fei i will join....')
+    message = models.TextField(default='Hey Lisanne and Fei i will join....', validators=[blocked_content_validator])
     #print(message) # <django.db.models.fields.TextField>
 
     guest_num = models.CharField(max_length=255,
