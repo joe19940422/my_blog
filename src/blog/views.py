@@ -349,6 +349,8 @@ from .forms import ContactForm
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
+        print(form)
+        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22222')
         if form.is_valid():
             form.save()
             return render(request, 'blog/success.html')

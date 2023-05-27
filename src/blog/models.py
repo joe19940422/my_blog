@@ -135,8 +135,8 @@ class Contact(models.Model):
                                   )
 
     message = models.TextField(default='Hey Lisanne and Fei i will join....')
-    print(message)
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22')
+    #print(message) # <django.db.models.fields.TextField>
+
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
                                  default='1',
