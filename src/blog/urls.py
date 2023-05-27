@@ -22,7 +22,7 @@ urlpatterns = [
     path('pie-chart/', views.pie_chart, name='pie-chart'),
     path('visitor-chart/', views.visitor_chart, name='visitor-chart'),
     path('contact/', views.contact_view, name='contact'),
-    path('rsvp/', views.rsvp, name='rsvp'),
+    #path('rsvp/', views.rsvp, name='rsvp'),
 
 ]
 
