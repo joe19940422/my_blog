@@ -356,13 +356,13 @@ def contact_view(request):
             message = form.cleaned_data['message']
 
             form.save()
-            send_mail(
-                'New Contact Form Submission',
-                f'Name: {name}\nEmail: {email}\nMessage: {message}',
-                'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
-            )
+            # send_mail(
+            #     'New Contact Form Submission',
+            #     f'Name: {name}\nEmail: {email}\nMessage: {message}',
+            #     'joe19940422@gmail.com',
+            #     ['joe19940422@gmail.com'],  # List of recipient emails
+            #     fail_silently=False,
+            # )
             return render(request, 'blog/success.html')
     form = ContactForm()
     result = Contact.objects.filter(event_type='2').count()
