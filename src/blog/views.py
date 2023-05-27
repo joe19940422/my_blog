@@ -365,8 +365,8 @@ def contact_view(request):
             )
 
             send_mail(
-                'Thank you for your reply',
-                'Dear {name},\n\nThank you for your message.\n\nBest regards,\nPengfei and Lisanne',
+                'Thank you for your reply[Automatic reply]',
+                f'Dear {name},\n\nThank you for your message.\n\nBest regards,\nPengfei and Lisanne',
                 'joe19940422@gmail.com',
                 [email],  # Use the extracted email address as the recipient
                 fail_silently=False,
