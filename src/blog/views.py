@@ -352,6 +352,8 @@ def contact_view(request):
         print(form)
         print(type(form))
         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22222')
+        if 'http' in form:
+            print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         if form.is_valid():
             form.save()
             return render(request, 'blog/success.html')
