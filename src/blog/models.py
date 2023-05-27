@@ -107,11 +107,13 @@ from django import forms
 class MY_CHOICES(models.Model):
     choice = models.CharField(max_length=154, unique=True)
 
+
 def blocked_content_validator(value):
-    blocked_words = ['https', 'http', 'investment']  # Add the blocked words or content here
+    blocked_words = ['https', 'http', 'investment', 'target', 'increase']  # Add the blocked words or content here
     for word in blocked_words:
         if word.lower() in value.lower():
             raise ValidationError(f"The message contains blocked content: {word}")
+
 
 class Contact(models.Model):
     GUEST_NUM_CHOICES = (

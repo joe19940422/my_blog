@@ -12,6 +12,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from newsapi import NewsApiClient
 from googletrans import Translator
+from django.core.mail import send_mail
 
 translator = Translator()
 
@@ -239,7 +240,7 @@ def bbc(request):
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
         author.append(myarticles['author'])
-    mylist = zip(news, desc,publishedAt,author, img)
+    mylist = zip(news, desc, publishedAt, author, img)
     print(request)
     return render(request, 'bbc.html', context={"mylist": mylist})
 
@@ -349,13 +350,19 @@ from .forms import ContactForm
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
-        print(form)
-        print(type(form))
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22222')
-        if 'http' in form:
-            print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
             form.save()
+            send_mail(
+                'New Contact Form Submission',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
             return render(request, 'blog/success.html')
     form = ContactForm()
     result = Contact.objects.filter(event_type='2').count()
