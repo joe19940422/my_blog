@@ -120,7 +120,8 @@ class Contact(models.Model):
     EVENT_TYPE_CHOICES = (
         ("1", "party/feest"),
         ("2", "ceremony/ceremonie"),
-        ("3", "ceremony and party/ ceremonie en feest")
+        ("3", "ceremony and party/ ceremonie en feest"),
+        ("4", "Can't join/ Kan niet meedoen"),
 
     )
     name = models.CharField(max_length=255)
