@@ -363,6 +363,14 @@ def contact_view(request):
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
             )
+
+            send_mail(
+                'Thank you for your reply',
+                'Dear {name},\n\nThank you for your message.\n\nBest regards,\nPengfei and Lisanne',
+                'joe19940422@gmail.com',
+                [email],  # Use the extracted email address as the recipient
+                fail_silently=False,
+            )
             return render(request, 'blog/success.html')
     form = ContactForm()
     result = Contact.objects.filter(event_type='2').count()
