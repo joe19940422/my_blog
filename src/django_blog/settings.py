@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'mdeditor',
     'django_requestlogging',
-    'crispy_forms'
+    'crispy_forms',
+    'aws'
 
 ]
 

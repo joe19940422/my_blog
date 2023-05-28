@@ -387,3 +387,21 @@ def rsvp(request):
     return render(request, 'blog/rsvp.html', {
         'queryset': queryset
     })
+
+import boto3
+
+
+def aws_page(request):
+    # Initialize Boto3 client
+    ec2_client = boto3.client('ec2')
+
+    # Retrieve instance status
+    instance_id = 'i-07360808c3dc6fed2'
+    response = ec2_client.describe_instance_status(
+        InstanceIds=[instance_id]
+    )
+
+    # Extract the instance status
+    instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
+
+    return render(request, 'blog/aws.html', {'instance_status': instance_status})
