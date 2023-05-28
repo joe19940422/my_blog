@@ -424,7 +424,10 @@ def aws_page(request):
         response = ec2_client.describe_instances(
             InstanceIds=[instance_id]
         )
-        instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+        if 'PublicIpAddress' in response['Reservations'][0]['Instances'][0]:
+            instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+        else:
+            instance_ip = 'Not assigned'
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or IP retrieval
         instance_ip = 'unknown'
