@@ -2,13 +2,3 @@
 <p>Instance ID: i-07360808c3dc6fed2</p>
 <p>Status: {{ instance_status }}</p>
 
-<form method="post" action="{% url 'start_instance' %}">
-    {% csrf_token %}
-    <button type="submit" name="start_instance">Start Instance</button>
-</form>
-
-
-<form method="post" action="{% url 'stop_instance' %}">
-    {% csrf_token %}
-    <button type="submit" name="stop_instance">Stop Instance</button>
-</form>
