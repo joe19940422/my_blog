@@ -2,7 +2,7 @@
 <p>Instance ID: i-07360808c3dc6fed2</p>
 <p>Status: {{ instance_status }}</p>
 
-<form method="post" action="{% url 'aws_page' %}">
+<form method="post" action="{% url 'aws' %}">
     {% csrf_token %}
     <button type="submit" name="start_instance">Start Instance</button>
     <button type="submit" name="stop_instance">Stop Instance</button>
