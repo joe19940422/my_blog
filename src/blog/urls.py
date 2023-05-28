@@ -24,8 +24,8 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact'),
     #path('rsvp/', views.rsvp, name='rsvp'),
     path('aws/', views.aws_page, name='aws_page'),
-    path('aws/start/', views.aws_page, name='start_instance'),
-    path('aws/stop', views.aws_page, name='stop_instance'),
+    # path('aws/start/', views.aws_page, name='start_instance'),
+    # path('aws/stop', views.aws_page, name='stop_instance'),
 
 ]
 
