@@ -23,7 +23,7 @@ urlpatterns = [
     path('visitor-chart/', views.visitor_chart, name='visitor-chart'),
     path('contact/', views.contact_view, name='contact'),
     #path('rsvp/', views.rsvp, name='rsvp'),
-    path('aws/', views.aws_page, name='aws_action'),
+    path('aws/', views.aws_page, name='aws_page'),
 
 ]
 
