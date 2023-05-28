@@ -415,3 +415,20 @@ def aws_page(request):
             instance_status = 'stopping'
 
     return render(request, 'blog/aws.html', {'instance_status': instance_status})
+
+
+def start_instance(request):
+    ec2_client = boto3.client('ec2', region_name='us-east-1')
+    instance_id = 'i-07360808c3dc6fed2'
+    ec2_client.start_instances(
+            InstanceIds=[instance_id]
+     )
+    return redirect('aws_page')
+
+def stop_instance(request):
+    ec2_client = boto3.client('ec2', region_name='us-east-1')
+    instance_id = 'i-07360808c3dc6fed2'
+    ec2_client.stop_instances(
+            InstanceIds=[instance_id]
+     )
+    return redirect('aws_page')
