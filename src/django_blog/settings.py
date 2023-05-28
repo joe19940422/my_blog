@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'mdeditor',
     'django_requestlogging',
     'crispy_forms',
-    'aws'
 
 ]
 
