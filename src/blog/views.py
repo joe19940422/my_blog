@@ -420,7 +420,16 @@ def aws_page(request):
             ec2_client.stop_instances(InstanceIds=[instance_id])
             instance_status = 'stopping'
 
-    return render(request, 'blog/aws.html', {'instance_status': instance_status})
+    try:
+        response = ec2_client.describe_instances(
+            InstanceIds=[instance_id]
+        )
+        instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+    except (BotoCoreError, ClientError, IndexError) as e:
+        # Handle any errors that occur during API call or IP retrieval
+        instance_ip = 'unknown'
+
+    return render(request, 'blog/aws.html', {'instance_status': instance_status, 'instance_ip': instance_ip})
 
 
 # def start_instance(request):
