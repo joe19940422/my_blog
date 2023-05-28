@@ -393,7 +393,7 @@ import boto3
 
 def aws_page(request):
     # Initialize Boto3 client
-    ec2_client = boto3.client('ec2')
+    ec2_client = boto3.client('ec2', region_name='us-east-1')
 
     # Retrieve instance status
     instance_id = 'i-07360808c3dc6fed2'
