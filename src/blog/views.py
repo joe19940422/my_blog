@@ -403,5 +403,15 @@ def aws_page(request):
 
     # Extract the instance status
     instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
+    if request.method == 'POST':
+        if 'start_instance' in request.POST:
+            # Start the instance
+            ec2_client.start_instances(InstanceIds=[instance_id])
+            instance_status = 'starting'
+
+        elif 'stop_instance' in request.POST:
+            # Stop the instance
+            ec2_client.stop_instances(InstanceIds=[instance_id])
+            instance_status = 'stopping'
 
     return render(request, 'blog/aws.html', {'instance_status': instance_status})
