@@ -13,6 +13,8 @@ from django.db.models import Count
 from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
+from botocore.exceptions import BotoCoreError, ClientError
+
 
 translator = Translator()
 
@@ -402,7 +404,11 @@ def aws_page(request):
     )
 
     # Extract the instance status
-    instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
+    try:  # Extract the instance status
+        instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
+    except (BotoCoreError, ClientError, IndexError) as e:
+        # Handle any errors that occur during API call or instance status retrieval
+        instance_status = 'not running'
     if request.method == 'POST':
         if 'start_instance' in request.POST:
             # Start the instance
