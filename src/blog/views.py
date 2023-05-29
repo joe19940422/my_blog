@@ -365,7 +365,13 @@ def contact_view(request):
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
             )
-
+            send_mail(
+                'New Contact Form Submission',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                'lisannedoff@hotmail.com',
+                ['lisannedoff@hotmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
             send_mail(
                 'Thank you for your reply[Automatic reply]',
                 f'Dear {name},\n\nThank you for your message.\n\nBest regards,\nPengfei and Lisanne',
@@ -373,6 +379,7 @@ def contact_view(request):
                 [email],  # Use the extracted email address as the recipient
                 fail_silently=False,
             )
+
             return render(request, 'blog/success.html')
     form = ContactForm()
     result = Contact.objects.filter(event_type='2').count()
@@ -434,19 +441,3 @@ def aws_page(request):
 
     return render(request, 'blog/aws.html', {'instance_status': instance_status, 'instance_ip': instance_ip})
 
-
-# def start_instance(request):
-#     ec2_client = boto3.client('ec2', region_name='us-east-1')
-#     instance_id = 'i-07360808c3dc6fed2'
-#     ec2_client.start_instances(
-#             InstanceIds=[instance_id]
-#      )
-#     return redirect('aws_page')
-#
-# def stop_instance(request):
-#     ec2_client = boto3.client('ec2', region_name='us-east-1')
-#     instance_id = 'i-07360808c3dc6fed2'
-#     ec2_client.stop_instances(
-#             InstanceIds=[instance_id]
-#      )
-#     return redirect('aws_page')
