@@ -418,12 +418,26 @@ def aws_page(request):
         instance_status = 'not running'
     if request.method == 'POST':
         if 'start_instance' in request.POST:
+            send_mail(
+                'EC2: is Staring',
+                f'EC2: is Staring',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
             # Start the instance
             ec2_client.start_instances(InstanceIds=[instance_id])
             instance_status = 'starting'
 
         elif 'stop_instance' in request.POST:
             # Stop the instance
+            send_mail(
+                'EC2: is Stoping',
+                f'EC2: is Stoping',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
             ec2_client.stop_instances(InstanceIds=[instance_id])
             instance_status = 'stopping'
 
