@@ -1,29 +1,27 @@
-
-
-{% load static %}
-
-<link rel="stylesheet" type="text/css" href="/static/css/Contact.css"/>
-<style>
-		@import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
-		@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
-		body {
- 		 background-image: url('https://clipartix.com/wp-content/uploads/2018/03/cartoon-wedding-ring-2018-29.jpg');
- 		 height: 100%;
-
-  		/* Center and scale the image nicely */
- 		 background-position: center;
-  		background-repeat: no-repeat;
-  		background-size: cover;
-}
-	</style>
-
-<h1>Wedding RSVP </h1>
-<form action="" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-    No photography is allowed during the ceremony !!!  <br>
-    Don't drive when you drink !!!
-    <br><br>
-
-  <input type="submit" value="Submit<Indienen>">
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/static/css/Contact.css"/>
+  <style>
+    @import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
+    @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+    body {
+      background-image: url('https://clipartix.com/wp-content/uploads/2018/03/cartoon-wedding-ring-2018-29.jpg');
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wedding RSVP</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p class="no-photography">No photography is allowed during the ceremony !!!</p>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
