@@ -17,25 +17,15 @@
 </head>
 <body>
   <h1>Wedding RSVP</h1>
-  <form id="contactForm" action="" method="post">
+  <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit<indienen><提交>" style="background-color: #ff0000; color: #ffffff;">
-    <p id="eventTypeError" class="no-photography" style="display: none;">Please select the event type.</p>
+    <p class="no-photography">Please select the number of guests/Selecteer het aantal gasten/請選擇賓客數量/ !!!</p>
     <p class="no-photography2">No photography is allowed during the ceremony/Tijdens de ceremonie is fotograferen niet toegestaan/禁止儀式上拍照 !!!</p>
     <p class="no-photography3">Don't drink and drive/請勿酒後駕車/!!!</p>
     <br>
     <br>
   </form>
-
-  <script>
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-      var eventTypeField = document.querySelector('select[name="event_type"]');
-      if (eventTypeField.value === "") {
-        event.preventDefault(); // Prevent form submission
-        alert("Please select the event type."); // Display pop-up error message
-      }
-    });
-  </script>
 </body>
 </html>
