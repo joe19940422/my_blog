@@ -373,27 +373,27 @@ def contact_view(request):
                 event = 'ceremony and party'
             if event_type == '4':
                 event = 'Cant join'
-            # send_mail(
-            #     'New Contact Form Submission',
-            #     f'Name: {name}\nEmail: {email}\nMessage: {message}\nGuest_num: {guest_num}\nEvent_type:{event}',
-            #     'joe19940422@gmail.com',
-            #     ['joe19940422@gmail.com'],  # List of recipient emails
-            #     fail_silently=False,
-            # )
-            # send_mail(
-            #     'New Contact Form Submission',
-            #     f'Name: {name}\nEmail: {email}\nMessage: {message}\nGuest_num: {guest_num}\nEvent_type:{event}',
-            #     'lisannedoff@hotmail.com',
-            #     ['lisannedoff@hotmail.com'],  # List of recipient emails
-            #     fail_silently=False,
-            # )
-            # send_mail(
-            #     'Thank you for your reply[Automatic reply]',
-            #     f'Dear {name},\n\nThank you for your message.\n\nBest regards,\nPengfei and Lisanne',
-            #     'joe19940422@gmail.com',
-            #     [email],  # Use the extracted email address as the recipient
-            #     fail_silently=False,
-            # )
+            send_mail(
+                'New Contact Form Submission',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}\nGuest_num: {guest_num}\nEvent_type:{event}',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
+            send_mail(
+                'New Contact Form Submission',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}\nGuest_num: {guest_num}\nEvent_type:{event}',
+                'lisannedoff@hotmail.com',
+                ['lisannedoff@hotmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
+            send_mail(
+                'Thank you for your reply[Automatic reply]',
+                f'Dear {name},\n\nThank you for your message.\n\nBest regards,\nPengfei and Lisanne',
+                'joe19940422@gmail.com',
+                [email],  # Use the extracted email address as the recipient
+                fail_silently=False,
+            )
 
             return render(request, 'blog/success.html')
     else:
