@@ -153,6 +153,29 @@ class Contact(models.Model):
                                  )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        notification_message = ""
+
+        if not self.event_type:  # Check if event_type is not provided
+            notification_message = "Event type is required."
+        else:
+            if self.event_type == "1":
+                notification_message = "You selected party/feest."
+            elif self.event_type == "2":
+                notification_message = "You selected ceremony/ceremonie."
+            elif self.event_type == "3":
+                notification_message = "You selected ceremony and party/ ceremonie en feest."
+            elif self.event_type == "4":
+                notification_message = "You selected Can't join/ Kan niet meedoen."
+
+        if notification_message:
+            # Display your notification message or raise an exception
+            print(notification_message)
+            # You can also raise an exception to prevent saving the instance
+            # raise ValueError(notification_message)
+
+        return super().save(*args, **kwargs)
+
     """
     def __str__(self):
         return  'email: ' + self.email + ' name: ' + self.name + ' phone: ' + self.phone + ' event_type:' + self.event_type + ' message: ' + self.message + ' guest_num: ' + self.guest_num
