@@ -32,8 +32,8 @@
     document.getElementById('contactForm').addEventListener('submit', function(event) {
       var eventTypeField = document.querySelector('select[name="event_type"]');
       if (eventTypeField.value === "") {
-        document.getElementById("eventTypeError").style.display = "block";
         event.preventDefault(); // Prevent form submission
+        alert("Please select the event type."); // Display pop-up error message
       }
     });
   </script>

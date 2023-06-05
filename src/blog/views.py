@@ -396,7 +396,8 @@ def contact_view(request):
             )
 
             return render(request, 'blog/success.html')
-    form = ContactForm()
+    else:
+        form = ContactForm()
     result = Contact.objects.filter(event_type='2').count()
 
     context = {'form': form, 'num': 400-result}
