@@ -139,7 +139,7 @@ class Contact(models.Model):
                                   choices=EVENT_TYPE_CHOICES,
                                   #name='event type (for ceremony max=30 persons))',
                                   db_column='event_type',
-                                  default='party'
+                                  #default='party'
                                   )
 
     message = models.TextField(default='Hey Lisanne and Fei i will join....', validators=[blocked_content_validator])
@@ -147,7 +147,7 @@ class Contact(models.Model):
 
     guest_num = models.CharField(max_length=255,
                                  choices=GUEST_NUM_CHOICES,
-                                 default='1',
+                                 #default='1',
                                  db_column='guest_num'
                                  #name='guest_num<Aantal Gasten>(include kids)')
                                  )
