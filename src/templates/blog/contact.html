@@ -17,7 +17,7 @@
 </head>
 <body>
   <h1>Wedding RSVP</h1>
-  <form action="" method="post" onsubmit="return validateEventType()">
+  <form id="contactForm" action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit<indienen><提交>" style="background-color: #ff0000; color: #ffffff;">
@@ -29,14 +29,13 @@
   </form>
 
   <script>
-    function validateEventType() {
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
       var eventTypeField = document.querySelector('select[name="event_type"]');
       if (eventTypeField.value === "") {
         document.getElementById("eventTypeError").style.display = "block";
-        return false;
+        event.preventDefault(); // Prevent form submission
       }
-      return true;
-    }
+    });
   </script>
 </body>
 </html>
