@@ -356,18 +356,33 @@ def contact_view(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-
+            guest_num = form.cleaned_data['guest_num']
+            event_type = form.cleaned_data['event_type']
+            """
+            ("1", "party/feest"),
+            ("2", "ceremony/ceremonie"),
+            ("3", "ceremony and party/ ceremonie en feest"),
+            ("4", "Can't join/ Kan niet meedoen"),
+            """
             form.save()
+            if event_type == '1':
+                event = 'party'
+            if event_type == '2':
+                event = 'ceremony'
+            if event_type == '3':
+                event = 'ceremony and party'
+            if event_type == '4':
+                event = 'Cant join'
             send_mail(
                 'New Contact Form Submission',
-                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}\nGuest_num: {guest_num}\nEvent_type:{event}',
                 'joe19940422@gmail.com',
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
             )
             send_mail(
                 'New Contact Form Submission',
-                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}\nGuest_num: {guest_num}\nEvent_type:{event}',
                 'lisannedoff@hotmail.com',
                 ['lisannedoff@hotmail.com'],  # List of recipient emails
                 fail_silently=False,
