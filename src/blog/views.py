@@ -469,25 +469,22 @@ def aws_page(request):
         # Handle any errors that occur during API call or IP retrieval
         instance_ip = 'unknown'
 
-    return render(request, 'blog/aws.html', {'instance_status': instance_status, 'instance_ip': instance_ip})
-
-
-def vpn_page(request):
-    # Initialize Boto3 client
-    ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
+    ##########################################################################
+    ##########################################################################
+    vpn_ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
 
     # Retrieve instance status
-    instance_id = 'i-02b099b8eaecb4288'
-    response = ec2_client.describe_instance_status(
+    vpn_instance_id = 'i-02b099b8eaecb4288'
+    vpn_response = ec2_client.describe_instance_status(
         InstanceIds=[instance_id]
     )
 
     # Extract the instance status
     try:  # Extract the instance status
-        instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
+        vpn_instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or instance status retrieval
-        instance_status = 'not running'
+        vpn_instance_status = 'not running'
     if request.method == 'POST':
         if 'start_vpn' in request.POST:
             send_mail(
@@ -498,8 +495,8 @@ def vpn_page(request):
                 fail_silently=False,
             )
             # Start the instance
-            ec2_client.start_instances(InstanceIds=[instance_id])
-            instance_status = 'starting'
+            vpn_ec2_client.start_instances(InstanceIds=[instance_id])
+            vpn_instance_status = 'starting'
 
         elif 'stop_vpn' in request.POST:
             # Stop the instance
@@ -510,20 +507,27 @@ def vpn_page(request):
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
             )
-            ec2_client.stop_instances(InstanceIds=[instance_id])
-            instance_status = 'stopping'
+            vpn_ec2_client.stop_instances(InstanceIds=[instance_id])
+            vpn_instance_status = 'stopping'
 
     try:
-        response = ec2_client.describe_instances(
+        vpn_response = ec2_client.describe_instances(
             InstanceIds=[instance_id]
         )
         if 'PublicIpAddress' in response['Reservations'][0]['Instances'][0]:
-            instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+            vpn_instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
         else:
-            instance_ip = 'Not assigned'
+            vpn_instance_ip = 'Not assigned'
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or IP retrieval
-        instance_ip = 'unknown'
+        vpn_instance_ip = 'unknown'
 
-    return render(request, 'blog/aws.html', {'instance_status': instance_status, 'instance_ip': instance_ip})
+    return render(request, 'blog/aws.html',
+                  {'instance_status': instance_status,
+                   'instance_ip': instance_ip,
+                   'vpn_instance_status': vpn_instance_status,
+                   'vpn_instance_ip': vpn_instance_ip})
+
+
+
 
