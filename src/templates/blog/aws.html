@@ -19,7 +19,7 @@
 
 <form method="post" action="{% url 'blog:vpn_page' %}">
     {% csrf_token %}
-    <button type="submit" name="start_instance">Start Instance</button>
+    <button type="submit" name="start_vpn">Start Instance</button>
     <br>
-    <button type="submit" name="stop_instance">Stop Instance</button>
+    <button type="submit" name="stop_vpn">Stop Instance</button>
 </form>

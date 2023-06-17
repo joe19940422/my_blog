@@ -489,7 +489,7 @@ def vpn_page(request):
         # Handle any errors that occur during API call or instance status retrieval
         instance_status = 'not running'
     if request.method == 'POST':
-        if 'start_instance' in request.POST:
+        if 'start_vpn' in request.POST:
             send_mail(
                 'VPN: is Staring',
                 f'VPN: is Staring',
@@ -501,7 +501,7 @@ def vpn_page(request):
             ec2_client.start_instances(InstanceIds=[instance_id])
             instance_status = 'starting'
 
-        elif 'stop_instance' in request.POST:
+        elif 'stop_vpn' in request.POST:
             # Stop the instance
             send_mail(
                 'VPN: is Stoping',
