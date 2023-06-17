@@ -481,7 +481,7 @@ def aws_page(request):
 
     # Extract the instance status
     try:  # Extract the instance status
-        vpn_instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
+        vpn_instance_status = vpn_response['InstanceStatuses'][0]['InstanceState']['Name']
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or instance status retrieval
         vpn_instance_status = 'not running'
@@ -495,7 +495,7 @@ def aws_page(request):
                 fail_silently=False,
             )
             # Start the instance
-            vpn_ec2_client.start_instances(InstanceIds=[instance_id])
+            vpn_ec2_client.start_instances(InstanceIds=[vpn_instance_id])
             vpn_instance_status = 'starting'
 
         elif 'stop_vpn' in request.POST:
@@ -507,7 +507,7 @@ def aws_page(request):
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
             )
-            vpn_ec2_client.stop_instances(InstanceIds=[instance_id])
+            vpn_ec2_client.stop_instances(InstanceIds=[vpn_instance_id])
             vpn_instance_status = 'stopping'
 
     try:
