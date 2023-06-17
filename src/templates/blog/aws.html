@@ -10,3 +10,16 @@
     <br>
     <button type="submit" name="stop_instance">Stop Instance</button>
 </form>
+
+
+<h1>Fei Joe's VPN Server</h1>
+<p>Status: {{ instance_status }}</p>
+<p>IP Address: {{ instance_ip }}</p>
+<p>IP Country: Japan</p>
+
+<form method="post" action="{% url 'blog:vpn_page' %}">
+    {% csrf_token %}
+    <button type="submit" name="start_instance">Start Instance</button>
+    <br>
+    <button type="submit" name="stop_instance">Stop Instance</button>
+</form>
