@@ -515,7 +515,7 @@ def aws_page(request):
             vpn_instance_status = 'stopping'
 
     try:
-        vpn_response = ec2_client.describe_instances(
+        vpn_response = vpn_ec2_client.describe_instances(
             InstanceIds=[vpn_instance_id]
         )
         if 'PublicIpAddress' in vpn_response['Reservations'][0]['Instances'][0]:
