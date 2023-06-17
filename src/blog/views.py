@@ -512,10 +512,10 @@ def aws_page(request):
 
     try:
         vpn_response = ec2_client.describe_instances(
-            InstanceIds=[instance_id]
+            InstanceIds=[vpn_instance_id]
         )
-        if 'PublicIpAddress' in response['Reservations'][0]['Instances'][0]:
-            vpn_instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+        if 'PublicIpAddress' in vpn_response['Reservations'][0]['Instances'][0]:
+            vpn_instance_ip = vpn_response['Reservations'][0]['Instances'][0]['PublicIpAddress']
         else:
             vpn_instance_ip = 'Not assigned'
     except (BotoCoreError, ClientError, IndexError) as e:
