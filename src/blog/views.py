@@ -471,12 +471,16 @@ def aws_page(request):
 
     ##########################################################################
     ##########################################################################
+    ##########################################################################
+    ##########################################################################
+    ##########################################################################
+    ##########################################################################
     vpn_ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
 
     # Retrieve instance status
     vpn_instance_id = 'i-02b099b8eaecb4288'
-    vpn_response = ec2_client.describe_instance_status(
-        InstanceIds=[instance_id]
+    vpn_response = vpn_ec2_client.describe_instance_status(
+        InstanceIds=[vpn_instance_id]
     )
 
     # Extract the instance status
