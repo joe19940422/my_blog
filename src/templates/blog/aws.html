@@ -1,6 +1,60 @@
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<!-- JavaScript to handle the AJAX requests for starting and stopping the VPN -->
+<script>
+  // Function to send the AJAX request to start the VPN and update the page
+  function startVPN() {
+    $.ajax({
+      url: "{% url 'blog:start_regina_vpn' %}",
+      type: "POST",
+      data: { start_vpn: true },
+      success: function(response) {
+        // Update the status and other details on the page
+        $("#regina_vpn_status").text(response.status);
+        // Update other details here...
+      },
+      error: function(error) {
+        // Handle error if the request fails
+        console.log("Error occurred:", error);
+      }
+    });
+  }
 
+  // Function to send the AJAX request to stop the VPN and update the page
+  function stopVPN() {
+    $.ajax({
+      url: "{% url 'blog:stop_regina_vpn' %}",
+      type: "POST",
+      data: { stop_regina_vpn: true },
+      success: function(response) {
+        // Update the status and other details on the page
+        $("#regina_vpn_status").text(response.status);
+        // Update other details here...
+      },
+      error: function(error) {
+        // Handle error if the request fails
+        console.log("Error occurred:", error);
+      }
+    });
+  }
+
+  // Event listener for the "Start vpn" button
+  $(document).ready(function() {
+    $("#start_regina_vpn_btn").click(function(event) {
+      event.preventDefault(); // Prevent the default form submission
+      startVPN(); // Call the function to start the VPN
+    });
+  });
+
+  // Event listener for the "Stop vpn" button
+  $(document).ready(function() {
+    $("#stop_regina_vpn_btn").click(function(event) {
+      event.preventDefault(); // Prevent the default form submission
+      stopVPN(); // Call the function to stop the VPN
+    });
+  });
+</script>
 <h1>yanjun's EC2 Instance Status</h1>
 <p>Instance ID: i-07360808c3dc6fed2</p>
 <p>Status: {{ instance_status }}</p>
@@ -32,7 +86,7 @@
     <p>Status: {{ regina_instance_status }}</p>
     <p>IP Address: {{ regina_instance_ip }}</p>
     <p>IP Country: Japan</p>
-
+    <p>Status: <span id="regina_vpn_status">{{ regina_instance_status }}</span></p>
     <p>Gateway is {{ regina_instance_ip }}     (you need to replace this ip every time since you start a vpn server)</p>
     <p>User name is feifei</p>
     <p>password is feifei</p>
@@ -87,6 +141,10 @@
     <button type="submit" name="start_regina_vpn">Start regina vpn</button>
     <br>
     <button type="submit" name="stop_regina_vpn">Stop regina vpn</button>
+    <br>
+    <button type="button" id="start_regina_vpn_btn">Start vpn</button>
+    <br>
+    <button type="button" id="stop_regina_vpn_btn">Stop vpn</button>
 </form>
 
 <a href="http://www.pengfeiqiao.com/blog/detail/8/" target="_blank">Click here</a> to learn how to connect to a vpn in ubuntu
