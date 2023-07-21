@@ -552,7 +552,7 @@ def aws_page(request):
                 fail_silently=False,
             )
             # Start the instance
-            regina_ec2_client.start_instances(InstanceIds=[vpn_instance_id])
+            regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
             regina_instance_status = 'starting'
 
         elif 'stop_regina_vpn' in request.POST:
