@@ -1,59 +1,17 @@
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- JavaScript to handle the AJAX requests for starting and stopping the VPN -->
 <script>
-  // Function to send the AJAX request to start the VPN and update the page
-  function startVPN() {
-    $.ajax({
-      url: "{% url 'blog:aws_page' %}",
-      type: "POST",
-      data: { start_regina_vpn: true },
-      success: function(response) {
-        // Update the status and other details on the page
-        $("#regina_vpn_status").text(response.status);
-        // Update other details here...
-      },
-      error: function(error) {
-        // Handle error if the request fails
-        console.log("Error occurred:", error);
-      }
-    });
-  }
+function startVpnAndRedirect() {
+  // Get the message container element
+  const messageContainer = document.getElementById('messageContainer');
 
-  // Function to send the AJAX request to stop the VPN and update the page
-  function stopVPN() {
-    $.ajax({
-      url: "{% url 'blog:aws_page' %}",
-      type: "POST",
-      data: { stop_regina_vpn: true },
-      success: function(response) {
-        // Update the status and other details on the page
-        $("#regina_vpn_status").text(response.status);
-        // Update other details here...
-      },
-      error: function(error) {
-        // Handle error if the request fails
-        console.log("Error occurred:", error);
-      }
-    });
-  }
+  // Display the message
+  messageContainer.textContent = 'Start a VPN, will take a few seconds';
 
-  // Event listener for the "Start vpn" button
-  $(document).ready(function() {
-    $("#start_regina_vpn_btn").click(function(event) {
-      event.preventDefault(); // Prevent the default form submission
-      startVPN(); // Call the function to start the VPN
-    });
-  });
-
-  // Event listener for the "Stop vpn" button
-  $(document).ready(function() {
-    $("#stop_regina_vpn_btn").click(function(event) {
-      event.preventDefault(); // Prevent the default form submission
-      stopVPN(); // Call the function to stop the VPN
-    });
-  });
+  // Wait for 3 seconds (3000 milliseconds)
+  setTimeout(function() {
+    // Redirect to www.google.com
+    window.location.href = 'https://www.google.com';
+  }, 3000);
+}
 </script>
 <h1>yanjun's EC2 Instance Status</h1>
 <p>Instance ID: i-07360808c3dc6fed2</p>
@@ -138,13 +96,12 @@
         </tr>
     </table>
 
-    <button type="submit" name="start_regina_vpn">Start regina vpn</button>
+    <button type="submit" name="start_regina_vpn" onclick="startVpnAndRedirect()">Start regina vpn</button>
     <br>
+    <div id="messageContainer"></div>
     <button type="submit" name="stop_regina_vpn">Stop regina vpn</button>
     <br>
-    <button type="button" id="start_regina_vpn_btn">Start vpn</button>
-    <br>
-    <button type="button" id="stop_regina_vpn_btn">Stop vpn</button>
+
 </form>
 
 <a href="http://www.pengfeiqiao.com/blog/detail/8/" target="_blank">Click here</a> to learn how to connect to a vpn in ubuntu
