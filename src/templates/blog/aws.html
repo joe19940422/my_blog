@@ -6,9 +6,9 @@
   // Function to send the AJAX request to start the VPN and update the page
   function startVPN() {
     $.ajax({
-      url: "{% url 'blog:start_regina_vpn' %}",
+      url: "{% url 'blog:aws_page' %}",
       type: "POST",
-      data: { start_vpn: true },
+      data: { start_regina_vpn: true },
       success: function(response) {
         // Update the status and other details on the page
         $("#regina_vpn_status").text(response.status);
@@ -24,7 +24,7 @@
   // Function to send the AJAX request to stop the VPN and update the page
   function stopVPN() {
     $.ajax({
-      url: "{% url 'blog:stop_regina_vpn' %}",
+      url: "{% url 'blog:aws_page' %}",
       type: "POST",
       data: { stop_regina_vpn: true },
       success: function(response) {
