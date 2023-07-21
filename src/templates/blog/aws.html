@@ -24,6 +24,21 @@
     <button type="submit" name="start_vpn">Start vpn</button>
     <br>
     <button type="submit" name="stop_vpn">Stop vpn</button>
+
+    <h1>Regina's VPN Server</h1>
+    <p>Status: {{ regin_instance_status }}</p>
+    <p>IP Address: {{ regin_instance_ip }}</p>
+    <p>IP Country: Japan</p>
+
+    <p>Gateway is {{ regina_instance_ip }} (you need to replace this ip every time since you start a vpn server)</p>
+    <p>User name is feifei</p>
+    <p>password is feifei</p>
+    <p>pre-shard key is feifei</p>
+    <p>vpn protocol is L2TP in iphone </p>
+
+    <button type="submit" name="start_regina_vpn">Start regina vpn</button>
+    <br>
+    <button type="submit" name="stop_regina_vpn">Stop regina vpn</button>
 </form>
 
 <a href="http://www.pengfeiqiao.com/blog/detail/8/" target="_blank">Click here</a> to learn how to connect to a vpn in ubuntu

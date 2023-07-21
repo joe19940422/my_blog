@@ -525,12 +525,67 @@ def aws_page(request):
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or IP retrieval
         vpn_instance_ip = 'unknown'
+    ###################################################################################
+    ###################################################################################
+    #regina vpn
+    regina_ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
 
+    # Retrieve instance status
+    regina_instance_id = 'i-0b37a6342f6b198f2'
+    regina_response = regina_ec2_client.describe_instance_status(
+        InstanceIds=[regina_instance_id]
+    )
+
+    # Extract the instance status
+    try:  # Extract the instance status
+        regina_instance_status = regina_response['InstanceStatuses'][0]['InstanceState']['Name']
+    except (BotoCoreError, ClientError, IndexError) as e:
+        # Handle any errors that occur during API call or instance status retrieval
+        regina_instance_status = 'not running'
+    if request.method == 'POST':
+        if 'start_regina_vpn' in request.POST:
+            send_mail(
+                'VPN(regina): is Staring',
+                f'VPN(regina): is Staring',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
+            # Start the instance
+            regina_ec2_client.start_instances(InstanceIds=[vpn_instance_id])
+            regina_instance_status = 'starting'
+
+        elif 'stop_regina_vpn' in request.POST:
+            # Stop the instance
+            send_mail(
+                'VPN(regina): is Stoping',
+                f'VPN(regina): is Stoping',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
+            regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
+            regina_instance_status = 'stopping'
+
+    try:
+        regina_response = regina_ec2_client.describe_instances(
+            InstanceIds=[regina_instance_id]
+        )
+        if 'PublicIpAddress' in regina_response['Reservations'][0]['Instances'][0]:
+            regina_instance_ip = regina_response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+        else:
+            regina_instance_ip = 'Not assigned'
+    except (BotoCoreError, ClientError, IndexError) as e:
+        # Handle any errors that occur during API call or IP retrieval
+        regina_instance_ip = 'unknown'
     return render(request, 'blog/aws.html',
                   {'instance_status': instance_status,
                    'instance_ip': instance_ip,
                    'vpn_instance_status': vpn_instance_status,
-                   'vpn_instance_ip': vpn_instance_ip})
+                   'vpn_instance_ip': vpn_instance_ip,
+                   'regina_instance_status': regina_instance_status,
+                   'regina_instance_ip': regina_instance_ip,
+                   })
 
 
 
