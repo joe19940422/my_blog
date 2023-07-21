@@ -1,3 +1,6 @@
+
+
+
 <h1>yanjun's EC2 Instance Status</h1>
 <p>Instance ID: i-07360808c3dc6fed2</p>
 <p>Status: {{ instance_status }}</p>
@@ -80,6 +83,41 @@
             <td>yes(click the box button)</td>
         </tr>
     </table>
+
+    <script>
+        $(document).ready(function () {
+            // Handle form submission for starting and stopping VPN
+            $("#startStopForm").submit(function (event) {
+                event.preventDefault(); // Prevent default form submission behavior
+
+                // Get the button name (start_vpn or stop_vpn)
+                var buttonName = $("button[type=submit][clicked=true]").attr("name");
+
+                // Send the AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr("action"),
+                    data: { csrfmiddlewaretoken: "{{ csrf_token }}", button_name: buttonName },
+                    success: function (response) {
+                        // Handle the response from the server
+                        // Update the page content with the new data (e.g., status updates)
+                        $("#instanceStatus").text(response.instance_status);
+                        $("#instanceIp").text(response.instance_ip);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any errors that occur during the AJAX request
+                        console.error("AJAX request failed:", error);
+                    }
+                });
+            });
+
+            // Attach a click event listener to the buttons to detect which button was clicked
+            $("button[type=submit]").click(function () {
+                $("button[type=submit]", $(this).parents("form")).removeAttr("clicked");
+                $(this).attr("clicked", "true");
+            });
+        });
+    </script>
     <button type="submit" name="start_regina_vpn">Start regina vpn</button>
     <br>
     <button type="submit" name="stop_regina_vpn">Stop regina vpn</button>
