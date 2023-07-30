@@ -528,10 +528,10 @@ def aws_page(request):
     ###################################################################################
     ###################################################################################
     #regina vpn
-    regina_ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
+    regina_ec2_client = boto3.client('ec2', region_name='ap-southeast-1')
 
     # Retrieve instance status
-    regina_instance_id = 'i-0b37a6342f6b198f2'
+    regina_instance_id = 'i-073e0b3347292a1ac'
     regina_response = regina_ec2_client.describe_instance_status(
         InstanceIds=[regina_instance_id]
     )
