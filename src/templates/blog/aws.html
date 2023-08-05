@@ -102,6 +102,10 @@ function startVpnAndRedirect() {
     <div id="messageContainer"></div>
     <button type="submit" name="stop_regina_vpn" style="width: 200px; height: 50px; font-size: 16px; background-color: red; color: white;">Stop Regina VPN</button>
     <br>
+    <h1 style="color: red;">Regina's open VPN Server bill </h1>
+    <h2 style="color: red;">$0.005 per Elastic IP address not attached to a running instance per hour (prorated) </h2>
+    <h2 style="color: red;">$0.12 per GB-month of General Purpose SSD (gp2) provisioned storage - Asia Pacific (Singapore)) </h2>
+    <h2 style="color: red;"> regina's total billing is {{ openvpn_amount }} usd  from {{ first_day }} to {{ today }} </h2>
 
 </form>
 

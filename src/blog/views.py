@@ -14,6 +14,7 @@ from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
 from botocore.exceptions import BotoCoreError, ClientError
+from datetime import datetime, timedelta
 
 
 translator = Translator()
@@ -578,6 +579,31 @@ def aws_page(request):
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or IP retrieval
         regina_instance_ip = 'unknown'
+
+    bill_client = boto3.client('ce', region_name='ap-southeast-1',
+                             )
+    now = datetime.now()
+    first_day_next_month = (now.replace(day=1) + timedelta(days=32)).replace(day=1)
+    last_day_current_month = first_day_next_month - timedelta(days=1)
+    first_day = now.replace(day=1).strftime('%Y-%m-%d')
+    last_day = last_day_current_month.strftime('%Y-%m-%d')
+    today = datetime.now().date().strftime('%Y-%m-%d')
+    time_period = {
+        'Start': first_day,
+        'End': last_day
+    }
+    response = bill_client.get_cost_and_usage(
+        TimePeriod=time_period,
+        Granularity='MONTHLY',
+        Metrics=['BlendedCost'],
+        Filter={
+            'Dimensions': {
+                "Key": "REGION", "Values": ["ap-southeast-1"]
+            }
+        }
+    )
+    openvpn_amount = float(response['ResultsByTime'][0]['Total']['BlendedCost']['Amount'])*1.25
+
     return render(request, 'blog/aws.html',
                   {'instance_status': instance_status,
                    'instance_ip': instance_ip,
@@ -585,7 +611,12 @@ def aws_page(request):
                    'vpn_instance_ip': vpn_instance_ip,
                    'regina_instance_status': regina_instance_status,
                    'regina_instance_ip': regina_instance_ip,
+                   'openvpn_amount': openvpn_amount,
+                   'first_day': first_day,
+                   'today': today
                    })
+
+
 
 
 
