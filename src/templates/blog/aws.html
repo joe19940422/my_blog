@@ -106,7 +106,29 @@ function startVpnAndRedirect() {
     <h2 style="color: red;">$0.005 per Elastic IP address not attached to a running instance per hour (prorated) </h2>
     <h2 style="color: red;">$0.12 per GB-month of General Purpose SSD (gp2) provisioned storage - Asia Pacific (Singapore)) </h2>
     <h2 style="color: red;"> regina's total billing is {{ openvpn_amount }} usd  from {{ first_day }} to {{ today }} </h2>
+    <table>
+        <tr>
+            <th>價格詳情 {{ first_day }} - {{ today }}</th>
+            <th>費用（美金）</th>
+        </tr>
+        <tr>
+            <td>靜態IP</td>
+            <td>$0.005 usd per /hour</td>
+        </tr>
+        <tr>
+            <td>SSD (gp2)服務器存儲 </td>
+            <td>$0.12 per GB-month</td>
+        </tr>
+        <tr>
+            <td>服務器按小時計費</td>
+            <td>$0.019 per On Demand Linux Instance Hour</td>
+        </tr>
+        <tr>
+            <td>截止{{ today }總費用 </td>
+            <td>{{ openvpn_amount }} usd</td>
+        </tr>
 
+    </table>
 </form>
 
 <a href="http://www.pengfeiqiao.com/blog/detail/8/" target="_blank">Click here</a> to learn how to connect to a vpn in ubuntu
