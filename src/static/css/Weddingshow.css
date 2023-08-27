@@ -1,0 +1,47 @@
+/* Reset default margin and padding */
+body, h1, ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set a maximum width for content */
+#viewer {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Style for album buttons */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+li button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  text-align: center;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Media element styling */
+span > div {
+  margin: 10px 0;
+}
+
+/* Responsive image styling */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive video styling */
+video {
+  max-width: 100%;
+  height: auto;
+}
