@@ -617,6 +617,9 @@ def aws_page(request):
                    })
 
 
+def wedding_show(request):
+    return render(request, 'wedding/picture.html', {
+    })
 
 
 
