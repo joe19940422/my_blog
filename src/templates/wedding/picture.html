@@ -46,7 +46,7 @@
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1445.0.min.js"></script>
   <script src="/static/js/s3_PhotoViewer.js"></script>
   <style>
-    /* Center-align the content */
+    /* Set background image from internet and center-align the content */
     body {
       display: flex;
       flex-direction: column;
@@ -54,10 +54,13 @@
       justify-content: center;
       height: 100vh;
       margin: 0;
+      background-image: url('https://patsyjohnsonceremonies.co.uk/wp-content/uploads/2023/02/pexels-tirachard-kumtanom-1001849-768x513.jpg'); /* Replace with your image URL */
+      background-size: cover; /* Adjust background size */
+      background-position: center; /* Center the background image */
     }
     h1 {
       margin-top: 0;
-      color: red; /* Change the title color to red */
+      color: red;
     }
   </style>
   <script>listAlbums();</script>
@@ -67,5 +70,6 @@
   <div id="viewer"></div>
 </body>
 </html>
+
 
 <!-- snippet-end:[s3.HTML.s3_PhotoViewer.complete] -->
