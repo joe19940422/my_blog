@@ -112,8 +112,7 @@ function viewAlbum(albumName) {
 
     var mediaHtml = data.Contents.map(function(media) {
       var mediaKey = media.Key;
-      #var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);
-      var mediaUrl = bucketUrl + mediaKey;
+      var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);
       var extension = mediaKey.split('.').pop().toLowerCase();
       var mediaElement;
 
