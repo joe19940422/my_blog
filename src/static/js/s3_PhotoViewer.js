@@ -146,7 +146,7 @@ function viewAlbum(albumName) {
     var htmlTemplate = [
       '<div>',
         '<button onclick="listAlbums()">',
-          'Back To Albums',
+          'Back To Albums(返回相冊)',
         '</button>',
       '</div>',
       '<h2>',
@@ -161,7 +161,7 @@ function viewAlbum(albumName) {
       '</h2>',
       '<div>',
         '<button onclick="listAlbums()">',
-          'Back To Albums',
+          'Back To Albums(返回相冊)',
         '</button>',
       '</div>',
     ]
