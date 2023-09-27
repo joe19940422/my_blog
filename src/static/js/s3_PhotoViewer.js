@@ -86,11 +86,11 @@ function listAlbums() {
       });
       var message = albums.length ?
         getHtml([
-          '<p>Click on an album name to view it.</p>',
+          '<p>Click on an album name to view it<點擊相簿名稱即可查看>.</p>',
         ]) :
         '<p>You do not have any albums. Please Create album.';
       var htmlTemplate = [
-        '<h2>Albums</h2>',
+        '<h2>Albums<相簿></h2>',
         message,
         '<ul>',
           getHtml(albums),
@@ -102,7 +102,8 @@ function listAlbums() {
 }
 
 function viewAlbum(albumName) {
-  var albumMediaKey = encodeURIComponent(albumName) + '/';
+  //var albumMediaKey = encodeURIComponent(albumName) + '/';
+  var albumMediaKey = encodeURI(albumName) + '/';
   s3.listObjects({Prefix: albumMediaKey}, function(err, data) {
     if (err) {
       return alert('There was an error viewing your album: ' + err.message);
@@ -112,8 +113,8 @@ function viewAlbum(albumName) {
 
     var mediaHtml = data.Contents.map(function(media) {
       var mediaKey = media.Key;
-      var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);
-      var extension = mediaKey.split('.').pop().toLowerCase();
+      var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);// s3:**/pengfei-wedding/folder/*.jpg
+      var extension = mediaKey.split('.').pop().toLowerCase(); //jpg
       var mediaElement;
 
       if (extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
