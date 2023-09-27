@@ -110,7 +110,9 @@ function viewAlbum(albumName) {
     }
     var href = this.request.httpRequest.endpoint.href;
     var bucketUrl = href + albumBucketName + '/';
-
+    console.log('href:', href);
+    console.log('bucketUrl:', bucketUrl);
+    console.log('albumMediaKey:', albumMediaKey);
     var mediaHtml = data.Contents.map(function(media) {
       var mediaKey = media.Key;
       var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);// s3:**/pengfei-wedding/folder/*.jpg
