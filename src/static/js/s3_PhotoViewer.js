@@ -76,13 +76,27 @@ function listAlbums() {
       var albums = data.CommonPrefixes.map(function(commonPrefix) {
         var prefix = commonPrefix.Prefix;
         var albumName = decodeURIComponent(prefix.replace('/', ''));
+        var additionalText = '';
+        if (albumName === 'church-ceremony') {
+          additionalText = '<p>This is additional text for the church-ceremony album.</p>';
+        }
+        if (albumName === 'before-wedding-moment') {
+          additionalText = '<p>This is additional text for the before-wedding-moment album.</p>';
+        }
+        if (albumName === 'pre-wedding-photo') {
+          additionalText = '<p>This is additional text for the pre-wedding-photo album.</p>';
+        }
+        if (albumName === 'wedding-moment') {
+          additionalText = '<p>This is additional text for the wedding-momentalbum.</p>';
+        }
         console.log('albumName:', albumName);
         return getHtml([
           '<li>',
             '<button style="margin:5px;" onclick="viewAlbum(\'' + albumName + '\')">',
               albumName,
             '</button>',
-          '</li>'
+          '</li>',
+          additionalText, // Append the additional text here
         ]);
       });
       var message = albums.length ?
