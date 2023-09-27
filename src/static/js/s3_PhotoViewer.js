@@ -76,6 +76,7 @@ function listAlbums() {
       var albums = data.CommonPrefixes.map(function(commonPrefix) {
         var prefix = commonPrefix.Prefix;
         var albumName = decodeURIComponent(prefix.replace('/', ''));
+        console.log('albumName:', albumName);
         return getHtml([
           '<li>',
             '<button style="margin:5px;" onclick="viewAlbum(\'' + albumName + '\')">',
