@@ -108,11 +108,13 @@ function viewAlbum(albumName) {
     if (err) {
       return alert('There was an error viewing your album: ' + err.message);
     }
-    var href = this.request.httpRequest.endpoint.href;
+    var href = this.request.httpRequest.endpoint.href; // https://s3.amazonaws.com/
     var bucketUrl = href + albumBucketName + '/';
     console.log('href:', href);
     console.log('bucketUrl:', bucketUrl);
     console.log('albumMediaKey:', albumMediaKey);
+    console.log('data', data)
+    console.log('data.Contents', data.Contents)
     var mediaHtml = data.Contents.map(function(media) {
       var mediaKey = media.Key;
       var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);// s3:**/pengfei-wedding/folder/*.jpg
