@@ -116,6 +116,8 @@ function viewAlbum(albumName) {
       var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);// s3:**/pengfei-wedding/folder/*.jpg
       var extension = mediaKey.split('.').pop().toLowerCase(); //jpg
       var mediaElement;
+      console.log('albumMediaKey:', albumMediaKey);
+      console.log('mediaUrl:', mediaUrl);
 
       if (extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
         mediaElement = '<img src="' + mediaUrl + '" alt="' + mediaKey.replace(albumMediaKey, '') + '"/>';
