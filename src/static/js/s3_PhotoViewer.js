@@ -92,11 +92,12 @@ function listAlbums() {
         console.log('albumName:', albumName);
         return getHtml([
           '<li>',
-            '<button style="margin:5px;" onclick="viewAlbum(\'' + albumName + '\')">',
-              albumName,
-            '</button>',
+          '<button style="margin:5px;" onclick="viewAlbum(\'' + albumName + '\')">',
+          '<span>', // Start a span to wrap album name and additional text
+          albumName + additionalText, // Combine album name and additional text
+          '</span>', // Close the span
+          '</button>',
           '</li>',
-          additionalText, // Append the additional text here
         ]);
       });
       var message = albums.length ?
