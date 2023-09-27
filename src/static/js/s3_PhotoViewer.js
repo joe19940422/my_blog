@@ -78,16 +78,22 @@ function listAlbums() {
         var albumName = decodeURIComponent(prefix.replace('/', ''));
         var additionalText = '';
         if (albumName === 'church-ceremony') {
-          additionalText = '<p>This is additional text for the church-ceremony album.</p>';
+          additionalText = '<p>教堂儀式</p>';
         }
         if (albumName === 'before-wedding-moment') {
-          additionalText = '<p>This is additional text for the before-wedding-moment album.</p>';
+          additionalText = '<p>婚禮前一刻</p>';
         }
         if (albumName === 'pre-wedding-photo') {
-          additionalText = '<p>This is additional text for the pre-wedding-photo album.</p>';
+          additionalText = '<p>婚紗照</p>';
         }
         if (albumName === 'wedding-moment') {
-          additionalText = '<p>This is additional text for the wedding-momentalbum.</p>';
+          additionalText = '<p>婚禮儀式.</p>';
+        }
+        if (albumName === 'party-moment') {
+          additionalText = '<p>party時刻</p>';
+        }
+        if (albumName === 'dinner-moment') {
+          additionalText = '<p>晚餐時刻</p>';
         }
         console.log('albumName:', albumName);
         return getHtml([
