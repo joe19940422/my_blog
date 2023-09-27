@@ -87,12 +87,12 @@ function listAlbums() {
           additionalText = '<p>婚紗照</p>';
         }
         if (albumName === 'wedding-moment') {
-          additionalText = '<p>婚禮儀式.</p>';
+          additionalText = '<p>婚禮儀式</p>';
         }
         if (albumName === 'party-moment') {
           additionalText = '<p>party時刻</p>';
         }
-        if (albumName === 'dinner-moment') {
+        if (albumName === 'dinner-time') {
           additionalText = '<p>晚餐時刻</p>';
         }
         console.log('albumName:', albumName);
