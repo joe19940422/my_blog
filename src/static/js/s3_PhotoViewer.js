@@ -98,7 +98,7 @@ function listAlbums() {
         console.log('albumName:', albumName);
         return getHtml([
           '<li>',
-          '<button style="margin:5px;" onclick="viewAlbum(\'' + albumName + '\')">',
+          '<button style="margin:2px;" onclick="viewAlbum(\'' + albumName + '\')">',
           '<span>', // Start a span to wrap album name and additional text
           albumName + additionalText, // Combine album name and additional text
           '</span>', // Close the span
@@ -142,9 +142,6 @@ function viewAlbum(albumName) {
       var mediaUrl = bucketUrl + encodeURIComponent(mediaKey);// s3:**/pengfei-wedding/folder/*.jpg
       var extension = mediaKey.split('.').pop().toLowerCase(); //jpg
       var mediaElement;
-      console.log('albumMediaKey:', albumMediaKey);
-      console.log('mediaUrl:', mediaUrl);
-
       if (extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
         mediaElement = '<img src="' + mediaUrl + '" alt="' + mediaKey.replace(albumMediaKey, '') + '"/>';
       } else if (extension === 'mp4') {
