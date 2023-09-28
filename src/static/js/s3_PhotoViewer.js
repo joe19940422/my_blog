@@ -61,7 +61,17 @@ function getHtml(template) {
 }
 // snippet-end:[s3.JavaScript.s3_PhotoViewer.config]
 
+var styleElement = document.createElement('style');
 
+// Define your CSS styles within the <style> element
+styleElement.textContent = `
+  /* CSS for controlling the size and layout of .media-container */
+  .media-container {
+    display: inline-block;
+    max-width: 300px;
+    margin: 10px;
+  }
+`;
 //
 // Functions
 //
@@ -154,7 +164,7 @@ function viewAlbum(albumName) {
       }
 
       return getHtml([
-        '<span>',
+        '<span class="media-container">',
           '<div>',
             '<br/>',
             mediaElement,
