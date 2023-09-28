@@ -61,26 +61,54 @@
 <body>
   <h1>Pengfei Lisanne wedding Album/video鵬飛Lisanne婚禮專輯/視頻</h1>
   <br>
+  <div id="countdown">
+        Days until 3rd Nov: <span id="countdown-number">30</span>
+    </div>
+
+    <script>
+        // Function to update the countdown
+        function updateCountdown() {
+            const targetDate = new Date(2023, 11, 3); // November 3, 2023 (months are zero-based)
+            const currentDate = new Date();
+            const timeDifference = targetDate - currentDate;
+            const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Calculate days remaining
+
+            // Update the countdown number
+            const countdownNumber = document.getElementById('countdown-number');
+            countdownNumber.textContent = daysRemaining;
+
+            // Optionally, you can check if the countdown has reached zero and hide it or display a message.
+            if (daysRemaining <= 0) {
+                document.getElementById('countdown').textContent = "Countdown expired.";
+            }
+        }
+
+        // Update the countdown initially
+        updateCountdown();
+
+        // Update the countdown every second (or any other desired interval)
+        setInterval(updateCountdown, 1000); // Update every second
+    </script>
   <table>
     <thead>
       <tr>
         <th>關於專輯評論</th>
-        <th>All photos watermarked by bydianne fotografie are produced by dianne Photographers所有帶有 bydianne fotografie 浮水印的照片均由 dianne 攝影師製作</th>
+        <th>Comment</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>關於專輯評論</td>
-        <td>除此之外, 均為手機版攝影 In addition, all are mobile versions</td>
+        <td>All photos watermarked by bydianne fotografie are produced by dianne Photographers所有帶有 bydianne fotografie 浮水印的照片均由 dianne 攝影師製作</td>
       </tr>
       <tr>
         <td>關於專輯評論</td>
-        <td>電影交貨時間 : 11月3日之前 Movie delivery time ETA : 3th Nov </td>
+        <td>除此之外, 均為手機版攝影 In addition, all are mobile versions</td>
       </tr>
       <!-- Add more rows as needed -->
     <tr>
-        <td>party-time</td>
-        <td>party時刻</td>
+        <td>關於專輯評論</td>
+        <td>電影交貨時間 : 11月3日之前 Movie delivery time ETA : 3th Nov </td>
       </tr>
 
     <tr>
