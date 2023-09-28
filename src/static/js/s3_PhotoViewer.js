@@ -61,17 +61,7 @@ function getHtml(template) {
 }
 // snippet-end:[s3.JavaScript.s3_PhotoViewer.config]
 
-var styleElement = document.createElement('style');
 
-// Define your CSS styles within the <style> element
-styleElement.textContent = `
-  /* CSS for controlling the size and layout of .media-container */
-  .media-container {
-    display: inline-block;
-    max-width: 300px;
-    margin: 10px;
-  }
-`;
 //
 // Functions
 //
@@ -136,6 +126,7 @@ function listAlbums() {
 function viewAlbum(albumName) {
   //var albumMediaKey = encodeURIComponent(albumName) + '/';
   var albumMediaKey = encodeURI(albumName) + '/';
+  var spanClass = 'custom-span';
   s3.listObjects({Prefix: albumMediaKey}, function(err, data) {
     if (err) {
       return alert('There was an error viewing your album: ' + err.message);
@@ -164,7 +155,7 @@ function viewAlbum(albumName) {
       }
 
       return getHtml([
-        '<span class="media-container">',
+        '<span class="' + spanClass + '">',
           '<div>',
             '<br/>',
             mediaElement,
@@ -177,6 +168,15 @@ function viewAlbum(albumName) {
         '</span>',
       ]);
     });
+    var spanStyle = '.' + spanClass + ' { font-size: 3px; }'; // Adjust the font-size as needed
+
+    // Create a <style> element to include the CSS styles
+    var styleElement = document.createElement('style');
+    styleElement.textContent = spanStyle;
+
+    // Append the <style> element to the <head> section of the document
+    document.head.appendChild(styleElement);
+
 
     var message = mediaHtml.length ?
       '<p>The following media files are present.</p>' :
