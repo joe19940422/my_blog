@@ -98,7 +98,7 @@ function listAlbums() {
         console.log('albumName:', albumName);
         return getHtml([
           '<li>',
-          '<button style="width: 300px; height: 130px; margin: 5px;" onclick="viewAlbum(\'' + albumName + '\')">',
+          '<button style="width: 250px; height: 100px; margin: 5px;" onclick="viewAlbum(\'' + albumName + '\')">',
           '<span>', // Start a span to wrap album name and additional text
           albumName + additionalText, // Combine album name and additional text
           '</span>', // Close the span
