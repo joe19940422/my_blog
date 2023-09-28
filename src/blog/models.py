@@ -109,7 +109,7 @@ class MY_CHOICES(models.Model):
 
 
 def blocked_content_validator(value):
-    blocked_words = ['https', 'http', 'investment', 'target', 'increase']  # Add the blocked words or content here
+    blocked_words = ['https', 'http', 'investment', 'target', 'increase', 'websites', 'website']  # Add the blocked words or content here
     for word in blocked_words:
         if word.lower() in value.lower():
             raise ValidationError(f"The message contains blocked content: {word}")
