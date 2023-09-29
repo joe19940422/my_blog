@@ -566,10 +566,12 @@ def aws_page(request):
         # Handle any errors that occur during API call or instance status retrieval
         regina_instance_status = 'not running'
     if request.method == 'POST':
+        month = datetime.now().date().strftime('%m')
+        day = datetime.now().date().strftime('%d')
         if 'start_regina_vpn' in request.POST:
             send_mail(
                 'VPN(regina): is Staring',
-                f'VPN(regina): is Staring',
+                f'VPN(regina): is Staring{day}',
                 'joe19940422@gmail.com',
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
