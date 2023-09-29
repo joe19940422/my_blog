@@ -566,12 +566,10 @@ def aws_page(request):
         # Handle any errors that occur during API call or instance status retrieval
         regina_instance_status = 'not running'
     if request.method == 'POST':
-        month = datetime.now().date().strftime('%m')
-        day = datetime.now().date().strftime('%d')
         if 'start_regina_vpn' in request.POST:
             send_mail(
                 'VPN(regina): is Staring',
-                f'VPN(regina): is Staring{day}',
+                f'VPN(regina): is Staring',
                 'joe19940422@gmail.com',
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
@@ -579,10 +577,7 @@ def aws_page(request):
 
             month = datetime.now().date().strftime('%m')
             day = datetime.now().date().strftime('%d')
-            print(month)
-            print(day)
-            if (month != '02' and day == '29') or (month == '02' and day == '28'):
-                print('@@@@@@@@@@@@@@@@@@@@@@@@222')
+            if (month != '02' and day == '30') or (month == '02' and day == '28'):
                 subject = 'Bill for *** Service'
                 message = f"Dear Regina from {first_day} to {today}, your bill costs {openvpn_amount} $"
                 from_email = 'joe19940422@gmail.com'
