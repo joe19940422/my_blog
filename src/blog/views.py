@@ -577,7 +577,7 @@ def aws_page(request):
 
             month = datetime.now().date().strftime('%m')
             day = datetime.now().date().strftime('%d')
-            if (month != '02' and day == '30') or (month == '02' and day == '28'):
+            if (month != '02' and day == '29') or (month == '02' and day == '28'):
                 send_mail(
                     'regina *** bill',
                     'Dear Regina \n'
