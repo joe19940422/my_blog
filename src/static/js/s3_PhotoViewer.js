@@ -108,7 +108,7 @@ function listAlbums() {
       });
       var message = albums.length ?
         getHtml([
-          '<p>Click on an album name to view it<點擊相簿名稱即可查看>.</p>',
+          '<p style="color: red;">Click on an album name to view it<點擊相簿名稱即可查看>.</p>',
         ]) :
         '<p>You do not have any albums. Please Create album.';
       var htmlTemplate = [
