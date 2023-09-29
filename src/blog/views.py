@@ -579,9 +579,9 @@ def aws_page(request):
             day = datetime.now().date().strftime('%d')
             if (month != '02' and day == '30') or (month == '02' and day == '28'):
                 subject = 'Bill for *** Service'
-                message = f"Dear Regina from {first_day} to {today}, your bill costs {openvpn_amount} $"
+                message = f"Dear Regina from {first_day} to {today}, your *** bill costs {openvpn_amount} $"
                 from_email = 'joe19940422@gmail.com'
-                recipient_list = ['joe19940422@gmail.com']
+                recipient_list = ['1738524677@qq.com']
 
                 send_mail(
                     subject,
