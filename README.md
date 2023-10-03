@@ -68,3 +68,5 @@ http://ip:port/admin
 * [v2.0](https://github.com/jhao104/django-blog/tree/v2.0)
 
 * [v1.0](https://github.com/jhao104/django-blog/tree/v1.0)
+
+pip install django_ratelimit

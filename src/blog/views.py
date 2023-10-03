@@ -10,6 +10,7 @@ from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
+from django_ratelimit.decorators import ratelimit
 from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
@@ -416,6 +417,7 @@ def rsvp(request):
 import boto3
 
 
+@ratelimit(key='user', rate='1/m', method='POST', block=True)
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
