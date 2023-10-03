@@ -97,10 +97,10 @@ function startVpnAndRedirect() {
         </tr>
     </table>
 
-    <button type="submit" name="start_regina_vpn" onclick="startVpnAndRedirect()" style="width: 200px; height: 50px; font-size: 16px; background-color: green; color: white;">Start Regina ***</button>
+    <button type="submit" name="start_regina_vpn" id="startButton" onclick="startVpnAndRedirect()" style="width: 200px; height: 50px; font-size: 16px; background-color: green; color: white;">Start Regina ***</button>
     <br>
     <div id="messageContainer"></div>
-    <button type="submit" name="stop_regina_vpn" style="width: 200px; height: 50px; font-size: 16px; background-color: red; color: white;">Stop Regina ***</button>
+    <button type="submit" name="stop_regina_vpn" id="stopButton" style="width: 200px; height: 50px; font-size: 16px; background-color: red; color: white;">Stop Regina ***</button>
     <br>
     <h1 style="color: red;">Regina's open *** Server bill </h1>
     <h2 style="color: red;">$0.005 per Elastic IP address not attached to a running instance per hour (prorated) </h2>
@@ -133,3 +133,29 @@ function startVpnAndRedirect() {
 
 <a href="http://www.pengfeiqiao.com/blog/detail/8/" target="_blank">Click here</a> to learn how to connect to a *** in ubuntu
 
+<script>
+    var startButton = document.getElementById("startButton");
+    var stopButton = document.getElementById("stopButton");
+
+    startButton.addEventListener("click", function(event) {
+        if (!startButton.disabled) {
+            startButton.disabled = true;
+            setTimeout(function() {
+                startButton.disabled = false;
+            }, 120000); // 120000 milliseconds = 2 minutes
+        } else {
+            event.preventDefault(); // Prevent multiple clicks within 2 minutes
+        }
+    });
+
+    stopButton.addEventListener("click", function(event) {
+        if (!stopButton.disabled) {
+            stopButton.disabled = true;
+            setTimeout(function() {
+                stopButton.disabled = false;
+            }, 120000); // 120000 milliseconds = 2 minutes
+        } else {
+            event.preventDefault(); // Prevent multiple clicks within 2 minutes
+        }
+    });
+</script>
