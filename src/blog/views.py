@@ -610,7 +610,7 @@ def aws_page(request):
 
                     return HttpResponse("Request processed successfully.")
                 else:
-                    return HttpResponseForbidden("Rate limit exceeded.")
+                    return HttpResponseForbidden("Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
             else:
                 return HttpResponseForbidden("Unable to determine client IP address.")
         elif 'stop_regina_vpn' in request.POST:
