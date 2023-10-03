@@ -10,7 +10,7 @@ from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-from ratelimit.decorators import ratelimit
+
 from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
@@ -417,7 +417,9 @@ def rsvp(request):
 import boto3
 
 
-@ratelimit(key='user', rate='1/m', method='POST', block=True)
+from ipware import get_client_ip
+from django.core.cache import cache
+from django.http import HttpResponse, HttpResponseForbidden
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
@@ -569,34 +571,48 @@ def aws_page(request):
         regina_instance_status = 'not running'
     if request.method == 'POST':
         if 'start_regina_vpn' in request.POST:
-            send_mail(
-                'VPN(regina): is Staring',
-                f'VPN(regina): is Staring',
-                'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
-            )
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
 
-            month = datetime.now().date().strftime('%m')
-            day = datetime.now().date().strftime('%d')
-            if (month != '02' and day == '30') or (month == '02' and day == '28'):
-                subject = 'Bill for *** Service'
-                message = f"Dear Regina from {first_day} to {today}, your *** bill costs {openvpn_amount} $"
-                from_email = 'joe19940422@gmail.com'
-                recipient_list = ['1738524677@qq.com']
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 60)  # 60 seconds (1 minute)
+                    send_mail(
+                        'VPN(regina): is Staring',
+                        f'VPN(regina): is Staring',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
 
-                send_mail(
-                    subject,
-                    message,
-                    from_email,
-                    recipient_list,
-                    fail_silently=False,
-                )
+                    month = datetime.now().date().strftime('%m')
+                    day = datetime.now().date().strftime('%d')
+                    if (month != '02' and day == '30') or (month == '02' and day == '28'):
+                        subject = 'Bill for *** Service'
+                        message = f"Dear Regina from {first_day} to {today}, your *** bill costs {openvpn_amount} $"
+                        from_email = 'joe19940422@gmail.com'
+                        recipient_list = ['1738524677@qq.com']
 
-            # Start the instance
-            regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
-            regina_instance_status = 'starting'
+                        send_mail(
+                            subject,
+                            message,
+                            from_email,
+                            recipient_list,
+                            fail_silently=False,
+                        )
 
+                    # Start the instance
+                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'starting'
+
+                    return HttpResponse("Request processed successfully.")
+                else:
+                    return HttpResponseForbidden("Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
         elif 'stop_regina_vpn' in request.POST:
             # Stop the instance
             send_mail(
