@@ -575,7 +575,7 @@ def aws_page(request):
             if client_ip:
                 # Define a cache key based on the client's IP address
                 cache_key = f'rate_limit_{client_ip}'
-
+                print(client_ip)
                 # Check if the IP address is rate-limited
                 if not cache.get(cache_key):
                     # Set a cache value to indicate that the IP address is rate-limited
