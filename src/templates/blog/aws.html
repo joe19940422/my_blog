@@ -12,6 +12,26 @@ function startVpnAndRedirect() {
     window.location.href = 'http://www.pengfeiqiao.com/blog/aws/';
   }, 9000);
 }
+
+var buttonClicked = false;
+
+  // Function to handle the click event
+function startVpnAndRedirect2() {
+    if (!buttonClicked) {
+      // Set a flag to prevent further clicks
+      buttonClicked = true;
+
+      // Perform your VPN start and redirection logic here
+
+      // Enable the button after 1 minute (60000 milliseconds)
+      setTimeout(enableButton, 60000);
+    }
+}
+
+  // Function to enable the button
+function enableButton() {
+    buttonClicked = false;
+}
 </script>
 <h1>yanjun's EC2 Instance Status</h1>
 <p>Instance ID: i-07360808c3dc6fed2</p>
@@ -97,33 +117,12 @@ function startVpnAndRedirect() {
         </tr>
     </table>
 
-    <button type="submit" name="start_regina_vpn" id="startButton" onclick="startVpnAndRedirect()" style="width: 200px; height: 50px; font-size: 16px; background-color: green; color: white;">Start Regina ***</button>
+    <button type="submit" name="start_regina_vpn" id="startButton" onclick="startVpnAndRedirect2()" style="width: 200px; height: 50px; font-size: 16px; background-color: green; color: white;">Start Regina ***</button>
     <br>
     <div id="messageContainer"></div>
     <button type="submit" name="stop_regina_vpn" id="stopButton" style="width: 200px; height: 50px; font-size: 16px; background-color: red; color: white;">Stop Regina ***</button>
     <br>
 
-    <script>
-  var buttonClicked = false;
-
-  // Function to handle the click event
-  function startVpnAndRedirect() {
-    if (!buttonClicked) {
-      // Set a flag to prevent further clicks
-      buttonClicked = true;
-
-      // Perform your VPN start and redirection logic here
-
-      // Enable the button after 1 minute (60000 milliseconds)
-      setTimeout(enableButton, 60000);
-    }
-  }
-
-  // Function to enable the button
-  function enableButton() {
-    buttonClicked = false;
-  }
-</script>
     <h1 style="color: red;">Regina's open *** Server bill </h1>
     <h2 style="color: red;">$0.005 per Elastic IP address not attached to a running instance per hour (prorated) </h2>
     <h2 style="color: red;">$0.12 per GB-month of General Purpose SSD (gp2) provisioned storage - Asia Pacific (Singapore)) </h2>
