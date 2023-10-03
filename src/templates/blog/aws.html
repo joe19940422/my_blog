@@ -104,22 +104,26 @@ function startVpnAndRedirect() {
     <br>
 
     <script>
-  // Function to enable the button after a specified time
-  function enableButton() {
-    document.getElementById("startButton").removeAttribute("disabled");
-  }
+  var buttonClicked = false;
 
   // Function to handle the click event
   function startVpnAndRedirect() {
-    // Disable the button when clicked
-    document.getElementById("startButton").setAttribute("disabled", "true");
+    if (!buttonClicked) {
+      // Set a flag to prevent further clicks
+      buttonClicked = true;
 
-    // Perform your VPN start and redirection logic here
+      // Perform your VPN start and redirection logic here
 
-    // Enable the button after 1 minute (60000 milliseconds)
-    setTimeout(enableButton, 60000);
+      // Enable the button after 1 minute (60000 milliseconds)
+      setTimeout(enableButton, 60000);
+    }
   }
-    </script>
+
+  // Function to enable the button
+  function enableButton() {
+    buttonClicked = false;
+  }
+</script>
     <h1 style="color: red;">Regina's open *** Server bill </h1>
     <h2 style="color: red;">$0.005 per Elastic IP address not attached to a running instance per hour (prorated) </h2>
     <h2 style="color: red;">$0.12 per GB-month of General Purpose SSD (gp2) provisioned storage - Asia Pacific (Singapore)) </h2>
