@@ -68,7 +68,7 @@
     <script>
         // Function to update the countdown
         function updateCountdown() {
-            const targetDate = new Date(2023, 10, 3); // November 3, 2023 (months are zero-based)
+            const targetDate = new Date(2023, 9, 8); // November 3, 2023 (months are zero-based)
             const currentDate = new Date();
             const timeDifference = targetDate - currentDate;
             const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Calculate days remaining
@@ -117,6 +117,15 @@
       </tr>
     </tbody>
   </table>
+    <head>
+    <title>Video Player</title>
+</head>
+<body>
+    <video controls width="640" height="360">
+        <source src="https://pengfei-lisanne-wedding.s3.amazonaws.com/Trouwfilm+Lisanne+%26+Fei+2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</body>
   <br>
   <div id="viewer"></div>
 </body>
