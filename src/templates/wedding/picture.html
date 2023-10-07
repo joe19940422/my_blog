@@ -109,12 +109,30 @@
 
 <body>
     <figure>
-        <video controls width="640" height="360">
+        <video id="videoPlayer" controls width="640" height="360">
             <source src="https://pengfei-lisanne-wedding.s3.amazonaws.com/Trouwfilm+Lisanne+%26+Fei+2.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <figcaption>婚禮電影 made by krisdo</figcaption>
+        <figcaption>Video Title Goes Here</figcaption>
+        <button id="fullscreenButton">Fullscreen</button>
     </figure>
+
+    <script>
+        const videoPlayer = document.getElementById("videoPlayer");
+        const fullscreenButton = document.getElementById("fullscreenButton");
+
+        fullscreenButton.addEventListener("click", () => {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) { /* Firefox */
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) { /* Chrome, Safari, and Opera */
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) { /* IE/Edge */
+                videoPlayer.msRequestFullscreen();
+            }
+        });
+    </script>
 </body>
 
   <br>
