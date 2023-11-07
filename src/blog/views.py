@@ -552,17 +552,18 @@ def aws_page(request):
         'Start': first_day,
         'End': last_day
     }
-    response = bill_client.get_cost_and_usage(
-        TimePeriod=time_period,
-        Granularity='MONTHLY',
-        Metrics=['BlendedCost'],
-        Filter={
-            'Dimensions': {
-                "Key": "REGION", "Values": ["ap-southeast-1"]
-            }
-        }
-    )
-    openvpn_amount = float(response['ResultsByTime'][0]['Total']['BlendedCost']['Amount']) * 1.25
+    # response = bill_client.get_cost_and_usage(
+    #     TimePeriod=time_period,
+    #     Granularity='MONTHLY',
+    #     Metrics=['BlendedCost'],
+    #     Filter={
+    #         'Dimensions': {
+    #             "Key": "REGION", "Values": ["ap-southeast-1"]
+    #         }
+    #     }
+    # )
+    openvpn_amount = 6 * 1.25
+    #openvpn_amount = float(response['ResultsByTime'][0]['Total']['BlendedCost']['Amount']) * 1.25
     # Extract the instance status
     try:  # Extract the instance status
         regina_instance_status = regina_response['InstanceStatuses'][0]['InstanceState']['Name']
