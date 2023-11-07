@@ -583,7 +583,7 @@ def aws_page(request):
                     cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
                     send_mail(
                         'VPN(regina): is Staring',
-                        f'VPN(regina): is Staring',
+                        f'VPN(regina): is Staring ip is {client_ip}',
                         'joe19940422@gmail.com',
                         ['joe19940422@gmail.com'],  # List of recipient emails
                         fail_silently=False,
