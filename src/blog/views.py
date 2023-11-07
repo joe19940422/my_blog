@@ -580,7 +580,7 @@ def aws_page(request):
                 # Check if the IP address is rate-limited
                 if not cache.get(cache_key):
                     # Set a cache value to indicate that the IP address is rate-limited
-                    cache.set(cache_key, True, 60)  # 60 seconds (1 minute)
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
                     send_mail(
                         'VPN(regina): is Staring',
                         f'VPN(regina): is Staring',
@@ -615,16 +615,26 @@ def aws_page(request):
             else:
                 return HttpResponseForbidden("Unable to determine client IP address.")
         elif 'stop_regina_vpn' in request.POST:
-            # Stop the instance
-            send_mail(
-                'VPN(regina): is Stoping',
-                f'VPN(regina): is Stoping',
-                'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
-            )
-            regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
-            regina_instance_status = 'stopping'
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+                    send_mail(
+                        'VPN(regina): is Stoping',
+                        f'VPN(regina): is Stoping',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+                    regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'stopping'
+                    # Stop the instance
+
 
     try:
         regina_response = regina_ec2_client.describe_instances(
