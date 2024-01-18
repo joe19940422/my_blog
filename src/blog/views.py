@@ -10,7 +10,7 @@ from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-
+from urllib.request import urlopen
 from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
@@ -420,6 +420,8 @@ import boto3
 from ipware import get_client_ip
 from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseForbidden
+
+
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
@@ -577,13 +579,26 @@ def aws_page(request):
                 # Define a cache key based on the client's IP address
                 cache_key = f'rate_limit_{client_ip}'
                 print(client_ip)
+                if client_ip == '':
+                    url = 'https://ipinfo.io/json'
+                else:
+                    url = 'https://ipinfo.io/' + client_ip + '/json'
+                res = urlopen(url)
+                # response from url(if res==None then check connection)
+                from json import load
+                data = load(res)
+                for attr in data.keys():
+                    # will print the data line by line
+                    print(attr, ' ' * 13 + '\t->\t', data[attr])
+                # will load the json response into data
+                    info = attr, ' ' * 13 + '\t->\t', data[attr]
                 # Check if the IP address is rate-limited
                 if not cache.get(cache_key):
                     # Set a cache value to indicate that the IP address is rate-limited
                     cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
                     send_mail(
                         'VPN(regina): is Staring',
-                        f'VPN(regina): is Staring ip is {client_ip}',
+                        f'VPN(regina): is Staring ip is {client_ip} info is {info}',
                         'joe19940422@gmail.com',
                         ['joe19940422@gmail.com'],  # List of recipient emails
                         fail_silently=False,
