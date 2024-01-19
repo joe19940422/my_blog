@@ -579,26 +579,14 @@ def aws_page(request):
                 # Define a cache key based on the client's IP address
                 cache_key = f'rate_limit_{client_ip}'
                 print(client_ip)
-                if client_ip == '':
-                    url = 'https://ipinfo.io/json'
-                else:
-                    url = 'https://ipinfo.io/' + client_ip + '/json'
-                res = urlopen(url)
-                # response from url(if res==None then check connection)
-                from json import load
-                data = load(res)
-                for attr in data.keys():
-                    # will print the data line by line
-                    print(attr, ' ' * 13 + '\t->\t', data[attr])
-                # will load the json response into data
-                    info = attr, ' ' * 13 + '\t->\t', data[attr]
+
                 # Check if the IP address is rate-limited
                 if not cache.get(cache_key):
                     # Set a cache value to indicate that the IP address is rate-limited
                     cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
                     send_mail(
                         'VPN(regina): is Staring',
-                        f'VPN(regina): is Staring ip is {client_ip} info is {info}',
+                        f'VPN(regina): is Staring ip is {client_ip}',
                         'joe19940422@gmail.com',
                         ['joe19940422@gmail.com'],  # List of recipient emails
                         fail_silently=False,
