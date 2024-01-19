@@ -10,7 +10,6 @@ from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-from urllib.request import urlopen
 from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
@@ -19,6 +18,7 @@ from datetime import datetime, timedelta
 
 
 translator = Translator()
+
 
 def get_page(request):
     page_number = request.GET.get("page")
@@ -155,53 +155,9 @@ def page_error(request):
     return render(request, "404.html", status=500)
 
 
-# class News():
-#     def __init__(self, page, country='', language='', translate='zh-tw'):
-#         self.page = page
-#         self.country = country
-#         self.language = language
-#         self.translate = translate
-#
-#     @classmethod
-#     def new(cls,request):
-#         newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-#         if cls.page == 'bbc':
-#             topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')
-#         else:
-#             topheadlines = newsapi.get_top_headlines(country=cls.country, language=cls.language)
-#         articles = topheadlines['articles']
-#
-#         desc = []
-#         news = []
-#         img = []
-#         publishedAt = []
-#         author = []
-#         for i in range(len(articles)):
-#             myarticles = articles[i]
-#
-#             news.append(myarticles['title'])
-#             if cls.page in ['bbc','taiwan']:
-#                 desc.append(myarticles['description'])
-#             else:
-#                 result = translator.translate(myarticles['description'], dest='zh-tw').text
-#                 desc.append(result)
-#             img.append(myarticles['urlToImage'])
-#             publishedAt.append(myarticles['publishedAt'])
-#             author.append(myarticles['author'])
-#         mylist = zip(news, desc, publishedAt, author, img)
-#         print(request)
-#         return render(request, cls.page+'html', context={"mylist": mylist})
-#
-#
-# China = News(page='china',country='cn',language='zh')
-# bbc = News(page='bbc')
-# taiwan = News(page='taiwan',country='cn',language='zh-tw')
-# dutch = News(page='dutch',country='cn',language='nl')
-
-
 def China(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='cn',language='zh')
+    topheadlines = newsapi.get_top_headlines(country='cn', language='zh')
 
     articles = topheadlines['articles']
 
@@ -251,7 +207,7 @@ def bbc(request):
 
 def taiwan(request):
     newsapi = NewsApiClient(api_key="0aaf327d9eed48e2adb87d10f7946650")
-    topheadlines = newsapi.get_top_headlines(country='tw',language='zh')
+    topheadlines = newsapi.get_top_headlines(country='tw', language='zh')
 
     articles = topheadlines['articles']
 
@@ -268,8 +224,8 @@ def taiwan(request):
         img.append(myarticles['urlToImage'])
         publishedAt.append(myarticles['publishedAt'])
         author.append(myarticles['author'])
-    mylist = zip(news,desc,publishedAt,author,img)
-    return render(request, 'taiwan.html', context={"mylist":mylist})
+    mylist = zip(news, desc, publishedAt, author, img)
+    return render(request, 'taiwan.html', context={"mylist": mylist})
 
 
 def dutch(request):
@@ -337,7 +293,7 @@ def visitor_chart(request):
     for result in queryset:
         labels.append(result['country_code'])
         data.append(result['Count'])
-    demo ={
+    demo = {
         'labels': labels,
         'data': data,
     }
