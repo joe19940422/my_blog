@@ -33,6 +33,21 @@ function enableButton() {
     buttonClicked = false;
 }
 </script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/static/css/Contact.css"/>
+  <style>
+    @import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
+    @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+    body {
+      background-image: url('https://clipartix.com/wp-content/uploads/2018/03/cartoon-wedding-ring-2018-29.jpg');
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
 <h1>yanjun's EC2 Instance Status</h1>
 <p>Instance ID: i-07360808c3dc6fed2</p>
 <p>Status: {{ instance_status }}</p>
@@ -44,21 +59,6 @@ function enableButton() {
     <button type="submit" name="start_instance">Start Instance</button>
     <br>
     <button type="submit" name="stop_instance">Stop Instance</button>
-
-{#    <h1>Fei Joe's *** Server</h1>#}
-{#    <p>Status: {{ vpn_instance_status }}</p>#}
-{#    <p>IP Address: {{ vpn_instance_ip }}</p>#}
-{#    <p>IP Country: Japan</p>#}
-{##}
-{#    <p>Gateway is {{ vpn_instance_ip }}</p>#}
-{#    <p>User name is feifei</p>#}
-{#    <p>password is feifei</p>#}
-{#    <p>pre-shard key is feifei</p>#}
-{#    <p>vpn protocol is L2TP </p>#}
-{##}
-{#    <button type="submit" name="start_vpn">Start ***</button>#}
-{#    <br>#}
-{#    <button type="submit" name="stop_vpn">Stop ***</button>#}
 
     <h1 style="color: red;">Regina's open *** Server</h1>
     <h1 style="color: green;">please ask fei joe for openvpn profile </h1>
@@ -120,7 +120,7 @@ function enableButton() {
     <button type="submit" name="start_regina_vpn" id="startButton" onclick="startVpnAndRedirect()" style="width: 200px; height: 50px; font-size: 16px; background-color: green; color: white;">Start Regina ***</button>
     <br>
     <div id="messageContainer"></div>
-    <button type="submit" name="stop_regina_vpn" id="stopButton" style="width: 200px; height: 50px; font-size: 16px; background-color: red; color: white;">Stop Regina ***</button>
+    <button type="submit" name="stop_regina_vpn" id="stopButton" style="width: 400px; height: 100px; font-size: 32px; background-color: red; color: white;">Stop Regina ***</button>
     <br>
 
     <h1 style="color: red;">Regina's open *** Server bill </h1>
