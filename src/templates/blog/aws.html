@@ -48,12 +48,12 @@ function enableButton() {
     }
   </style>
 </head>
-<!--
-<h1>yanjun's EC2 Instance Status</h1>
-<p>Instance ID: i-07360808c3dc6fed2</p>
-<p>Status: {{ instance_status }}</p>
-<p>IP Address: {{ instance_ip }}</p>
--->
+
+{#<h1>yanjun's EC2 Instance Status</h1>#}
+{#<p>Instance ID: i-07360808c3dc6fed2</p>#}
+{#<p>Status: {{ instance_status }}</p>#}
+{#<p>IP Address: {{ instance_ip }}</p>#}
+
 
 <form method="post" action="{% url 'blog:aws_page' %}">
     {% csrf_token %}
