@@ -574,10 +574,11 @@ def aws_page(request):
             else:
                 return HttpResponseForbidden("Unable to determine client IP address.")
         elif 'stop_regina_vpn' in request.POST:
+            client_ip, _ = get_client_ip(request)
             # Stop the instance
             send_mail(
                 'VPN(regina): is Stoping',
-                f'VPN(regina): is Stoping',
+                f'VPN(regina): is Stoping ip: {client_ip}',
                 'joe19940422@gmail.com',
                 ['joe19940422@gmail.com'],  # List of recipient emails
                 fail_silently=False,
