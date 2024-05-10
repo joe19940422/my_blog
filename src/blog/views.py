@@ -592,6 +592,7 @@ def aws_page(request):
             ip_adress = None
             for line in lines:
                 if line.startswith('# OVPN_ACCESS_SERVER_PROFILE='):
+                    print('hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
                     # Extract the IP address from the line
                     parts = line.split('@')
                     if len(parts) == 2:
@@ -601,7 +602,7 @@ def aws_page(request):
             with open(config_file_path, 'r') as file:
                 config_content = file.read()
 
-            updated_config_content = config_content.replace('54.254.226.22', ip_address)
+            updated_config_content = config_content.replace(ip_address, vpn_instance_ip)
             with open(config_file_path, 'w') as file:
                 file.write(updated_config_content)
             from django.core.mail import EmailMessage
