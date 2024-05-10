@@ -528,6 +528,19 @@ def aws_page(request):
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or instance status retrieval
         regina_instance_status = 'not running'
+
+    try:
+        regina_response = regina_ec2_client.describe_instances(
+            InstanceIds=[regina_instance_id]
+        )
+        if 'PublicIpAddress' in regina_response['Reservations'][0]['Instances'][0]:
+            regina_instance_ip = regina_response['Reservations'][0]['Instances'][0]['PublicIpAddress']
+        else:
+            regina_instance_ip = 'Not assigned'
+    except (BotoCoreError, ClientError, IndexError) as e:
+        # Handle any errors that occur during API call or IP retrieval
+        regina_instance_ip = 'unknown'
+
     if request.method == 'POST':
         if 'start_regina_vpn' in request.POST:
             client_ip, _ = get_client_ip(request)
@@ -589,10 +602,9 @@ def aws_page(request):
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 lines = file.readlines()
-            ip_adress = None
+
             for line in lines:
                 if line.startswith('# OVPN_ACCESS_SERVER_PROFILE='):
-                    print('hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
                     # Extract the IP address from the line
                     parts = line.split('@')
                     if len(parts) == 2:
@@ -602,7 +614,7 @@ def aws_page(request):
             with open(config_file_path, 'r') as file:
                 config_content = file.read()
 
-            updated_config_content = config_content.replace(ip_address, vpn_instance_ip)
+            updated_config_content = config_content.replace(ip_address, regina_instance_ip)
             with open(config_file_path, 'w') as file:
                 file.write(updated_config_content)
             from django.core.mail import EmailMessage
@@ -614,17 +626,8 @@ def aws_page(request):
             )
             email.attach_file(config_file_path)
             email.send()
-    try:
-        regina_response = regina_ec2_client.describe_instances(
-            InstanceIds=[regina_instance_id]
-        )
-        if 'PublicIpAddress' in regina_response['Reservations'][0]['Instances'][0]:
-            regina_instance_ip = regina_response['Reservations'][0]['Instances'][0]['PublicIpAddress']
-        else:
-            regina_instance_ip = 'Not assigned'
-    except (BotoCoreError, ClientError, IndexError) as e:
-        # Handle any errors that occur during API call or IP retrieval
-        regina_instance_ip = 'unknown'
+
+
 
     return render(request, 'blog/aws.html',
                   {
