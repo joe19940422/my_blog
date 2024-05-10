@@ -589,7 +589,8 @@ def aws_page(request):
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 config_content = file.read()
-            updated_config_content = config_content.replace('54.254.226.22', '54.254.226.222')
+                client_ip, _ = get_client_ip(request)
+            updated_config_content = config_content.replace('54.254.226.22', client_ip)
             with open(config_file_path, 'w') as file:
                 file.write(updated_config_content)
             from django.core.mail import EmailMessage
