@@ -598,7 +598,6 @@ def aws_page(request):
                 f'VPN(regina): new config ! ',
                 'joe19940422@gmail.com',
                 ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
             )
             email.attach_file(config_file_path)
             email.send()
