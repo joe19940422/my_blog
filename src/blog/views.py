@@ -588,9 +588,20 @@ def aws_page(request):
         if 'download_config' in request.POST:
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
+                lines = file.readlines()
+            ip_adress = None
+            for line in lines:
+                if line.startswith('# OVPN_ACCESS_SERVER_PROFILE='):
+                    # Extract the IP address from the line
+                    parts = line.split('@')
+                    if len(parts) == 2:
+                        ip_address = parts[1].strip()
+                        break  # Stop searching once IP address is found
+
+            with open(config_file_path, 'r') as file:
                 config_content = file.read()
-                client_ip, _ = get_client_ip(request)
-            updated_config_content = config_content.replace('54.254.226.22', client_ip)
+
+            updated_config_content = config_content.replace('54.254.226.22', ip_address)
             with open(config_file_path, 'w') as file:
                 file.write(updated_config_content)
             from django.core.mail import EmailMessage
