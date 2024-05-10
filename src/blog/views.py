@@ -585,7 +585,23 @@ def aws_page(request):
             )
             regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
             regina_instance_status = 'stopping'
-
+        if 'download_config' in request.POST:
+            config_file_path = '/root/regina.ovpn'
+            with open(config_file_path, 'r') as file:
+                config_content = file.read()
+            updated_config_content = config_content.replace('54.254.226.22', '54.254.226.222')
+            with open(config_file_path, 'w') as file:
+                file.write(updated_config_content)
+            from django.core.mail import EmailMessage
+            email = EmailMessage(
+                'VPN(regina): new config !',
+                f'VPN(regina): new config ! ',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
+            email.attach_file(config_file_path)
+            email.send()
     try:
         regina_response = regina_ec2_client.describe_instances(
             InstanceIds=[regina_instance_id]
