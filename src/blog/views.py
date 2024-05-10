@@ -620,9 +620,9 @@ def aws_page(request):
             from django.core.mail import EmailMessage
             email = EmailMessage(
                 'VPN(regina): new config !',
-                f'VPN(regina): new config ! ',
+                f'VPN(regina): new config  Please download this file and open it with openvpn ! ',
                 'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
+                ['joe19940422@gmail.com', '1738524677@qq.com'],  # List of recipient emails
             )
             email.attach_file(config_file_path)
             email.send()
