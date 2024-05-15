@@ -319,10 +319,13 @@ def get_currency_data():
     #     ProjectionExpression='currency_code, exchange_rate'  # Specify attributes to retrieve
     # )
     response = table.scan()
+    items = response['Items']
+    # Sort items by 'exchange_rate' using a lambda function
+    items_sorted = sorted(items, key=lambda x: Decimal(x['exchange_rate']))
     labels = []
     data = []
 
-    for item in response['Items']:
+    for item in items_sorted:
         labels.append(item['currency_code'])
         data.append(float(item['exchange_rate']))  # Convert exchange_rate to float
 
