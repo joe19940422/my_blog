@@ -314,11 +314,11 @@ def get_currency_data():
 
     table = dynamodb.Table(table_name)
 
-    response = table.query(
-        KeyConditionExpression=Key('currency_code').eq('USD') & Key('timestamp').gt(0),
-        ProjectionExpression='currency_code, exchange_rate'  # Specify attributes to retrieve
-    )
-
+    # response = table.query(
+    #     KeyConditionExpression=Key('currency_code').eq('USD') & Key('timestamp').gt(0),
+    #     ProjectionExpression='currency_code, exchange_rate'  # Specify attributes to retrieve
+    # )
+    response = table.scan()
     labels = []
     data = []
 
