@@ -303,6 +303,41 @@ def visitor_chart(request):
         'data': data,
     })
 
+
+from boto3.dynamodb.conditions import Key
+from decimal import Decimal
+
+
+def get_currency_data():
+    dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+    table_name = 'CurrencyExchangeRates'
+
+    table = dynamodb.Table(table_name)
+
+    response = table.query(
+        KeyConditionExpression=Key('exchange_rate').gt(0),  # Filter for timestamp > 0 (adjust as needed)
+        ProjectionExpression='currency_code, exchange_rate'  # Specify attributes to retrieve
+    )
+
+    labels = []
+    data = []
+
+    for item in response['Items']:
+        labels.append(item['currency_code'])
+        data.append(float(item['exchange_rate']))  # Convert exchange_rate to float
+
+    return labels, data
+
+
+def currency_chart(request):
+    # Get currency data from AWS DynamoDB
+    labels, data = get_currency_data()
+
+    return render(request, 'blog/currency_chart.html', {
+        'labels': labels,
+        'data': data,
+    })
+
 from .forms import ContactForm
 
 
