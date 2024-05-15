@@ -315,7 +315,7 @@ def get_currency_data():
     table = dynamodb.Table(table_name)
 
     response = table.query(
-        KeyConditionExpression=Key('exchange_rate').gt(0),  # Filter for timestamp > 0 (adjust as needed)
+        KeyConditionExpression=Key('currency_code').eq('USD') & Key('timestamp').gt(0),
         ProjectionExpression='currency_code, exchange_rate'  # Specify attributes to retrieve
     )
 
