@@ -329,17 +329,18 @@ def get_currency_data():
         labels.append(item['currency_code'])
         data.append(float(item['exchange_rate']))  # Convert exchange_rate to float
         tms.append(item['timestamp'])
-    return labels, data,  tms
+    return labels, data, tms, items_sorted
 
 
 def currency_chart(request):
     # Get currency data from AWS DynamoDB
-    labels, data, tms = get_currency_data()
+    labels, data, tms, items_sorted = get_currency_data()
 
     return render(request, 'blog/currency_chart.html', {
         'labels': labels,
         'data': data,
-        'tms': tms[0]
+        'tms': tms[0],
+        'items_sorted': items_sorted,
     })
 
 from .forms import ContactForm

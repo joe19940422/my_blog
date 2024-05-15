@@ -36,7 +36,7 @@
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Currency Value' // Label for y-axis (currency values)
+            labelString: 'Currency Rate' // Label for y-axis (currency Rate)
           }
         }]
       }
@@ -52,8 +52,10 @@
 
 <h4>currency rate is from Amsterdam time >> {{ tms }}</h4>
 <h4>The data update every in 5 minutes </h4>
+
 <!-- Image link -->
 <a href="https://github.com/joe19940422/bigdata_project/blob/main/aws/currency_exchange/currency_rate_pipeline.jpg?raw=true" target="_blank">
-  <img src="https://github.com/joe19940422/bigdata_project/blob/main/aws/currency_exchange/currency_rate_pipeline.jpg?raw=true" alt="Image Alt Text" width="900" height="400">
+  <img src="https://github.com/joe19940422/bigdata_project/blob/main/aws/currency_exchange/currency_rate_pipeline.jpg?raw=true" alt="Image Alt Text" width="1000" height="450">
 </a>
+    <h4> currency rate data>> {{ items_sorted }} </h4>>
 {% endblock %}
