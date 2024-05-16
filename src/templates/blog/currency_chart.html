@@ -47,7 +47,7 @@
     type: 'line',
     data: {
       datasets: [{
-        label: 'EURO to USD', // Label for the dataset
+        label: '1 EURO = ??? USD', // Label for the dataset
         data: {{ data2|safe }}, // Data values for the chart
         backgroundColor: '#1c3d9e', // Background color for the line (if needed)
         borderColor: '#1c9e5f', // Line color
@@ -84,9 +84,9 @@
 </script>
 
 
-<h4 style="color: #0015ff; text-decoration: none; font-size: 32px;">currency rate is from Amsterdam time >> {{ tms }}</h4>
+<h4 style="color: #0015ff; text-decoration: none; font-size: 32px;">Currency rate Amsterdam time {{ tms }}</h4>
 
-<h4>The data update every in 5 minutes </h4>
+<h4>The data update every in 10 minutes </h4>
 
     <style>
         /* Add some basic styling to the table for demonstration purposes */
