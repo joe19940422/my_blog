@@ -329,12 +329,26 @@ def get_currency_data():
         labels.append(item['currency_code'])
         data.append(float(item['exchange_rate']))  # Convert exchange_rate to float
         tms.append(item['timestamp'])
-    return labels, data, tms, items_sorted
+
+    table2 = dynamodb.Table('CurrencyExchangeRates2')
+
+    response = table2.scan(FilterExpression=Key('currency_code').eq('EUR'))
+    items = response['Items']
+    for item in items:
+        rates_sorted = sorted(item['rates'], key=lambda x: x['timestamp'])
+        item['rates'] = rates_sorted
+    parse_data = items[0]['rates']
+    labels2 = []
+    data2 = []
+    for item in parse_data:
+        labels2.append(item['timestamp'])
+        data2.append(float(item['rate']))
+    return labels, data, tms, items_sorted, labels2, data2
 
 
 def currency_chart(request):
     # Get currency data from AWS DynamoDB
-    labels, data, tms, items_sorted = get_currency_data()
+    labels, data, tms, items_sorted,labels2, data2 = get_currency_data()
     print(labels)
     print(data)
     return render(request, 'blog/currency_chart.html', {
@@ -342,37 +356,36 @@ def currency_chart(request):
         'data': data,
         'tms': tms[0],
         'items_sorted': items_sorted,
+        'labels2': labels2,
+        'data2': data2
     })
 
 
 def get_currency_data2():
     dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
-    table_name = 'CurrencyExchangeRates2'
 
-    table = dynamodb.Table(table_name)
+    table2 = dynamodb.Table('CurrencyExchangeRates2')
 
-    response = table.scan(FilterExpression=Key('currency_code').eq('EUR'))
+    response = table2.scan(FilterExpression=Key('currency_code').eq('EUR'))
     items = response['Items']
     for item in items:
         rates_sorted = sorted(item['rates'], key=lambda x: x['timestamp'])
         item['rates'] = rates_sorted
     parse_data = items[0]['rates']
-    labels = []
-    data = []
+    labels2 = []
+    data2 = []
     for item in parse_data:
-        labels.append(item['timestamp'])
-        data.append(float(item['rate']))
-    return labels, data
+        labels2.append(item['timestamp'])
+        data2.append(float(item['rate']))
+    return labels2, data2
 
 
 def currency_chart2(request):
     # Get currency data from AWS DynamoDB
-    labels, data = get_currency_data2()
-    print(labels)
-    print(data)
+    labels2, data2 = get_currency_data2()
     return render(request, 'blog/currency_chart2.html', {
-        'labels': labels,
-        'data': data,
+        'labels2': labels2,
+        'data2': data2,
     })
 
 from .forms import ContactForm
