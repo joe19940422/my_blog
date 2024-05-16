@@ -343,6 +343,36 @@ def currency_chart(request):
         'items_sorted': items_sorted,
     })
 
+
+def get_currency_data2():
+    dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+    table_name = 'CurrencyExchangeRates2'
+
+    table = dynamodb.Table(table_name)
+
+    response = table.scan(FilterExpression=Key('currency_code').eq('EUR'))
+    items = response['Items']
+    for item in items:
+        rates_sorted = sorted(item['rates'], key=lambda x: x['timestamp'])
+        item['rates'] = rates_sorted
+    parse_data = items[0]['rates']
+    labels = []
+    data = []
+    for item in parse_data:
+        labels.append(item['timestamp'])
+        data.append(float(item['rate']))
+    return labels, data
+
+
+def currency_chart2(request):
+    # Get currency data from AWS DynamoDB
+    labels, data, tms, items_sorted = get_currency_data2()
+
+    return render(request, 'blog/currency_chart2.html', {
+        'labels': labels,
+        'data': data,
+    })
+
 from .forms import ContactForm
 
 

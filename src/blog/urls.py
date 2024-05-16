@@ -22,6 +22,7 @@ urlpatterns = [
     path('pie-chart/', views.pie_chart, name='pie-chart'),
     path('visitor-chart/', views.visitor_chart, name='visitor-chart'),
     path('currency-chart/', views.currency_chart, name='currency-chart'),
+    path('currency-chart2/', views.currency_chart2, name='currency-chart2'),
     #path('contact/', views.contact_view, name='contact'),
     #path('rsvp/', views.rsvp, name='rsvp'),
     path('aws/', views.aws_page, name='aws_page'),
