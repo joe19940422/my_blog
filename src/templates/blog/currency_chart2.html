@@ -45,14 +45,11 @@
 
   // Wait for window to load before rendering the chart
   window.onload = function() {
-    var ctx = document.getElementById('currency-chart').getContext('2d');
+    var ctx = document.getElementById('currency-chart2').getContext('2d');
     window.myLine = new Chart(ctx, config); // Create a line chart
   };
 </script>
 
-<h4 style="color: #0015ff; text-decoration: none; font-size: 32px;">currency rate is from Amsterdam time >> {{ tms }}</h4>
-
-<h4>The data update every in 5 minutes </h4>
 
     <style>
         /* Add some basic styling to the table for demonstration purposes */
