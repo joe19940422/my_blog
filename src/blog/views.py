@@ -335,7 +335,8 @@ def get_currency_data():
 def currency_chart(request):
     # Get currency data from AWS DynamoDB
     labels, data, tms, items_sorted = get_currency_data()
-
+    print(labels)
+    print(data)
     return render(request, 'blog/currency_chart.html', {
         'labels': labels,
         'data': data,
