@@ -52,45 +52,7 @@
 
 
 <h4 style="color: #0015ff; text-decoration: none; font-size: 32px;">currency rate is from Amsterdam time >> {{ tms }}</h4>
-<script>
-  // Define chart configuration
-  var config = {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: 'time', // Label for the dataset
-        data: {{ data|safe }}, // Data values for the chart
-        backgroundColor: '#1c9e5f', // Background color for the line (if needed)
-        borderColor: '#1c9e5f', // Line color
-        borderWidth: 2 // Line width
-      }],
-      labels: {{ labels|safe }} // Labels for x-axis (country names)
-    },
-    options: {
-      responsive: true,
-      scales: {
-        xAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'time' // Label for x-axis (countries)
-          }
-        }],
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'Currency Rate' // Label for y-axis (currency Rate)
-          }
-        }]
-      }
-    }
-  };
 
-  // Wait for window to load before rendering the chart
-  window.onload = function() {
-    var ctx = document.getElementById('currency-chart2').getContext('2d');
-    window.myLine = new Chart(ctx, config); // Create a line chart
-  };
-</script>
 
 <h4>The data update every in 5 minutes </h4>
 
