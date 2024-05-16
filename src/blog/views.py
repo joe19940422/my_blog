@@ -341,7 +341,7 @@ def get_currency_data():
     labels2 = []
     data2 = []
     for item in parse_data:
-        labels2.append(item['timestamp'])
+        labels2.append(item['timestamp'].split('.')[0])
         data2.append(float(item['rate']))
     return labels, data, tms, items_sorted, labels2, data2
 
