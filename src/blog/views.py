@@ -348,7 +348,7 @@ def get_currency_data():
 
 def currency_chart(request):
     # Get currency data from AWS DynamoDB
-    labels, data, tms, items_sorted,labels2, data2 = get_currency_data()
+    labels, data, tms, items_sorted, labels2, data2 = get_currency_data()
     print(labels)
     print(data)
     return render(request, 'blog/currency_chart.html', {
@@ -361,32 +361,39 @@ def currency_chart(request):
     })
 
 
-def get_currency_data2():
+def get_weather_data():
     dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+    table_name = 'weather'
 
-    table2 = dynamodb.Table('CurrencyExchangeRates2')
-
-    response = table2.scan(FilterExpression=Key('currency_code').eq('EUR'))
+    table = dynamodb.Table(table_name)
+    response = table.scan(FilterExpression=Key('name').eq('Rotterdam'))
     items = response['Items']
-    for item in items:
-        rates_sorted = sorted(item['rates'], key=lambda x: x['timestamp'])
-        item['rates'] = rates_sorted
-    parse_data = items[0]['rates']
-    labels2 = []
-    data2 = []
-    for item in parse_data:
-        labels2.append(item['timestamp'])
-        data2.append(float(item['rate']))
-    return labels2, data2
+    print(items)
+    # Sort items by 'exchange_rate' using a lambda function
+    items_sorted = sorted(items, key=lambda x: x['dt'])[0]
+    visibility = items_sorted['visibility']
+    lon = items_sorted['coord']['lon']
+    lat = items_sorted['coord']['lat']
+    wind = items_sorted['wind']
+    name = items_sorted['name']
+    tms = items_sorted['tms']
+
+    return visibility, lon, lat, wind, name, tms
 
 
-def currency_chart2(request):
+def weather(request):
     # Get currency data from AWS DynamoDB
-    labels2, data2 = get_currency_data2()
-    return render(request, 'blog/currency_chart2.html', {
-        'labels2': labels2,
-        'data2': data2,
+    visibility, lon, lat, wind, name, tms = get_weather_data()
+
+    return render(request, 'blog/weather.html', {
+        'visibility': visibility,
+        'lon': lon,
+        'lat': lat,
+        'wind': wind,
+        'name': name,
+        'tms': tms
     })
+
 
 from .forms import ContactForm
 

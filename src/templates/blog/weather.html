@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <h2>Weather Data for {{ name }}</h2>
+  
+  <div>
+    <p><strong>Visibility:</strong> {{ visibility }}</p>
+    <p><strong>Longitude:</strong> {{ lon }}</p>
+    <p><strong>Latitude:</strong> {{ lat }}</p>
+    <p><strong>Wind:</strong> Speed: {{ wind.speed }} m/s, Degree: {{ wind.deg }}°</p>
+    <p><strong>Timestamp:</strong> {{ tms }}</p>
+  </div>
+  
+  <div>
+    <a href="{% url 'blog:index' %}">Back to home</a>
+  </div>
+{% endblock %}
