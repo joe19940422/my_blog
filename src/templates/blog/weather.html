@@ -25,13 +25,7 @@
       <p><strong>insert dynamdb time:</strong> {{ insert_dynamdb_time }}</p>
     </div>
   {% endif %}
-
-  <div>
-    <a href="{% url 'blog:index' %}">Back to home</a>
-  </div>
-{% endblock %}
-
-<h4>The data update every 5 minutes </h4>
+    <h4>The data update every 5 minutes </h4>
 
     <style>
         /* Add some basic styling to the table for demonstration purposes */
@@ -78,3 +72,7 @@
 <a href="https://github.com/joe19940422/bigdata_project/blob/main/aws/weather/weather.jpg?raw=true" target="_blank">
   <img src="https://github.com/joe19940422/bigdata_project/blob/main/aws/weather/weather.jpg?raw=true" alt="Image Alt Text" width="1000" height="450">
 </a>
+  <div>
+    <a href="{% url 'blog:index' %}">Back to home</a>
+  </div>
+{% endblock %}
