@@ -385,6 +385,7 @@ def get_weather_data(city_name):
 
 
 def weather(request):
+    city_name = request.GET.get('city', 'Rotterdam')  # Default to Rotterdam
     # Get currency data from AWS DynamoDB
     visibility, lon, lat, wind, name, weather_time, insert_dynamdb_time = get_weather_data()
 
