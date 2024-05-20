@@ -361,29 +361,32 @@ def currency_chart(request):
     })
 
 
-def get_weather_data():
+def get_weather_data(city_name):
     dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
     table_name = 'weather'
 
     table = dynamodb.Table(table_name)
-    response = table.scan(FilterExpression=Key('name').eq('Rotterdam'))
+    response = table.scan(FilterExpression=Key('name').eq(city_name))
     items = response['Items']
     print(items)
+    if not items:
+        return None, None, None, None, None, None
     # Sort items by 'exchange_rate' using a lambda function
-    items_sorted = sorted(items, key=lambda x: x['dt'])[0]
+    items_sorted = sorted(items, key=lambda x: x['dt'],reverse=True)[0]
     visibility = items_sorted['visibility']
     lon = items_sorted['coord']['lon']
     lat = items_sorted['coord']['lat']
     wind = items_sorted['wind']
     name = items_sorted['name']
-    tms = items_sorted['tms']
+    weather_time = items_sorted['tms']
+    insert_dynamdb_time = items_sorted['insert_time']
 
-    return visibility, lon, lat, wind, name, tms
+    return visibility, lon, lat, wind, name, weather_time, insert_dynamdb_time
 
 
 def weather(request):
     # Get currency data from AWS DynamoDB
-    visibility, lon, lat, wind, name, tms = get_weather_data()
+    visibility, lon, lat, wind, name, weather_time, insert_dynamdb_time = get_weather_data()
 
     return render(request, 'blog/weather.html', {
         'visibility': visibility,
@@ -391,7 +394,9 @@ def weather(request):
         'lat': lat,
         'wind': wind,
         'name': name,
-        'tms': tms
+        'weather_time': weather_time,
+        'insert_dynamdb_time': insert_dynamdb_time,
+        'cities': ['Rotterdam', 'Taipei']  # List of cities
     })
 
 
