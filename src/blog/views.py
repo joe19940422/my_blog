@@ -378,16 +378,17 @@ def get_weather_data(city_name):
     lat = items_sorted['coord']['lat']
     wind = items_sorted['wind']
     name = items_sorted['name']
+    sys = items_sorted['sys']
     weather_time = items_sorted['tms']
     insert_dynamdb_time = items_sorted['insert_time']
 
-    return visibility, lon, lat, wind, name, weather_time, insert_dynamdb_time
+    return visibility, lon, lat, wind, name, sys, weather_time, insert_dynamdb_time
 
 
 def weather(request):
     city_name = request.GET.get('city', 'Rotterdam')  # Default to Rotterdam
     # Get currency data from AWS DynamoDB
-    visibility, lon, lat, wind, name, weather_time, insert_dynamdb_time = get_weather_data(city_name)
+    visibility, lon, lat, wind, name, sys, weather_time, insert_dynamdb_time = get_weather_data(city_name)
 
     return render(request, 'blog/weather.html', {
         'visibility': visibility,
@@ -395,6 +396,7 @@ def weather(request):
         'lat': lat,
         'wind': wind,
         'name': name,
+        'sys': sys,
         'weather_time': weather_time,
         'insert_dynamdb_time': insert_dynamdb_time,
         'cities': ['Rotterdam', 'Taipei']  # List of cities
