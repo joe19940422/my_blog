@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <h2>Weather Data</h2>
+  <h1>Weather Data</h1>
 
   <form method="get" action="{% url 'blog:weather' %}">
     <label for="city">Select a city:</label>
@@ -30,3 +30,51 @@
     <a href="{% url 'blog:index' %}">Back to home</a>
   </div>
 {% endblock %}
+
+<h4>The data update every 5 minutes </h4>
+
+    <style>
+        /* Add some basic styling to the table for demonstration purposes */
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 2px solid black;
+            padding: 8px;
+        }
+    </style>
+    <table>
+        <tr>
+            <th>Cloud</th>
+            <th>AWS</th>
+        </tr>
+        <tr>
+            <td>Severless</td>
+            <td>Amazon Lambda</td>
+        </tr>
+        <tr>
+            <td>pipeline</td>
+            <td>EventBridge</td>
+        </tr>
+        <tr>
+            <td>Database</td>
+            <td>Amazon DynamoDB</td>
+        </tr>
+        <tr>
+            <td>Streaming</td>
+            <td>Amazon Kinesis</td>
+        </tr>
+        <tr>
+            <td> Web</td>
+            <td>Django</td>
+        </tr>
+    </table>
+    <a href="http://www.pengfeiqiao.com/blog/detail/12/" target="_blank" style="color: #0015ff; text-decoration: none; font-size: 32px;">View Project fake code  Click here </a>
+    <br>
+
+<br>
+<!-- Image link -->
+<a href="https://github.com/joe19940422/bigdata_project/blob/main/aws/weather/weather.jpg?raw=true" target="_blank">
+  <img src="https://github.com/joe19940422/bigdata_project/blob/main/aws/weather/weather.jpg?raw=true" alt="Image Alt Text" width="1000" height="450">
+</a>
