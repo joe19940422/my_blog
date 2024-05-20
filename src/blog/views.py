@@ -370,7 +370,7 @@ def get_weather_data(city_name):
     items = response['Items']
     print(items)
     if not items:
-        return None, None, None, None, None, None
+        return None, None, None, None, None, None, None, None, None
     # Sort items by 'exchange_rate' using a lambda function
     items_sorted = sorted(items, key=lambda x: x['dt'],reverse=True)[0]
     visibility = items_sorted['visibility']
@@ -379,16 +379,17 @@ def get_weather_data(city_name):
     wind = items_sorted['wind']
     name = items_sorted['name']
     sys = items_sorted['sys']
+    main = items_sorted['main']
     weather_time = items_sorted['tms']
     insert_dynamdb_time = items_sorted['insert_time']
 
-    return visibility, lon, lat, wind, name, sys, weather_time, insert_dynamdb_time
+    return visibility, lon, lat, wind, name, sys, main, weather_time, insert_dynamdb_time
 
 
 def weather(request):
     city_name = request.GET.get('city', 'Rotterdam')  # Default to Rotterdam
-    # Get currency data from AWS DynamoDB
-    visibility, lon, lat, wind, name, sys, weather_time, insert_dynamdb_time = get_weather_data(city_name)
+    # Get weather data from AWS DynamoDB
+    visibility, lon, lat, wind, name, sys, main, weather_time, insert_dynamdb_time = get_weather_data(city_name)
 
     return render(request, 'blog/weather.html', {
         'visibility': visibility,
@@ -397,6 +398,7 @@ def weather(request):
         'wind': wind,
         'name': name,
         'sys': sys,
+        'main': main,
         'weather_time': weather_time,
         'insert_dynamdb_time': insert_dynamdb_time,
         'cities': ['Rotterdam', 'Taipei']  # List of cities
