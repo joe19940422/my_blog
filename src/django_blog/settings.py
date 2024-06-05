@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mdeditor',
     'django_requestlogging',
     'crispy_forms',
+    'django_extensions',
 
 ]
 
