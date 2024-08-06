@@ -730,6 +730,7 @@ def aws_page(request):
             email.send()
 
         if 'start_regina_vpn_one_hour' in request.POST:
+            ## schedule a job to stop vpn server
             from django.utils import timezone
             sqs = boto3.client('sqs', region_name='us-east-1')
             queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
@@ -742,6 +743,120 @@ def aws_page(request):
                 MessageBody=json.dumps(message_body),
                 DelaySeconds=120  # Delay for 2 minutes
             )
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+                    send_mail(
+                        'VPN(regina): is Staring 1 hour ',
+                        f'VPN(regina): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+
+                    # Start the instance
+                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'starting'
+
+                    return HttpResponse("申請1小時成功.")
+                else:
+                    return HttpResponseForbidden(
+                        "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
+
+        if 'start_regina_vpn_two_hour' in request.POST:
+            ## schedule a job to stop vpn server
+            from django.utils import timezone
+            sqs = boto3.client('sqs', region_name='us-east-1')
+            queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
+            message_body = {
+                'instance_id': regina_instance_id,
+                'stop_time': (timezone.now() + timezone.timedelta(hours=2)).isoformat()
+            }
+            sqs.send_message(
+                QueueUrl=queue_url,
+                MessageBody=json.dumps(message_body),
+                DelaySeconds=120  # Delay for 2 minutes
+            )
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+                    send_mail(
+                        'VPN(regina): is Staring 2 hour ',
+                        f'VPN(regina): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+
+                    # Start the instance
+                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'starting'
+
+                    return HttpResponse("申請2小時成功.")
+                else:
+                    return HttpResponseForbidden(
+                        "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
+
+        if 'start_regina_vpn_three_hour' in request.POST:
+            ## schedule a job to stop vpn server
+            from django.utils import timezone
+            sqs = boto3.client('sqs', region_name='us-east-1')
+            queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
+            message_body = {
+                'instance_id': regina_instance_id,
+                'stop_time': (timezone.now() + timezone.timedelta(hours=3)).isoformat()
+            }
+            sqs.send_message(
+                QueueUrl=queue_url,
+                MessageBody=json.dumps(message_body),
+                DelaySeconds=120  # Delay for 2 minutes
+            )
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+                    send_mail(
+                        'VPN(regina): is Staring 3 hour ',
+                        f'VPN(regina): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+
+                    # Start the instance
+                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'starting'
+
+                    return HttpResponse("申請3小時成功.")
+                else:
+                    return HttpResponseForbidden(
+                        "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
 
     return render(request, 'blog/aws.html',
                   {
