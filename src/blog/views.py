@@ -752,7 +752,7 @@ def aws_page(request):
             queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
             message_body = {
                 'instance_id': regina_instance_id,
-                'stop_time': (timezone.now() + timezone.timedelta(minutes=2)).isoformat()
+                'stop_time': (timezone.now() + timezone.timedelta(minutes=60)).isoformat()
             }
             sqs.send_message(
                 QueueUrl=queue_url,
