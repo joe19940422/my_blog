@@ -480,6 +480,22 @@ from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseForbidden
 
 
+html_content = """
+    <html>
+    <head>
+        <title>Redirecting</title>
+        <script type="text/javascript">
+            // Redirect to Google after a delay
+            setTimeout(function() {
+                window.location.href = "http://pengfeiqiao.com/blog/aws/";
+            }, 3000); // 3000 milliseconds = 2 seconds
+        </script>
+    </head>
+    <body>
+        <p>請稍候 2 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
+    </body>
+    </html>
+    """
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
@@ -683,7 +699,7 @@ def aws_page(request):
                     regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
                     regina_instance_status = 'starting'
 
-                    return HttpResponse("Request processed successfully.")
+                    return HttpResponse(html_content)
                 else:
                     return HttpResponseForbidden("Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
             else:
@@ -765,7 +781,7 @@ def aws_page(request):
                     regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
                     regina_instance_status = 'starting'
 
-                    return HttpResponse("申請1小時成功.")
+                    return HttpResponse(html_content)
                 else:
                     return HttpResponseForbidden(
                         "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
@@ -808,7 +824,7 @@ def aws_page(request):
                     regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
                     regina_instance_status = 'starting'
 
-                    return HttpResponse("申請2小時成功.")
+                    return HttpResponse(html_content)
                 else:
                     return HttpResponseForbidden(
                         "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
@@ -851,7 +867,7 @@ def aws_page(request):
                     regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
                     regina_instance_status = 'starting'
 
-                    return HttpResponse("申請3小時成功.")
+                    return HttpResponse(html_content)
                 else:
                     return HttpResponseForbidden(
                         "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
