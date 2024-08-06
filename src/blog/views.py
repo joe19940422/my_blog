@@ -724,12 +724,24 @@ def aws_page(request):
                 'VPN(regina): new config !',
                 f'VPN(regina): new config  Please download this file and open it with openvpn ! ',
                 'joe19940422@gmail.com',
-                ['joe19940422@gmail.com', '1738524677@qq.com'],  # List of recipient emails
+                ['joe19940422@gmail.com', '1738524677@qq.com', '949936589@qq.com'],  # List of recipient emails
             )
             email.attach_file(config_file_path)
             email.send()
 
-
+        if 'start_regina_vpn_one_hour' in request.POST:
+            from django.utils import timezone
+            sqs = boto3.client('sqs', region_name='us-east-1')
+            queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
+            message_body = {
+                'instance_id': regina_instance_id,
+                'stop_time': (timezone.now() + timezone.timedelta(minutes=2)).isoformat()
+            }
+            sqs.send_message(
+                QueueUrl=queue_url,
+                MessageBody=json.dumps(message_body),
+                DelaySeconds=120  # Delay for 2 minutes
+            )
 
     return render(request, 'blog/aws.html',
                   {
