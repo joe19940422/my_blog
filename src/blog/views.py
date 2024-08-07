@@ -488,11 +488,11 @@ html_content = """
             // Redirect to Google after a delay
             setTimeout(function() {
                 window.location.href = "http://pengfeiqiao.com/blog/aws/";
-            }, 8000); // 8000 milliseconds = 8 seconds
+            }, 16000); // 16000 milliseconds = 16 seconds
         </script>
     </head>
     <body>
-        <p>請稍候 8 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
+        <p>請稍候 16 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
     </body>
     </html>
     """
@@ -513,6 +513,7 @@ html_content_vpn_already_started = """
     </body>
     </html>
     """
+
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
@@ -762,6 +763,10 @@ def aws_page(request):
             email.attach_file(config_file_path)
             email.send()
 
+            with open(config_file_path, 'rb') as file:
+                response = HttpResponse(file.read(), content_type='application/ovpn')
+                response['Content-Disposition'] = f'attachment; filename={config_file_path.split("/")[-1]}'
+                return response
         if 'start_regina_vpn_one_hour' in request.POST:
             if regina_instance_status != 'not running':
                 return HttpResponse(html_content_vpn_already_started)
@@ -809,6 +814,8 @@ def aws_page(request):
                 return HttpResponseForbidden("Unable to determine client IP address.")
 
         if 'start_regina_vpn_two_hour' in request.POST:
+            if regina_instance_status != 'not running':
+                return HttpResponse(html_content_vpn_already_started)
             ## schedule a job to stop vpn server
             from django.utils import timezone
             sqs = boto3.client('sqs', region_name='us-east-1')
@@ -853,6 +860,8 @@ def aws_page(request):
                 return HttpResponseForbidden("Unable to determine client IP address.")
 
         if 'start_regina_vpn_three_hour' in request.POST:
+            if regina_instance_status != 'not running':
+                return HttpResponse(html_content_vpn_already_started)
             ## schedule a job to stop vpn server
             from django.utils import timezone
             sqs = boto3.client('sqs', region_name='us-east-1')
@@ -897,6 +906,8 @@ def aws_page(request):
                 return HttpResponseForbidden("Unable to determine client IP address.")
 
         if 'start_regina_vpn_four_hour' in request.POST:
+            if regina_instance_status != 'not running':
+                return HttpResponse(html_content_vpn_already_started)
             ## schedule a job to stop vpn server
             from django.utils import timezone
             sqs = boto3.client('sqs', region_name='us-east-1')
