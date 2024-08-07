@@ -514,6 +514,23 @@ html_content_vpn_already_started = """
     </html>
     """
 
+html_content_vpn_not_already = """
+    <html>
+    <head>
+        <title>Redirecting</title>
+        <script type="text/javascript">
+            // Redirect to Google after a delay
+            setTimeout(function() {
+                window.location.href = "http://pengfeiqiao.com/blog/aws/";
+            }, 4000); // 8000 milliseconds = 8 seconds
+        </script>
+    </head>
+    <body>
+        <p>嘿 嘿，伺服器仍在啟動，您需要稍等一下 我們將進入主頁，請再試一次 下載您的配置.</p>
+    </body>
+    </html>
+    """
+
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
@@ -735,6 +752,8 @@ def aws_page(request):
             regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
             regina_instance_status = 'stopping'
         if 'download_config_email' in request.POST:
+            if regina_instance_ip == 'Not assigned':
+                return HttpResponse(html_content_vpn_not_already)
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 lines = file.readlines()
@@ -764,6 +783,9 @@ def aws_page(request):
             email.send()
 
         if 'download_config_local' in request.POST:
+            if regina_instance_ip == 'Not assigned':
+                return HttpResponse(html_content_vpn_not_already)
+
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 lines = file.readlines()
