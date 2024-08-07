@@ -488,11 +488,11 @@ html_content = """
             // Redirect to Google after a delay
             setTimeout(function() {
                 window.location.href = "http://pengfeiqiao.com/blog/aws/";
-            }, 3000); // 3000 milliseconds = 2 seconds
+            }, 8000); // 8000 milliseconds = 8 seconds
         </script>
     </head>
     <body>
-        <p>請稍候 2 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
+        <p>請稍候 8 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
     </body>
     </html>
     """
@@ -757,7 +757,7 @@ def aws_page(request):
             sqs.send_message(
                 QueueUrl=queue_url,
                 MessageBody=json.dumps(message_body),
-                DelaySeconds=120  # Delay for 2 minutes
+                DelaySeconds=3600  # Delay for 2 minutes
             )
             client_ip, _ = get_client_ip(request)
             if client_ip:
@@ -800,7 +800,7 @@ def aws_page(request):
             sqs.send_message(
                 QueueUrl=queue_url,
                 MessageBody=json.dumps(message_body),
-                DelaySeconds=120  # Delay for 2 minutes
+                DelaySeconds=7200  # Delay for 2 minutes
             )
             client_ip, _ = get_client_ip(request)
             if client_ip:
@@ -843,7 +843,7 @@ def aws_page(request):
             sqs.send_message(
                 QueueUrl=queue_url,
                 MessageBody=json.dumps(message_body),
-                DelaySeconds=120  # Delay for 2 minutes
+                DelaySeconds=10800  # Delay for 3 h
             )
             client_ip, _ = get_client_ip(request)
             if client_ip:
