@@ -481,21 +481,56 @@ from django.http import HttpResponse, HttpResponseForbidden
 
 
 html_content = """
-    <html>
-    <head>
-        <title>Redirecting</title>
-        <script type="text/javascript">
-            // Redirect to Google after a delay
-            setTimeout(function() {
-                window.location.href = "http://pengfeiqiao.com/blog/aws/";
-            }, 16000); // 16000 milliseconds = 16 seconds
-        </script>
-    </head>
-    <body>
-        <p>請稍候 16 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
-    </body>
-    </html>
-    """
+<html>
+<head>
+    <title>Redirecting</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .container p {
+            font-size: 1.5em;
+            color: #333333;
+        }
+    </style>
+    <script type="text/javascript">
+        // Redirect to the specified URL after a delay
+        setTimeout(function() {
+            window.location.href = "http://pengfeiqiao.com/blog/aws/";
+        }, 16000); // 16000 milliseconds = 16 seconds
+
+        // Countdown timer
+        var countdown = 16;
+        function updateCountdown() {
+            if (countdown > 0) {
+                countdown--;
+                document.getElementById('countdown').innerHTML = countdown;
+            }
+        }
+        setInterval(updateCountdown, 1000); // Update countdown every second
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p>請稍候 <span id="countdown">16</span> 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
+    </div>
+</body>
+</html>
+"""
+
 
 html_content_vpn_already_started = """
     <html>
