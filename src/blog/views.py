@@ -734,7 +734,7 @@ def aws_page(request):
             )
             regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
             regina_instance_status = 'stopping'
-        if 'download_config' in request.POST:
+        if 'download_config_email' in request.POST:
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 lines = file.readlines()
@@ -762,6 +762,26 @@ def aws_page(request):
             )
             email.attach_file(config_file_path)
             email.send()
+
+        if 'download_config_local' in request.POST:
+            config_file_path = '/root/regina.ovpn'
+            with open(config_file_path, 'r') as file:
+                lines = file.readlines()
+
+            for line in lines:
+                if line.startswith('# OVPN_ACCESS_SERVER_PROFILE='):
+                    # Extract the IP address from the line
+                    parts = line.split('@')
+                    if len(parts) == 2:
+                        ip_address = parts[1].strip()
+                        break  # Stop searching once IP address is found
+
+            with open(config_file_path, 'r') as file:
+                config_content = file.read()
+
+            updated_config_content = config_content.replace(ip_address, regina_instance_ip)
+            with open(config_file_path, 'w') as file:
+                file.write(updated_config_content)
 
             with open(config_file_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/ovpn')
