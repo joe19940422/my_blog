@@ -496,6 +496,23 @@ html_content = """
     </body>
     </html>
     """
+
+html_content_vpn_already_started = """
+    <html>
+    <head>
+        <title>Redirecting</title>
+        <script type="text/javascript">
+            // Redirect to Google after a delay
+            setTimeout(function() {
+                window.location.href = "http://pengfeiqiao.com/blog/aws/";
+            }, 4000); // 8000 milliseconds = 8 seconds
+        </script>
+    </head>
+    <body>
+        <p>嘿 伺服器已經啟動了你不需要啟動，我們將進入主頁，請下載您的配置.</p>
+    </body>
+    </html>
+    """
 def aws_page(request):
     # Initialize Boto3 client
     ec2_client = boto3.client('ec2', region_name='us-east-1')
@@ -746,6 +763,8 @@ def aws_page(request):
             email.send()
 
         if 'start_regina_vpn_one_hour' in request.POST:
+            if regina_instance_status != 'not running':
+                return HttpResponse(html_content_vpn_already_started)
             ## schedule a job to stop vpn server
             from django.utils import timezone
             sqs = boto3.client('sqs', region_name='us-east-1')
@@ -860,6 +879,50 @@ def aws_page(request):
                     cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
                     send_mail(
                         'VPN(regina): is Staring 3 hour ',
+                        f'VPN(regina): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+
+                    # Start the instance
+                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'starting'
+
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
+
+        if 'start_regina_vpn_four_hour' in request.POST:
+            ## schedule a job to stop vpn server
+            from django.utils import timezone
+            sqs = boto3.client('sqs', region_name='us-east-1')
+            queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
+            message_body = {
+                'instance_id': regina_instance_id,
+                'start_time': timezone.now().isoformat(),
+                'total_delay': 14400  # 4 hours in seconds
+            }
+            sqs.send_message(
+                QueueUrl=queue_url,
+                MessageBody=json.dumps(message_body),
+                DelaySeconds=900
+            )
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+                    send_mail(
+                        'VPN(regina): is Staring 4 hour ',
                         f'VPN(regina): is Staring ip is {client_ip}',
                         'joe19940422@gmail.com',
                         ['joe19940422@gmail.com'],  # List of recipient emails
