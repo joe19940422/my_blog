@@ -752,12 +752,13 @@ def aws_page(request):
             queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
             message_body = {
                 'instance_id': regina_instance_id,
-                'stop_time': (timezone.now() + timezone.timedelta(minutes=60)).isoformat()
+                'start_time': timezone.now().isoformat(),
+                'total_delay': 3600  # 1 hours in seconds
             }
             sqs.send_message(
                 QueueUrl=queue_url,
                 MessageBody=json.dumps(message_body),
-                DelaySeconds=3600  # Delay for 2 minutes
+                DelaySeconds=900
             )
             client_ip, _ = get_client_ip(request)
             if client_ip:
@@ -795,12 +796,13 @@ def aws_page(request):
             queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
             message_body = {
                 'instance_id': regina_instance_id,
-                'stop_time': (timezone.now() + timezone.timedelta(hours=2)).isoformat()
+                'start_time': timezone.now().isoformat(),
+                'total_delay': 7200  # 2 hours in seconds
             }
             sqs.send_message(
                 QueueUrl=queue_url,
                 MessageBody=json.dumps(message_body),
-                DelaySeconds=7200  # Delay for 2 minutes
+                DelaySeconds=900
             )
             client_ip, _ = get_client_ip(request)
             if client_ip:
@@ -838,12 +840,13 @@ def aws_page(request):
             queue_url = 'https://sqs.us-east-1.amazonaws.com/034847449190/my-vpn'
             message_body = {
                 'instance_id': regina_instance_id,
-                'stop_time': (timezone.now() + timezone.timedelta(hours=3)).isoformat()
+                'start_time': timezone.now().isoformat(),
+                'total_delay': 10800  # 3 hours in seconds
             }
             sqs.send_message(
                 QueueUrl=queue_url,
                 MessageBody=json.dumps(message_body),
-                DelaySeconds=10800  # Delay for 3 h
+                DelaySeconds=900
             )
             client_ip, _ = get_client_ip(request)
             if client_ip:
