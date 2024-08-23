@@ -17,7 +17,7 @@ from botocore.exceptions import BotoCoreError, ClientError
 from datetime import datetime, timedelta
 from boto3.dynamodb.conditions import Key
 from decimal import Decimal
-import datetime
+
 
 translator = Translator()
 
