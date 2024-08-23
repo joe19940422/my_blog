@@ -715,7 +715,7 @@ def aws_page(request):
         if 'download_config_email' in request.POST:
             if regina_instance_ip == 'Not assigned':
                 return HttpResponse(html_content_vpn_not_already)
-            timestamp = datetime.datetime.now().strftime('%y%m%d-%H-%M-%S')
+            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
             new_file_path = f'/root/regina-{timestamp}.ovpn'
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
@@ -748,7 +748,7 @@ def aws_page(request):
         if 'download_config_local' in request.POST:
             if regina_instance_ip == 'Not assigned':
                 return HttpResponse(html_content_vpn_not_already)
-            timestamp = datetime.datetime.now().strftime('%y%m%d-%H-%M-%S')
+            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
             new_file_path = f'/root/regina-{timestamp}.ovpn'
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
