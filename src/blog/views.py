@@ -15,7 +15,8 @@ from googletrans import Translator
 from django.core.mail import send_mail
 from botocore.exceptions import BotoCoreError, ClientError
 from datetime import datetime, timedelta
-
+from boto3.dynamodb.conditions import Key
+from decimal import Decimal
 
 translator = Translator()
 
@@ -261,19 +262,11 @@ def pie_chart(request):
     data = []
 
     queryset = City.objects.order_by('-population')[:5]
-    print(queryset)
-    """
-    <QuerySet [<City: City object (1)>, <City: City object (2)>, <City: City object (3)>, <City: City object (4)>, <City: City object (5)>]>
-    """
-    print(type(queryset))
+
     for city in queryset:
         labels.append(city.name)
         data.append(city.population)
-    demo = {
-        'labels': labels,
-        'data': data,
-    }
-    print(demo)
+
     return render(request, 'blog/pie_chart.html', {
         'labels': labels,
         'data': data,
@@ -285,27 +278,17 @@ def visitor_chart(request):
     data = []
     # select count(DISTINCT ip), v.country_code  from visitor v group by v.country_code
     queryset = Visitor.objects.exclude(country_code__isnull=True).values("country_code").annotate(Count=Count("ip", distinct=True)).order_by("-Count")
-    print(queryset)
-    print(type(queryset))
     """
     <QuerySet [{'country_code': 'TW', 'Count': 1}, {'country_code': 'NL', 'Count': 1}, {'country_code': '', 'Count': 1}, {'country_code': 'UA', 'Count': 1}, {'country_code': 'RU', 'Count': 1}, {'country_code': 'DE', 'Count': 2}]>
     """
     for result in queryset:
         labels.append(result['country_code'])
         data.append(result['Count'])
-    demo = {
-        'labels': labels,
-        'data': data,
-    }
-    print(demo)
+
     return render(request, 'blog/visitor_chart.html', {
         'labels': labels,
         'data': data,
     })
-
-
-from boto3.dynamodb.conditions import Key
-from decimal import Decimal
 
 
 def get_currency_data():
@@ -466,7 +449,6 @@ def contact_view(request):
 def rsvp(request):
 
     queryset = Contact.objects.all()
-    print(queryset)
 
     return render(request, 'blog/rsvp.html', {
         'queryset': queryset
@@ -567,64 +549,7 @@ html_content_vpn_not_already = """
     """
 
 def aws_page(request):
-    # Initialize Boto3 client
-    ec2_client = boto3.client('ec2', region_name='us-east-1')
 
-    # Retrieve instance status
-    # instance_id = 'i-07360808c3dc6fed2'
-    # response = ec2_client.describe_instance_status(
-    #     InstanceIds=[instance_id]
-    # )
-    #
-    # # Extract the instance status
-    # try:  # Extract the instance status
-    #     instance_status = response['InstanceStatuses'][0]['InstanceState']['Name']
-    # except (BotoCoreError, ClientError, IndexError) as e:
-    #     # Handle any errors that occur during API call or instance status retrieval
-    #     instance_status = 'not running'
-    # if request.method == 'POST':
-    #     if 'start_instance' in request.POST:
-    #         send_mail(
-    #             'EC2: is Staring',
-    #             f'EC2: is Staring',
-    #             'joe19940422@gmail.com',
-    #             ['joe19940422@gmail.com'],  # List of recipient emails
-    #             fail_silently=False,
-    #         )
-    #         # Start the instance
-    #         ec2_client.start_instances(InstanceIds=[instance_id])
-    #         instance_status = 'starting'
-    #
-    #     elif 'stop_instance' in request.POST:
-    #         # Stop the instance
-    #         send_mail(
-    #             'EC2: is Stoping',
-    #             f'EC2: is Stoping',
-    #             'joe19940422@gmail.com',
-    #             ['joe19940422@gmail.com'],  # List of recipient emails
-    #             fail_silently=False,
-    #         )
-    #         ec2_client.stop_instances(InstanceIds=[instance_id])
-    #         instance_status = 'stopping'
-    #
-    # try:
-    #     response = ec2_client.describe_instances(
-    #         InstanceIds=[instance_id]
-    #     )
-    #     if 'PublicIpAddress' in response['Reservations'][0]['Instances'][0]:
-    #         instance_ip = response['Reservations'][0]['Instances'][0]['PublicIpAddress']
-    #     else:
-    #         instance_ip = 'Not assigned'
-    # except (BotoCoreError, ClientError, IndexError) as e:
-    #     # Handle any errors that occur during API call or IP retrieval
-    #     instance_ip = 'unknown'
-
-    ##########################################################################
-    ##########################################################################
-    ##########################################################################
-    ##########################################################################
-    ##########################################################################
-    ##########################################################################
     vpn_ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
 
     # Retrieve instance status
@@ -789,6 +714,8 @@ def aws_page(request):
         if 'download_config_email' in request.POST:
             if regina_instance_ip == 'Not assigned':
                 return HttpResponse(html_content_vpn_not_already)
+            timestamp = datetime.datetime.now().strftime('%y%m%d-%H-%M-%S')
+            new_file_path = f'/root/regina-{timestamp}.ovpn'
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 lines = file.readlines()
@@ -805,7 +732,7 @@ def aws_page(request):
                 config_content = file.read()
 
             updated_config_content = config_content.replace(ip_address, regina_instance_ip)
-            with open(config_file_path, 'w') as file:
+            with open(new_file_path, 'w') as file:
                 file.write(updated_config_content)
             from django.core.mail import EmailMessage
             email = EmailMessage(
@@ -814,13 +741,14 @@ def aws_page(request):
                 'joe19940422@gmail.com',
                 ['joe19940422@gmail.com', '1738524677@qq.com', '949936589@qq.com'],  # List of recipient emails
             )
-            email.attach_file(config_file_path)
+            email.attach_file(new_file_path)
             email.send()
 
         if 'download_config_local' in request.POST:
             if regina_instance_ip == 'Not assigned':
                 return HttpResponse(html_content_vpn_not_already)
-
+            timestamp = datetime.datetime.now().strftime('%y%m%d-%H-%M-%S')
+            new_file_path = f'/root/regina-{timestamp}.ovpn'
             config_file_path = '/root/regina.ovpn'
             with open(config_file_path, 'r') as file:
                 lines = file.readlines()
@@ -837,12 +765,12 @@ def aws_page(request):
                 config_content = file.read()
 
             updated_config_content = config_content.replace(ip_address, regina_instance_ip)
-            with open(config_file_path, 'w') as file:
+            with open(new_file_path, 'w') as file:
                 file.write(updated_config_content)
 
-            with open(config_file_path, 'rb') as file:
+            with open(new_file_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/ovpn')
-                response['Content-Disposition'] = f'attachment; filename={config_file_path.split("/")[-1]}'
+                response['Content-Disposition'] = f'attachment; filename={new_file_path.split("/")[-1]}'
                 return response
         if 'start_regina_vpn_one_hour' in request.POST:
             if regina_instance_status != 'not running':

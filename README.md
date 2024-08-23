@@ -1,14 +1,7 @@
 ## Django搭建博客
 ![py35](https://img.shields.io/badge/Python-3.5-red.svg) 
 ![Django2.2](https://img.shields.io/badge/Django-2.2.0-green.svg)
-[![](https://img.shields.io/badge/Powered%20by-@j_hao104-blue.svg)](http://www.spiderpy.cn/blog/)
 
-使用Django快速搭建博客
-### 要求
-* Python: 3.5
-* Django: 2.2.0
-
-### 示例博客：<http://www.spiderpy.cn/blog>
 
 ### 特点
 
@@ -20,12 +13,6 @@
 * 博文归档
 * 友情链接
 
-### 下载
-```
-wget https://github.com/jhao104/django-blog/archive/master.zip
-or
-git clone git@github.com:jhao104/django-blog.git
-```
 
 ### 安装
 ```
