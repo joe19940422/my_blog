@@ -712,6 +712,7 @@ def aws_page(request):
             )
             regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
             regina_instance_status = 'stopping'
+            return HttpResponse(html_content)
         if 'download_config_email' in request.POST:
             if regina_instance_ip == 'Not assigned':
                 return HttpResponse(html_content_vpn_not_already)
