@@ -1019,6 +1019,8 @@ def wedding_show(request):
     return render(request, 'wedding/picture.html', {
     })
 
-
+def taiwan_show(request):
+    return render(request, 'blog/picture.html', {
+    })
 
 

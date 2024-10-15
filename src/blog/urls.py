@@ -26,7 +26,8 @@ urlpatterns = [
     #path('contact/', views.contact_view, name='contact'),
     #path('rsvp/', views.rsvp, name='rsvp'),
     path('aws/', views.aws_page, name='aws_page'),
-    path('wedding-show/', views.wedding_show, name='wedding_show')
+    path('wedding-show/', views.wedding_show, name='wedding_show'),
+    path('taiwan-show/', views.taiwan_show, name='taiwan_show')
     # path('aws/start/', views.aws_page, name='start_instance'),
     # path('aws/stop', views.aws_page, name='stop_instance'),
 
