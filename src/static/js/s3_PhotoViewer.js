@@ -95,6 +95,19 @@ function listAlbums() {
         if (albumName === 'dinner-time') {
           additionalText = '<p>晚餐時刻</p>';
         }
+        if (albumName === 'shilin') {
+          additionalText = '<p>台灣台北蒋介石林宅邸</p>';
+        }
+        if (albumName === 'taipei-national-palace-museum') {
+          additionalText = '<p>台灣台北故宮博物院</p>';
+        }
+        if (albumName === 'taipei-national-palace-museum') {
+          additionalText = '<p>台灣台北故宮博物院</p>';
+        }
+        if (albumName === 'taipei-general') {
+          additionalText = '<p>台灣台北</p>';
+        }
+
         console.log('albumName:', albumName);
         return getHtml([
           '<li>',
