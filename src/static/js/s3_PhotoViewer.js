@@ -84,7 +84,7 @@ function listAlbums() {
           additionalText = '<p>婚禮前一刻</p>';
         }
         if (albumName === 'pre-wedding-photo') {
-          additionalText = '<p>婚紗照</p>';
+          additionalText = '<p>婚紗照22</p>';
         }
         if (albumName === 'wedding-moment') {
           additionalText = '<p>婚禮儀式</p>';
