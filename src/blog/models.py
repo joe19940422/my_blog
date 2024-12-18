@@ -182,4 +182,3 @@ class Contact(models.Model):
         return  'email: ' + self.email + ' name: ' + self.name + ' phone: ' + self.phone + ' event_type:' + self.event_type + ' message: ' + self.message + ' guest_num: ' + self.guest_num
     """
 
-
