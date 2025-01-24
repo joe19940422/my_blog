@@ -955,8 +955,6 @@ def aws_page(request):
                 return HttpResponseForbidden("Unable to determine client IP address.")
     return render(request, 'blog/aws.html',
                   {
-                   'vpn_instance_status': vpn_instance_status,
-                   'vpn_instance_ip': vpn_instance_ip,
                    'regina_instance_status': regina_instance_status,
                    'regina_instance_ip': regina_instance_ip,
                    'openvpn_amount': openvpn_amount,
