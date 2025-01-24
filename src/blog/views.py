@@ -10,7 +10,7 @@ from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-from newsapi import NewsApiClient
+#from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
 from botocore.exceptions import BotoCoreError, ClientError
