@@ -1003,6 +1003,67 @@ def aws_page(request):
                         "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
             else:
                 return HttpResponseForbidden("Unable to determine client IP address.")
+
+        if 'start_taiwan_vpn' in request.POST:
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+                    taipei_ec2 = boto3.client('ec2', region_name='ap-northeast-1')
+
+                    BlockDeviceMappings = [
+                        {
+                            'DeviceName': '/dev/sda1',
+                            'Ebs': {
+                                'DeleteOnTermination': True,
+                                'VolumeSize': 8,
+                                'VolumeType': 'gp2'
+                            }
+                        },
+                    ]
+                    security_group_ids = ['sg-027ae28d7aac002e8']
+                    subnet_id = 'subnet-04ff9ea4548f3fe7b'
+                    placement = {
+                        'AvailabilityZone': 'ap-northeast-1-tpe-1a'
+                    }
+
+                    user_data = '''#!/bin/bash
+                                wget https://raw.githubusercontent.com/joe19940422/vpn_project/refs/heads/main/wireguard.sh
+                                bash wireguard.sh
+                                cp /root/fei_taiwan.conf /home/ubuntu/
+                                chown ubuntu:ubuntu /home/ubuntu/fei_taiwan.conf
+                                chmod 777 /home/ubuntu/fei_taiwan.conf
+                                # /root/fei_taiwan/conf
+                                '''
+                    # Create the EC2 instance
+                    response = taipei_ec2.run_instances(
+                        BlockDeviceMappings=BlockDeviceMappings,
+                        ImageId='ami-0a290015b99140cd1',
+                        InstanceType='t3.medium',
+                        KeyName='taipei',
+                        MinCount=1,
+                        MaxCount=1,
+                        UserData=user_data,
+                        Placement=placement,
+                        SubnetId=subnet_id,
+                        SecurityGroupIds=security_group_ids,
+
+                    )
+
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
+
     return render(request, 'blog/aws.html',
                   {
                    'vpn_instance_status': vpn_instance_status,
