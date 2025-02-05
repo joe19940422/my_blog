@@ -10,7 +10,7 @@ from blog.models import Article, Comment, City, Visitor, Contact
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-from newsapi import NewsApiClient
+#from newsapi import NewsApiClient
 from googletrans import Translator
 from django.core.mail import send_mail
 from botocore.exceptions import BotoCoreError, ClientError
@@ -551,56 +551,6 @@ html_content_vpn_not_already = """
 
 def aws_page(request):
 
-    vpn_ec2_client = boto3.client('ec2', region_name='ap-northeast-1')
-
-    # Retrieve instance status
-    vpn_instance_id = 'i-02b099b8eaecb4288'
-    vpn_response = vpn_ec2_client.describe_instance_status(
-        InstanceIds=[vpn_instance_id]
-    )
-
-    # Extract the instance status
-    try:  # Extract the instance status
-        vpn_instance_status = vpn_response['InstanceStatuses'][0]['InstanceState']['Name']
-    except (BotoCoreError, ClientError, IndexError) as e:
-        # Handle any errors that occur during API call or instance status retrieval
-        vpn_instance_status = 'not running'
-    if request.method == 'POST':
-        if 'start_vpn' in request.POST:
-            send_mail(
-                'VPN: is Staring',
-                f'VPN: is Staring',
-                'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
-            )
-            # Start the instance
-            vpn_ec2_client.start_instances(InstanceIds=[vpn_instance_id])
-            vpn_instance_status = 'starting'
-
-        elif 'stop_vpn' in request.POST:
-            # Stop the instance
-            send_mail(
-                'VPN: is Stoping',
-                f'VPN: is Stoping',
-                'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
-            )
-            vpn_ec2_client.stop_instances(InstanceIds=[vpn_instance_id])
-            vpn_instance_status = 'stopping'
-
-    try:
-        vpn_response = vpn_ec2_client.describe_instances(
-            InstanceIds=[vpn_instance_id]
-        )
-        if 'PublicIpAddress' in vpn_response['Reservations'][0]['Instances'][0]:
-            vpn_instance_ip = vpn_response['Reservations'][0]['Instances'][0]['PublicIpAddress']
-        else:
-            vpn_instance_ip = 'Not assigned'
-    except (BotoCoreError, ClientError, IndexError) as e:
-        # Handle any errors that occur during API call or IP retrieval
-        vpn_instance_ip = 'unknown'
     ###################################################################################
     ###################################################################################
     #regina vpn
@@ -1066,8 +1016,6 @@ def aws_page(request):
 
     return render(request, 'blog/aws.html',
                   {
-                   'vpn_instance_status': vpn_instance_status,
-                   'vpn_instance_ip': vpn_instance_ip,
                    'regina_instance_status': regina_instance_status,
                    'regina_instance_ip': regina_instance_ip,
                    'openvpn_amount': openvpn_amount,
