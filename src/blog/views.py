@@ -549,6 +549,27 @@ html_content_vpn_not_already = """
     </html>
     """
 
+taiwan_ec2 = boto3.client('ec2', region_name='ap-northeast-1')
+
+def get_running_instances():
+    try:
+        response = taiwan_ec2.describe_instances(Filters=[
+            {'Name': 'instance-state-name', 'Values': ['running']}
+        ])
+        reservations = response['Reservations']
+        instances = []
+        for reservation in reservations:
+            instances.extend(reservation['Instances'])
+        return instances
+    except Exception as e:
+        print(f"Error getting running instances: {e}")
+        return None
+
+def get_taiwan_ip():
+    running_instances = get_running_instances()
+    taiwan_ip = running_instances[0]['PublicIpAddress'] if running_instances != [] else 'no ip'
+    return taiwan_ip
+
 def aws_page(request):
 
     ###################################################################################
@@ -561,7 +582,7 @@ def aws_page(request):
     regina_response = regina_ec2_client.describe_instance_status(
         InstanceIds=[regina_instance_id]
     )
-
+    taiwan_ip = get_taiwan_ip()
     bill_client = boto3.client('ce', region_name='ap-southeast-1',
                                )
     now = datetime.now()
@@ -1014,13 +1035,72 @@ def aws_page(request):
             else:
                 return HttpResponseForbidden("Unable to determine client IP address.")
 
+
+        if 'delete_taiwan_vpn' in request.POST:
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+                    def delete_taiwan_instances(instances):
+                        try:
+                            instance_ids = [instance['InstanceId'] for instance in instances]
+                            response = taiwan_ec2.terminate_instances(InstanceIds=instance_ids)
+                            print(f"Deleting {len(instance_ids)} running instances...")
+                        except Exception as e:
+                            print(f"Error deleting instances: {e}")
+
+                    # Get all running instances
+                    running_instances = get_running_instances()
+                    print(running_instances)
+
+                    taiwan_ip = get_taiwan_ip()
+
+                    if running_instances is not None:
+                        # stop_instances(running_instances)
+                        delete_taiwan_instances(running_instances)
+                    else:
+                        print("No running instances found.")
+
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
+
+        if 'download_taiwan_config' in request.POST:
+            import paramiko
+
+            ssh_client = paramiko.SSHClient()
+            ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            taiwan_ip = get_taiwan_ip()
+            ssh_client.connect(hostname=taiwan_ip, username='ubuntu',
+                               key_filename='/home/ubuntu/taipei.pem')
+
+            sftp_client = ssh_client.open_sftp()
+            local_path = '/home/ubuntu/fei_taiwan.conf'
+            sftp_client.get('/home/ubuntu/fei_taiwan.conf', local_path)
+
+            sftp_client.close()
+            ssh_client.close()
+
+            print("File downloaded successfully!")
+
     return render(request, 'blog/aws.html',
                   {
                    'regina_instance_status': regina_instance_status,
                    'regina_instance_ip': regina_instance_ip,
                    'openvpn_amount': openvpn_amount,
                    'first_day': first_day,
-                   'today': today
+                   'today': today,
+                   'taiwan_ip': taiwan_ip
                    })
 
 
