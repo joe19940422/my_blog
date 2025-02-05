@@ -1092,6 +1092,10 @@ def aws_page(request):
             ssh_client.close()
 
             print("File downloaded successfully!")
+            with open(local_path, 'rb') as file:
+                response = HttpResponse(file.read(), content_type='application/ovpn')
+                response['Content-Disposition'] = f'attachment; filename={local_path.split("/")[-1]}'
+                return response
 
     return render(request, 'blog/aws.html',
                   {
