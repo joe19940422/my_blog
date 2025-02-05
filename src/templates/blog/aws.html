@@ -70,6 +70,9 @@ function enableButton() {
     <p style="font-size: 40px;">Status: {{ regina_instance_status }}</p>
     <p style="font-size: 40px;">IP Address: {{ regina_instance_ip }}</p>
     <p style="font-size: 40px;">IP Country: Singapore</p>
+    
+    <p style="font-size: 40px;">Taiwan IP Address: {{ taiwan_ip }}</p>
+    <p style="font-size: 40px;">IP Country: TAIWAN</p>
 
     <style>
         /* Add some basic styling to the table for demonstration purposes */
@@ -132,6 +135,10 @@ function enableButton() {
     <button type="submit" name="start_regina_vpn_six_hour" id="startreginavpnsixhour" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">嘗試6小時 價格 0.18 美元</button>
     <br>
     <button type="submit" name="start_taiwan_vpn" id="starttaiwanvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">open taiwan vpn</button>
+    <br>
+    <button type="submit" name="delete_taiwan_vpn" id="deletetaiwanvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">delete taiwan vpn</button>
+    <br>
+    <button type="submit" name="download_taiwan_config" id="downloadtaiwanconfig" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">download_taiwan_config</button>
     <br>
     <button type="submit" name="start_regina_vpn" id="startButton" onclick="startVpnAndRedirect()" style="width: 800px; height: 200px; font-size: 48px; background-color: #a6133a; color: white;">Start Regina ***(沒有限制 0.72美元每天)</button>
     <br>
