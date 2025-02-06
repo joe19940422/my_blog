@@ -57,3 +57,25 @@ http://ip:port/admin
 * [v1.0](https://github.com/jhao104/django-blog/tree/v1.0)
 
 pip install django_ratelimit
+
+
+## 
+wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh
+conda create -n blog python=3.11
+sudo apt-get install libmysqlclient-dev
+
+sudo apt update && sudo apt upgrade
+curl -O http://launchpadlibrarian.net/646633572/libaio1_0.3.113-4_amd64.deb
+sudo dpkg -i libaio1_0.3.113-4_amd64.deb
+
+https://stackoverflow.com/questions/62382968/install-mysql-5-6-on-ubuntu-20-04
+sudo apt update
+sudo apt install mysql-server mysql-client
+sudo systemctl start mysql
+Check the status again:
+
+sudo systemctl status mysql
+If the service starts successfully, you can then try to connect:
+
+mysql -u root -p
+pip install django-requestlogging
