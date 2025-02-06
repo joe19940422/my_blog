@@ -653,7 +653,52 @@ def aws_page(request):
 
 
     if request.method == 'POST':
-        if 'stop_regina_vpn' in request.POST:
+        if 'start_regina_vpn' in request.POST:
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+                    send_mail(
+                        'VPN(regina): is Staring',
+                        f'VPN(regina): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+
+                    month = datetime.now().date().strftime('%m')
+                    day = datetime.now().date().strftime('%d')
+                    if (month != '02' and day == '30') or (month == '02' and day == '28'):
+                        subject = 'Bill for *** Service'
+                        message = f"Dear Regina from {first_day} to {today}, your *** bill costs {openvpn_amount} $"
+                        from_email = 'joe19940422@gmail.com'
+                        recipient_list = ['1738524677@qq.com']
+
+                        send_mail(
+                            subject,
+                            message,
+                            from_email,
+                            recipient_list,
+                            fail_silently=False,
+                        )
+
+                    # Start the instance
+                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
+                    regina_instance_status = 'starting'
+
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
+        elif 'stop_regina_vpn' in request.POST:
             client_ip, _ = get_client_ip(request)
             # Stop the instance
             send_mail(
