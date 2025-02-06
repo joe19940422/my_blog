@@ -639,7 +639,7 @@ def aws_page(request):
 
     try:  # Extract the instance status
         regina_instance_status = regina_response['InstanceStatuses'][0]['InstanceState']['Name']
-    except (BotoCoreError, ClientError, IndexError) as e:
+    except (BotoCoreError, ClientError, IndexError, KeyError) as e:
         # Handle any errors that occur during API call or instance status retrieval
         regina_instance_status = 'not running'
 
