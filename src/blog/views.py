@@ -905,9 +905,14 @@ def aws_page(request):
             ssh_client = paramiko.SSHClient()
             ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             taiwan_ip = get_taiwan_ip()
-            ssh_client.connect(hostname=taiwan_ip, username='ubuntu',
-                               key_filename='/home/ubuntu/taipei.pem')
-
+            from socket import gaierror
+            try:
+                ssh_client.connect(hostname=taiwan_ip, username='ubuntu', key_filename='/home/ubuntu/taipei.pem')
+            except gaierror as e:
+                if str(e).startswith('[Errno -2] Name or service not known'):
+                    return HttpResponseForbidden("Unable to vpn Name or service not known.")
+                else:
+                    return HttpResponseForbidden("Unable to vpn.")
             sftp_client = ssh_client.open_sftp()
             local_path = '/home/ubuntu/fei_taiwan.conf'
             sftp_client.get('/home/ubuntu/fei_taiwan.conf', local_path)
