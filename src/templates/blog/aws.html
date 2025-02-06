@@ -49,76 +49,28 @@ function enableButton() {
   </style>
 </head>
 
-{#<h1>yanjun's EC2 Instance Status</h1>#}
-{#<p>Instance ID: i-07360808c3dc6fed2</p>#}
-{#<p>Status: {{ instance_status }}</p>#}
-{#<p>IP Address: {{ instance_ip }}</p>#}
-
-
 <form method="post" action="{% url 'blog:aws_page' %}">
     {% csrf_token %}
     <!--<button type="submit" name="start_instance">Start Instance</button> -->
     <br>
     <!--<button type="submit" name="stop_instance">Stop Instance</button> -->
 
-    <h1 style="color: red;">Regina's open *** Server</h1>
+    <h1 style="color: red;">Fei's VPN Server</h1>
     <h2 style="color: green;">1 為了節省價格，伺服器將在新加坡時間晚上11點15分自動關閉，如果您想使用請再次點擊開始按鈕 </h2>
     <h2 style="color: green;">2 為了節省價格，如果沒有活躍用戶連接openpvn 伺服器將自動關閉(每小時檢查是否有活躍用戶)，如果您想使用請再次點擊開始按鈕 </h2>
     <h2 style="color: green;">3 如果您使用我們的伺服器，您可以查看任何您想要的內容，因為我們是在一個言論自由的網絡，我們的法律遵循新加坡法律，但請記住，請不要將我們的IP分享給其他人（五毛, 小粉紅, 傻屄），否則我們的伺服器將被封殺</h2>
     <h2 style="color: green;">4 如果您對我們的程式碼如何查看我們的 *** 活躍用戶感興趣 ，請點擊下面的連結 </h2>
     <a href="http://www.pengfeiqiao.com/blog/detail/9/" target="_blank">點擊我</a> 如果您對我們的程式碼如何查看我們的 *** 活躍用戶感興趣 ，請點擊下面的連結
-    <p style="font-size: 40px;">Status: {{ regina_instance_status }}</p>
+    <h1 style="color: #0022ff;">OPENVPN</h1>
+    <p style="font-size: 40px;">Vpn type: OpenVPN</p>
+    <p style="font-size: 40px;">openvpn Status: {{ regina_instance_status }}</p>
     <p style="font-size: 40px;">IP Address: {{ regina_instance_ip }}</p>
     <p style="font-size: 40px;">IP Country: Singapore</p>
     
+    <h1 style="color: #c91e85;">Wireguard</h1>
+    <p style="font-size: 40px;">Vpn type: Wireguard</p>
     <p style="font-size: 40px;">Taiwan IP Address: {{ taiwan_ip }}</p>
-    <p style="font-size: 40px;">IP Country: TAIWAN</p>
-
-    <style>
-        /* Add some basic styling to the table for demonstration purposes */
-        table {
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-    </style>
-    <table>
-        <tr>
-            <th>類型</th>
-            <th>L2TP</th>
-        </tr>
-        <tr>
-            <td>Description（描述）</td>
-            <td>填寫任意值</td>
-        </tr>
-        <tr>
-            <td>Server（伺服器） </td>
-            <td>{{ regina_instance_ip }}</td>
-        </tr>
-        <tr>
-            <td>Account（賬戶）</td>
-            <td>feifei</td>
-        </tr>
-        <tr>
-            <td>RSA SecurID </td>
-            <td>you can ignore</td>
-        </tr>
-        <tr>
-            <td>Passpord（密碼）</td>
-            <td>feifei</td>
-        </tr>
-        <tr>
-            <td>Secret（密鑰）</td>
-            <td>feifei</td>
-        </tr>
-        <tr>
-            <td>send all traffic（發送所有流量）</td>
-            <td>yes(click the box button)</td>
-        </tr>
-    </table>
+    <p style="font-size: 40px;">IP Country: Taiwan</p>
 
     <button type="submit" name="download_config_email" id="downloadconfigemail" style="width: 800px; height: 200px; font-size: 48px; background-color: #002480; color: white;">download config to email(下載配置到email)</button>
     <br>
@@ -146,34 +98,7 @@ function enableButton() {
     <br>
     <h1 style="color: #0022ff;">點選啟動 Regina V** 後，請等待 2 分鐘 !!，然後點選 download_config 按鈕！您將收到一封電子郵件！ After you click Start Regina v** please wait 1~2 mins then click download_config button !! you will receive an email !!  </h1>
     <div id="messageContainer"></div>
-
-    <h1 style="color: red;">Regina's open *** Server bill </h1>
-    <h2 style="color: red;">$0.005 per Elastic IP address not attached to a running instance per hour (prorated) </h2>
-    <h2 style="color: red;">$0.12 per GB-month of General Purpose SSD (gp2) provisioned storage - Asia Pacific (Singapore)) </h2>
-    <h2 style="color: red;"> regina's total billing is {{ openvpn_amount }} usd  from {{ first_day }} to {{ today }} </h2>
-    <table>
-        <tr>
-            <th>regina's open*** 價格詳情 {{ first_day }} - {{ today }}</th>
-            <th>費用（美金）</th>
-        </tr>
-        <tr>
-            <td>靜態IP</td>
-            <td>$0.005 usd per /hour</td>
-        </tr>
-        <tr>
-            <td>SSD (gp2)服務器存儲 </td>
-            <td>$0.12 per GB-month</td>
-        </tr>
-        <tr>
-            <td>服務器按小時計費</td>
-            <td>$0.019 per On Demand Linux Instance Hour</td>
-        </tr>
-        <tr>
-            <td>截止{{ today }}當月總費用 </td>
-            <td>{{ openvpn_amount }} usd（美金）</td>
-        </tr>
-
-    </table>
+    
 </form>
 
 <a href="http://www.pengfeiqiao.com/blog/detail/8/" target="_blank">Click here</a> to learn how to connect to a *** in ubuntu
