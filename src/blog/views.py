@@ -653,51 +653,7 @@ def aws_page(request):
 
 
     if request.method == 'POST':
-        if 'start_regina_vpn' in request.POST:
-            client_ip, _ = get_client_ip(request)
-            if client_ip:
-                # Define a cache key based on the client's IP address
-                cache_key = f'rate_limit_{client_ip}'
-                print(client_ip)
-
-                # Check if the IP address is rate-limited
-                if not cache.get(cache_key):
-                    # Set a cache value to indicate that the IP address is rate-limited
-                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
-                    send_mail(
-                        'VPN(regina): is Staring',
-                        f'VPN(regina): is Staring ip is {client_ip}',
-                        'joe19940422@gmail.com',
-                        ['joe19940422@gmail.com'],  # List of recipient emails
-                        fail_silently=False,
-                    )
-
-                    month = datetime.now().date().strftime('%m')
-                    day = datetime.now().date().strftime('%d')
-                    if (month != '02' and day == '30') or (month == '02' and day == '28'):
-                        subject = 'Bill for *** Service'
-                        message = f"Dear Regina from {first_day} to {today}, your *** bill costs {openvpn_amount} $"
-                        from_email = 'joe19940422@gmail.com'
-                        recipient_list = ['1738524677@qq.com']
-
-                        send_mail(
-                            subject,
-                            message,
-                            from_email,
-                            recipient_list,
-                            fail_silently=False,
-                        )
-
-                    # Start the instance
-                    regina_ec2_client.start_instances(InstanceIds=[regina_instance_id])
-                    regina_instance_status = 'starting'
-
-                    return HttpResponse(html_content)
-                else:
-                    return HttpResponseForbidden("Hey regina !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
-            else:
-                return HttpResponseForbidden("Unable to determine client IP address.")
-        elif 'stop_regina_vpn' in request.POST:
+        if 'stop_regina_vpn' in request.POST:
             client_ip, _ = get_client_ip(request)
             # Stop the instance
             send_mail(
@@ -710,6 +666,7 @@ def aws_page(request):
             regina_ec2_client.stop_instances(InstanceIds=[regina_instance_id])
             regina_instance_status = 'stopping'
             return HttpResponse(html_content)
+
         if 'download_config_email' in request.POST:
             if regina_instance_ip == 'Not assigned':
                 return HttpResponse(html_content_vpn_not_already)
@@ -771,26 +728,21 @@ def aws_page(request):
                 response = HttpResponse(file.read(), content_type='application/ovpn')
                 response['Content-Disposition'] = f'attachment; filename={new_file_path.split("/")[-1]}'
                 return response
-        if 'start_regina_vpn_one_hour' in request.POST:
-            return start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,
-                                           delay=3600)
 
-        if 'start_regina_vpn_two_hour' in request.POST:
-            return start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,
-                                           delay=7200)
+        delay_map = {
+            'start_regina_vpn_one_hour': 3600,
+            'start_regina_vpn_two_hour': 7200,
+            'start_regina_vpn_three_hour': 10800,
+            'start_regina_vpn_four_hour': 14400,
+            'start_regina_vpn_six_hour':  21600
+        }
 
+        if request.POST:
+            for button_name, delay in delay_map.items():
+                if button_name in request.POST:
+                    return start_regina_vpn_common(request, regina_ec2_client, regina_instance_status,
+                                                   regina_instance_id, delay=delay)
 
-        if 'start_regina_vpn_three_hour' in request.POST:
-            return start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,
-                                           delay=10800)
-
-        if 'start_regina_vpn_four_hour' in request.POST:
-            return start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,
-                                           delay=14400)
-
-        if 'start_regina_vpn_six_hour' in request.POST:
-            return start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,
-                                           delay=21600)
 
         if 'start_taiwan_vpn' in request.POST:
             client_ip, _ = get_client_ip(request)
