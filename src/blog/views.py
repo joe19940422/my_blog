@@ -5,7 +5,6 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from pydash import delay
 
 from django_blog.util import PageInfo
 from blog.models import Article, Comment, City, Visitor, Contact
