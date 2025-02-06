@@ -636,10 +636,11 @@ def aws_page(request):
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or IP retrieval
         regina_instance_ip = 'unknown'
-
+    print(regina_response)
+    print('!!!!!!!!!!!!!!!!!!')
     try:  # Extract the instance status
         regina_instance_status = regina_response['InstanceStatuses'][0]['InstanceState']['Name']
-    except (BotoCoreError, ClientError, IndexError, KeyError) as e:
+    except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or instance status retrieval
         regina_instance_status = 'not running'
 
