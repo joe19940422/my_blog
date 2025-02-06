@@ -908,7 +908,7 @@ def aws_page(request):
             from socket import gaierror
             try:
                 ssh_client.connect(hostname=taiwan_ip, username='ubuntu', key_filename='/home/ubuntu/taipei.pem')
-            except gaierror as e:
+            except (gaierror, paramiko.ssh_exception.NoValidConnectionsError) as e:
                 if str(e).startswith('[Errno -2] Name or service not known'):
                     return HttpResponseForbidden("Unable to vpn Name or service not known.")
                 else:
