@@ -642,13 +642,8 @@ def aws_page(request):
     except (BotoCoreError, ClientError, IndexError) as e:
         # Handle any errors that occur during API call or IP retrieval
         regina_instance_ip = 'unknown'
-    print(regina_response)
-    print('!!!!!!!!!!!!!!!!!!')
-
 
     taiwan_ip = get_taiwan_ip()
-    bill_client = boto3.client('ce', region_name='ap-southeast-1',
-                               )
     now = datetime.now()
     first_day_next_month = (now.replace(day=1) + timedelta(days=32)).replace(day=1)
     last_day_current_month = first_day_next_month - timedelta(days=1)
@@ -915,8 +910,10 @@ def aws_page(request):
                     return HttpResponseForbidden("Unable to vpn.")
             sftp_client = ssh_client.open_sftp()
             local_path = '/home/ubuntu/fei_taiwan.conf'
-            sftp_client.get('/home/ubuntu/fei_taiwan.conf', local_path)
-
+            try:
+                sftp_client.get('/home/ubuntu/fei_taiwan.conf', local_path)
+            except FileNotFoundError:
+                return HttpResponseForbidden("vpn not installed you need to wait few mins and try again !!!")
             sftp_client.close()
             ssh_client.close()
 
