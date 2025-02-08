@@ -841,7 +841,13 @@ def aws_page(request):
                         SecurityGroupIds=security_group_ids,
 
                     )
-
+                    send_mail(
+                        f'VPN(taipei): is Staring ',
+                        f'VPN(taipei): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
                     return HttpResponse(html_content)
                 else:
                     return HttpResponseForbidden(
