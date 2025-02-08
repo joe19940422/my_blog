@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-from blog import views
+from blog import views, vpn
+
 from django.urls import path
 
 urlpatterns = [
@@ -25,7 +26,7 @@ urlpatterns = [
     path('weather/', views.weather, name='weather'),
     #path('contact/', views.contact_view, name='contact'),
     #path('rsvp/', views.rsvp, name='rsvp'),
-    path('aws/', views.aws_page, name='aws_page'),
+    path('aws/', vpn.aws_page, name='aws_page'),
     path('wedding-show/', views.wedding_show, name='wedding_show'),
     path('taiwan-show/', views.taiwan_show, name='taiwan_show')
     # path('aws/start/', views.aws_page, name='start_instance'),
