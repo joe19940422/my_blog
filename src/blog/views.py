@@ -915,8 +915,9 @@ def aws_page(request):
             print("File downloaded successfully!")
             timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
             with open(local_path, 'rb') as file:
-                response = HttpResponse(file.read(), content_type='application/ovpn')
-                response['Content-Disposition'] = f'attachment; filename={local_path.split("/")[-1]-timestamp}'
+                response = HttpResponse(file.read(), content_type='application/conf')
+                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
                 return response
 
     return render(request, 'blog/aws.html',
