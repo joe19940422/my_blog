@@ -98,11 +98,157 @@ html_content_vpn_not_already = """
     </html>
     """
 
-taiwan_ec2 = boto3.client('ec2', region_name='ap-northeast-1')
+info_vpn_account = {
+    "taipei": {
+        "region_name": "ap-northeast-1",
+        "security_group_ids": "sg-027ae28d7aac002e8",
+        "AvailabilityZone": "ap-northeast-1-tpe-1a",
+        "InstanceType": "t3.medium",
+        "subnet_id": "subnet-04ff9ea4548f3fe7b",
+        "key_name": "taipei",
+        "ImageId":'ami-0a290015b99140cd1'
+    },
+    "hk": {
+        "region_name": "ap-east-1",
+        "security_group_ids": "sg-03c8eb17866a1469a",
+        "AvailabilityZone": "ap-east-1a",
+        "InstanceType": "t3.micro",
+        "subnet_id": "subnet-0080560f56d07ff8f",
+        "key_name": "hk",
+        "ImageId":'ami-01c19c4912400a3fd'
+    },
+    "us": {
+        "region_name": "us-west-1",
+        "security_group_ids": "sg-04f745ad7ffe47069",
+        "AvailabilityZone": "us-west-1b",
+        "InstanceType": "t2.micro",
+        "subnet_id": "subnet-0a44dee48c84db504",
+        "key_name": "us",
+        "ImageId":'ami-07d2649d67dbe8900'
+    },
+    "jp": {
+        "region_name": "ap-northeast-1",
+        "security_group_ids": "sg-027ae28d7aac002e8",
+        "AvailabilityZone": "ap-northeast-1a",
+        "InstanceType": "t2.micro",
+        "subnet_id": "subnet-00e2fedb920d4edfc",
+        "key_name": "taipei",
+        "ImageId":'ami-0a290015b99140cd1'
+    },
+}
 
-def get_running_instances():
+def create_vpn(country):
+    vpn_ec2 = boto3.client('ec2', region_name=info_vpn_account[country]["region_name"])
+
+    BlockDeviceMappings = [
+        {
+            'DeviceName': '/dev/sda1',
+            'Ebs': {
+                'DeleteOnTermination': True,
+                'VolumeSize': 8,
+                'VolumeType': 'gp2'
+            }
+        },
+    ]
+
+    user_data = f'''#!/bin/bash
+    wget https://raw.githubusercontent.com/joe19940422/vpn_project/refs/heads/main/wireguard.sh
+    bash wireguard.sh
+    cp /root/fei_taiwan.conf /home/ubuntu/
+    mv /home/ubuntu/fei_taiwan.conf /home/ubuntu/fei_{country}.conf
+    chown ubuntu:ubuntu /home/ubuntu/fei_{country}.conf
+    chmod 777 /home/ubuntu/fei_{country}.conf
+    # /root/fei_taiwan/conf
+    '''
+    placement = {
+        'AvailabilityZone': info_vpn_account[country]["AvailabilityZone"]
+    }
+
+    # Create the EC2 instance
+    response = vpn_ec2.run_instances(
+        BlockDeviceMappings=BlockDeviceMappings,
+        ImageId=info_vpn_account[country]["ImageId"],
+        InstanceType=info_vpn_account[country]["InstanceType"],
+        KeyName=info_vpn_account[country]["key_name"],
+        MinCount=1,
+        MaxCount=1,
+        UserData=user_data,
+        Placement=placement,
+        SubnetId=info_vpn_account[country]["subnet_id"],
+        SecurityGroupIds=[info_vpn_account[country]["security_group_ids"]],
+
+    )
+    print(response)
+
+def start_vpn(country, request):
+    client_ip, _ = get_client_ip(request)
+    if client_ip:
+        # Define a cache key based on the client's IP address
+        cache_key = f'rate_limit_{client_ip}'
+        print(client_ip)
+
+        # Check if the IP address is rate-limited
+        if not cache.get(cache_key):
+            # Set a cache value to indicate that the IP address is rate-limited
+            cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+            create_vpn(country=country)
+
+            send_mail(
+                f'VPN({country}): is Staring ',
+                f'VPN({country}): is Staring ip is {client_ip}',
+                'joe19940422@gmail.com',
+                ['joe19940422@gmail.com'],  # List of recipient emails
+                fail_silently=False,
+            )
+            return HttpResponse(html_content)
+        else:
+            return HttpResponseForbidden(
+                "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+    else:
+        return HttpResponseForbidden("Unable to determine client IP address.")
+
+def delete_vpn(country, request):
+    vpn_ec2 = boto3.client('ec2', region_name=info_vpn_account[country]["region_name"])
+    client_ip, _ = get_client_ip(request)
+    if client_ip:
+        # Define a cache key based on the client's IP address
+        cache_key = f'rate_limit_{client_ip}'
+        print(client_ip)
+
+        # Check if the IP address is rate-limited
+        if not cache.get(cache_key):
+            # Set a cache value to indicate that the IP address is rate-limited
+            cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+            def delete_vpn_instances(instances):
+                try:
+                    instance_ids = [instance['InstanceId'] for instance in instances]
+                    response = vpn_ec2.terminate_instances(InstanceIds=instance_ids)
+                    print(f"Deleting {len(instance_ids)} running instances...")
+                except Exception as e:
+                    print(f"Error deleting instances: {e}")
+
+            # Get all running instances
+            running_instances = get_running_instances()
+            print(running_instances)
+            if running_instances is not None:
+                # stop_instances(running_instances)
+                delete_vpn_instances(running_instances)
+            else:
+                print("No running instances found.")
+
+            return HttpResponse(html_content)
+        else:
+            return HttpResponseForbidden(
+                "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+    else:
+        return HttpResponseForbidden("Unable to determine client IP address.")
+
+def get_running_instances(country):
+    vpn_ec2 = boto3.client('ec2', region_name=info_vpn_account[country]["region_name"])
     try:
-        response = taiwan_ec2.describe_instances(Filters=[
+        response = vpn_ec2.describe_instances(Filters=[
             {'Name': 'instance-state-name', 'Values': ['running']}
         ])
         reservations = response['Reservations']
@@ -114,10 +260,41 @@ def get_running_instances():
         print(f"Error getting running instances: {e}")
         return None
 
-def get_taiwan_ip():
-    running_instances = get_running_instances()
-    taiwan_ip = running_instances[0]['PublicIpAddress'] if running_instances != [] else 'no ip'
-    return taiwan_ip
+def get_country_ip(country):
+    running_instances = get_running_instances(country)
+    country_ip = running_instances[0]['PublicIpAddress'] if running_instances != [] else 'no ip'
+    return country_ip
+
+
+def download_vpn(country):
+    import paramiko
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    country_ip = get_country_ip(country)
+    from socket import gaierror
+    try:
+        ssh_client.connect(hostname=country_ip, username='ubuntu', key_filename=f'/home/ubuntu/{country}.pem')
+    except (gaierror, paramiko.ssh_exception.NoValidConnectionsError) as e:
+        if str(e).startswith('[Errno -2] Name or service not known'):
+            return HttpResponseForbidden("Unable to vpn Name or service not known.")
+        else:
+            return HttpResponseForbidden("Unable to vpn.")
+    sftp_client = ssh_client.open_sftp()
+    local_path = f'/home/ubuntu/fei_{country}.conf'
+    try:
+        sftp_client.get(f'/home/ubuntu/fei_{country}.conf', local_path)
+    except FileNotFoundError:
+        return HttpResponseForbidden("vpn not installed you need to wait few mins and try again !!!")
+    sftp_client.close()
+    ssh_client.close()
+
+    print("File downloaded successfully!")
+    timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
+    with open(local_path, 'rb') as file:
+        response = HttpResponse(file.read(), content_type='application/conf')
+        filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
 
 
 def start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,  delay):
@@ -190,7 +367,7 @@ def aws_page(request):
         # Handle any errors that occur during API call or IP retrieval
         regina_instance_ip = 'unknown'
 
-    taiwan_ip = get_taiwan_ip()
+    taiwan_ip = get_country_ip(country='taipei')
     now = datetime.now()
     first_day_next_month = (now.replace(day=1) + timedelta(days=32)).replace(day=1)
     last_day_current_month = first_day_next_month - timedelta(days=1)
@@ -339,141 +516,16 @@ def aws_page(request):
 
 
         if 'start_taiwan_vpn' in request.POST:
-            client_ip, _ = get_client_ip(request)
-            if client_ip:
-                # Define a cache key based on the client's IP address
-                cache_key = f'rate_limit_{client_ip}'
-                print(client_ip)
+            start_vpn(country='taipei', request=request)
 
-                # Check if the IP address is rate-limited
-                if not cache.get(cache_key):
-                    # Set a cache value to indicate that the IP address is rate-limited
-                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
-
-                    taipei_ec2 = boto3.client('ec2', region_name='ap-northeast-1')
-
-                    BlockDeviceMappings = [
-                        {
-                            'DeviceName': '/dev/sda1',
-                            'Ebs': {
-                                'DeleteOnTermination': True,
-                                'VolumeSize': 8,
-                                'VolumeType': 'gp2'
-                            }
-                        },
-                    ]
-                    security_group_ids = ['sg-027ae28d7aac002e8']
-                    subnet_id = 'subnet-04ff9ea4548f3fe7b'
-                    placement = {
-                        'AvailabilityZone': 'ap-northeast-1-tpe-1a'
-                    }
-
-                    user_data = '''#!/bin/bash
-                                wget https://raw.githubusercontent.com/joe19940422/vpn_project/refs/heads/main/wireguard.sh
-                                bash wireguard.sh
-                                cp /root/fei_taiwan.conf /home/ubuntu/
-                                chown ubuntu:ubuntu /home/ubuntu/fei_taiwan.conf
-                                chmod 777 /home/ubuntu/fei_taiwan.conf
-                                # /root/fei_taiwan/conf
-                                '''
-                    # Create the EC2 instance
-                    response = taipei_ec2.run_instances(
-                        BlockDeviceMappings=BlockDeviceMappings,
-                        ImageId='ami-0a290015b99140cd1',
-                        InstanceType='t3.medium',
-                        KeyName='taipei',
-                        MinCount=1,
-                        MaxCount=1,
-                        UserData=user_data,
-                        Placement=placement,
-                        SubnetId=subnet_id,
-                        SecurityGroupIds=security_group_ids,
-
-                    )
-                    send_mail(
-                        f'VPN(taipei): is Staring ',
-                        f'VPN(taipei): is Staring ip is {client_ip}',
-                        'joe19940422@gmail.com',
-                        ['joe19940422@gmail.com'],  # List of recipient emails
-                        fail_silently=False,
-                    )
-                    return HttpResponse(html_content)
-                else:
-                    return HttpResponseForbidden(
-                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
-            else:
-                return HttpResponseForbidden("Unable to determine client IP address.")
 
 
         if 'delete_taiwan_vpn' in request.POST:
-            client_ip, _ = get_client_ip(request)
-            if client_ip:
-                # Define a cache key based on the client's IP address
-                cache_key = f'rate_limit_{client_ip}'
-                print(client_ip)
+            delete_vpn(country='taipei', request=request)
 
-                # Check if the IP address is rate-limited
-                if not cache.get(cache_key):
-                    # Set a cache value to indicate that the IP address is rate-limited
-                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
-
-                    def delete_taiwan_instances(instances):
-                        try:
-                            instance_ids = [instance['InstanceId'] for instance in instances]
-                            response = taiwan_ec2.terminate_instances(InstanceIds=instance_ids)
-                            print(f"Deleting {len(instance_ids)} running instances...")
-                        except Exception as e:
-                            print(f"Error deleting instances: {e}")
-
-                    # Get all running instances
-                    running_instances = get_running_instances()
-                    print(running_instances)
-
-                    taiwan_ip = get_taiwan_ip()
-
-                    if running_instances is not None:
-                        # stop_instances(running_instances)
-                        delete_taiwan_instances(running_instances)
-                    else:
-                        print("No running instances found.")
-
-                    return HttpResponse(html_content)
-                else:
-                    return HttpResponseForbidden(
-                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
-            else:
-                return HttpResponseForbidden("Unable to determine client IP address.")
-
+        #todo
         if 'download_taiwan_config' in request.POST:
-            import paramiko
-
-            ssh_client = paramiko.SSHClient()
-            ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            taiwan_ip = get_taiwan_ip()
-            from socket import gaierror
-            try:
-                ssh_client.connect(hostname=taiwan_ip, username='ubuntu', key_filename='/home/ubuntu/taipei.pem')
-            except (gaierror, paramiko.ssh_exception.NoValidConnectionsError) as e:
-                if str(e).startswith('[Errno -2] Name or service not known'):
-                    return HttpResponseForbidden("Unable to vpn Name or service not known.")
-                else:
-                    return HttpResponseForbidden("Unable to vpn.")
-            sftp_client = ssh_client.open_sftp()
-            local_path = '/home/ubuntu/fei_taiwan.conf'
-            try:
-                sftp_client.get('/home/ubuntu/fei_taiwan.conf', local_path)
-            except FileNotFoundError:
-                return HttpResponseForbidden("vpn not installed you need to wait few mins and try again !!!")
-            sftp_client.close()
-            ssh_client.close()
-
-            print("File downloaded successfully!")
-            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
-            with open(local_path, 'rb') as file:
-                response = HttpResponse(file.read(), content_type='application/conf')
-                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
-                response['Content-Disposition'] = f'attachment; filename="{filename}"'
-                return response
+            download_vpn(country='taipei')
 
     return render(request, 'blog/aws.html',
                   {
