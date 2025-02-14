@@ -266,7 +266,7 @@ def get_country_ip(country):
     return country_ip
 
 
-def download_vpn(country):
+def download_vpn(country, request):
     import paramiko
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
