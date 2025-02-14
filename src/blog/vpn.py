@@ -539,13 +539,13 @@ def aws_page(request):
             delete_vpn(country='hk', request=request)
         #todo
         if 'download_taiwan_config' in request.POST:
-            download_vpn(country='taiwan')
+            download_vpn(country='taiwan', request=request)
 
         if 'download_us_config' in request.POST:
-            download_vpn(country='us')
+            download_vpn(country='us', request=request)
 
         if 'download_hk_config' in request.POST:
-            download_vpn(country='hk')
+            download_vpn(country='hk', request=request)
 
     return render(request, 'blog/aws.html',
                   {
