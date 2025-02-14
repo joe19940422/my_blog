@@ -266,7 +266,7 @@ def get_country_ip(country):
     country_ip = running_instances[0]['PublicIpAddress'] if running_instances != [] else 'no ip'
     return country_ip
 
-
+from django.http import FileResponse, HttpResponseForbidden
 def download_vpn(country, request):
     import paramiko
     ssh_client = paramiko.SSHClient()
@@ -282,22 +282,39 @@ def download_vpn(country, request):
         else:
             return HttpResponseForbidden("Unable to vpn.")
     sftp_client = ssh_client.open_sftp()
-    local_path = f'/home/ubuntu/fei_{country}.conf'
+    local_path = f'/tmp/fei_{country}.conf'  # better to use /tmp as it is for temporary files
     try:
         sftp_client.get(f'/home/ubuntu/fei_{country}.conf', local_path)
     except FileNotFoundError:
-        return HttpResponseForbidden("vpn not installed you need to wait few mins and try again !!!")
-    sftp_client.close()
-    ssh_client.close()
+        return HttpResponseForbidden("VPN config file not found on server.")
+    except Exception as e:
+        print(f"SFTP Error: {e}")  # Handle and log any SFTP related errors
+        return HttpResponseForbidden("Error downloading VPN config.")
+    finally:
+        if sftp_client:
+            sftp_client.close()
+        if ssh_client:
+            ssh_client.close()
 
-    print("File downloaded successfully!")
     timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
-    with open(local_path, 'rb') as file:
-        response = HttpResponse(file.read(), content_type='application/conf')
-        filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
-        print(filename)
+    filename = f"fei_{country}-{timestamp}.conf"
+
+    try:
+        # Use FileResponse for streaming
+        response = FileResponse(open(local_path, 'rb'), content_type='application/conf')
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
         return response
+    except FileNotFoundError:
+        return HttpResponseForbidden("Local file not found after download.")  # Handle local file errors
+    except Exception as e:
+        print(f"File Response Error: {e}")  # Handle and log any errors
+        return HttpResponseForbidden("Error creating file response.")
+    finally:
+        try:
+            os.remove(local_path)  # Clean up the temporary file, even if errors occur
+        except Exception as e:
+            print(f"Error removing temporary file: {e}")  # Log errors but continue
 
 
 def start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, regina_instance_id,  delay):
