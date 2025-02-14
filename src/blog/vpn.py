@@ -269,6 +269,7 @@ def get_country_ip(country):
 from django.http import FileResponse, HttpResponseForbidden
 def download_vpn(country, request):
     import paramiko
+    import os
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     country_ip = get_country_ip(country)
