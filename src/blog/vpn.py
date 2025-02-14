@@ -181,34 +181,6 @@ def create_vpn(country):
     print(response)
     return HttpResponse(html_content)
 
-def start_vpn(country, request):
-    client_ip, _ = get_client_ip(request)
-    if client_ip:
-        # Define a cache key based on the client's IP address
-        cache_key = f'rate_limit_{client_ip}'
-        print(client_ip)
-
-        # Check if the IP address is rate-limited
-        if not cache.get(cache_key):
-            # Set a cache value to indicate that the IP address is rate-limited
-            cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
-
-            create_vpn(country=country)
-
-            send_mail(
-                f'VPN({country}): is Staring ',
-                f'VPN({country}): is Staring ip is {client_ip}',
-                'joe19940422@gmail.com',
-                ['joe19940422@gmail.com'],  # List of recipient emails
-                fail_silently=False,
-            )
-            return HttpResponse(html_content)
-        else:
-            return HttpResponseForbidden(
-                "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
-    else:
-        return HttpResponseForbidden("Unable to determine client IP address.")
-
 def delete_vpn(country, request):
     vpn_ec2 = boto3.client('ec2', region_name=info_vpn_account[country]["region_name"])
     client_ip, _ = get_client_ip(request)
@@ -516,13 +488,91 @@ def aws_page(request):
 
 
         if 'start_taiwan_vpn' in request.POST:
-            start_vpn(country='taiwan', request=request)
+            country = 'taiwan'
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+                    create_vpn(country=country)
+
+                    send_mail(
+                        f'VPN({country}): is Staring ',
+                        f'VPN({country}): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
 
         if 'start_us_vpn' in request.POST:
-            start_vpn(country='us', request=request)
+            country = 'us'
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+                    create_vpn(country=country)
+
+                    send_mail(
+                        f'VPN({country}): is Staring ',
+                        f'VPN({country}): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
 
         if 'start_hk_vpn' in request.POST:
-            start_vpn(country='hk', request=request)
+            country = 'hk'
+            client_ip, _ = get_client_ip(request)
+            if client_ip:
+                # Define a cache key based on the client's IP address
+                cache_key = f'rate_limit_{client_ip}'
+                print(client_ip)
+
+                # Check if the IP address is rate-limited
+                if not cache.get(cache_key):
+                    # Set a cache value to indicate that the IP address is rate-limited
+                    cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+
+                    create_vpn(country=country)
+
+                    send_mail(
+                        f'VPN({country}): is Staring ',
+                        f'VPN({country}): is Staring ip is {client_ip}',
+                        'joe19940422@gmail.com',
+                        ['joe19940422@gmail.com'],  # List of recipient emails
+                        fail_silently=False,
+                    )
+                    return HttpResponse(html_content)
+                else:
+                    return HttpResponseForbidden(
+                        "Hey fei !!! You can click the 'Start' button only once within one minute. After clicking the 'Start' button, please wait for 2 minutes as the server needs time to start !!! Rate limit exceeded.")
+            else:
+                return HttpResponseForbidden("Unable to determine client IP address.")
 
         if 'delete_taiwan_vpn' in request.POST:
             delete_vpn(country='taiwan', request=request)
@@ -532,12 +582,26 @@ def aws_page(request):
 
         if 'delete_hk_vpn' in request.POST:
             delete_vpn(country='hk', request=request)
-        #todo
+
         if 'download_taiwan_config' in request.POST:
             download_vpn(country='taiwan', request=request)
+            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
+            local_path = f'/home/ubuntu/fei_taiwan.conf'
+            with open(local_path, 'rb') as file:
+                response = HttpResponse(file.read(), content_type='application/conf')
+                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+                return response
 
         if 'download_us_config' in request.POST:
             download_vpn(country='us', request=request)
+            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
+            local_path = f'/home/ubuntu/fei_us.conf'
+            with open(local_path, 'rb') as file:
+                response = HttpResponse(file.read(), content_type='application/conf')
+                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+                return response
 
         if 'download_hk_config' in request.POST:
             download_vpn(country='hk', request=request)
@@ -546,7 +610,6 @@ def aws_page(request):
             with open(local_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/conf')
                 filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
-                print(filename)
                 response['Content-Disposition'] = f'attachment; filename="{filename}"'
                 return response
 
