@@ -368,6 +368,9 @@ def aws_page(request):
         regina_instance_ip = 'unknown'
 
     taiwan_ip = get_country_ip(country='taipei')
+    us_ip = get_country_ip(country='us')
+    hk_ip = get_country_ip(country='hk')
+
     now = datetime.now()
     first_day_next_month = (now.replace(day=1) + timedelta(days=32)).replace(day=1)
     last_day_current_month = first_day_next_month - timedelta(days=1)
@@ -518,18 +521,35 @@ def aws_page(request):
         if 'start_taiwan_vpn' in request.POST:
             start_vpn(country='taipei', request=request)
 
+        if 'start_us_vpn' in request.POST:
+            start_vpn(country='us', request=request)
 
+        if 'start_hk_vpn' in request.POST:
+            start_vpn(country='hk', request=request)
 
         if 'delete_taiwan_vpn' in request.POST:
             delete_vpn(country='taipei', request=request)
 
+        if 'delete_us_vpn' in request.POST:
+            delete_vpn(country='us', request=request)
+
+        if 'delete_hk_vpn' in request.POST:
+            delete_vpn(country='hk', request=request)
         #todo
         if 'download_taiwan_config' in request.POST:
             download_vpn(country='taipei')
+
+        if 'download_us_config' in request.POST:
+            download_vpn(country='us')
+
+        if 'download_hk_config' in request.POST:
+            download_vpn(country='hk')
 
     return render(request, 'blog/aws.html',
                   {
                    'regina_instance_status': regina_instance_status,
                    'regina_instance_ip': regina_instance_ip,
-                   'taiwan_ip': taiwan_ip
+                   'taiwan_ip': taiwan_ip,
+                   "hk_ip": hk_ip,
+                   "us_ip": us_ip
                    })

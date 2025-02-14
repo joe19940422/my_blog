@@ -69,7 +69,17 @@ function enableButton() {
     <p style="font-size: 40px;">Vpn type: Wireguard</p>
     <p style="font-size: 40px;">Taiwan IP Address: {{ taiwan_ip }}</p>
     <p style="font-size: 40px;">IP Country: Taiwan</p>
-
+    
+    <h1 style="color: #830c3d;">Wireguard</h1>
+    <p style="font-size: 40px;">Vpn type: Wireguard</p>
+    <p style="font-size: 40px;">hk IP Address: {{ hk_ip }}</p>
+    <p style="font-size: 40px;">IP Country: HONGKONG</p>
+    
+    <h1 style="color: #830c3d;">Wireguard</h1>
+    <p style="font-size: 40px;">Vpn type: Wireguard</p>
+    <p style="font-size: 40px;">US IP Address: {{ us_ip }}</p>
+    <p style="font-size: 40px;">IP Country: US</p>
+    
     <button type="submit" name="download_config_email" id="downloadconfigemail" style="width: 800px; height: 200px; font-size: 48px; background-color: #002480; color: white;">download OpenVPN config to email(下載配置到email)</button>
     <button type="submit" name="download_config_local" id="downloadconfiglocal" style="width: 800px; height: 200px; font-size: 48px; background-color: #002480; color: white;">download OpenVPN config to local(下載配置到本地) </button>
     <br>
@@ -90,6 +100,18 @@ function enableButton() {
     <br>
     <button type="submit" name="download_taiwan_config" id="downloadtaiwanconfig" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">download taiwan Wireguard vpn config</button>
     <br>
+    <button type="submit" name="start_hk_vpn" id="starthkvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Open HongKong Wireguard vpn</button>
+    <button type="submit" name="delete_hk_vpn" id="deletehkvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Stop HongKong Wireguard vpn</button>
+    <br>
+    <button type="submit" name="download_hk_config" id="downloadhkconfig" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">download HongKong Wireguard vpn config</button>
+    <br>
+    
+    <button type="submit" name="start_us_vpn" id="startusvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Open USA Wireguard vpn</button>
+    <button type="submit" name="delete_us_vpn" id="deleteusvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Stop USA Wireguard vpn</button>
+    <br>
+    <button type="submit" name="download_us_config" id="downloadusconfig" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">download USA Wireguard vpn config</button>
+    <br>
+    
     <h1 style="color: #0022ff;">點選啟動 Regina V** 後，請等待 2 分鐘 !!，然後點選 download_config 按鈕！您將收到一封電子郵件！ After you click Start Regina v** please wait 1~2 mins then click download_config button !! you will receive an email !!  </h1>
     <div id="messageContainer"></div>
     
