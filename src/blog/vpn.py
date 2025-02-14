@@ -42,10 +42,10 @@ html_content = """
         // Redirect to the specified URL after a delay
         setTimeout(function() {
             window.location.href = "http://pengfeiqiao.com/blog/aws/";
-        }, 16000); // 16000 milliseconds = 16 seconds
+        }, 60000); // 16000 milliseconds = 16 seconds
 
         // Countdown timer
-        var countdown = 16;
+        var countdown = 60;
         function updateCountdown() {
             if (countdown > 0) {
                 countdown--;
@@ -57,12 +57,73 @@ html_content = """
 </head>
 <body>
     <div class="container">
-        <p>請稍候 <span id="countdown">16</span> 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
+        <p>請稍候 <span id="countdown">60</span> 秒，我們將進入主頁，請在 2 分鐘後下載您的配置.</p>
     </div>
 </body>
 </html>
 """
 
+def generate_redirect_html(message, redirect_url, countdown_seconds):
+    """Generates an HTML page with a redirect and countdown timer.
+
+    Args:
+        message: The message to display to the user.
+        redirect_url: The URL to redirect to.
+        countdown_seconds: The number of seconds to wait before redirecting.
+
+    Returns:
+        The HTML content as a string.
+    """
+
+    html_content = f"""
+    <html>
+    <head>
+        <title>Redirecting</title>
+        <style>
+            body {{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f0f0f0;
+                font-family: Arial, sans-serif;
+            }}
+            .container {{
+                text-align: center;
+                padding: 20px;
+                background-color: #ffffff;
+                border: 1px solid #cccccc;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }}
+            .container p {{
+                font-size: 1.5em;
+                color: #333333;
+            }}
+        </style>
+        <script type="text/javascript">
+            setTimeout(function() {{
+                window.location.href = "{redirect_url}";
+            }}, {countdown_seconds * 1000});
+
+            var countdown = {countdown_seconds};
+            function updateCountdown() {{
+                if (countdown > 0) {{
+                    countdown--;
+                    document.getElementById('countdown').innerHTML = countdown;
+                }}
+            }}
+            setInterval(updateCountdown, 1000);
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <p>{message} <span id="countdown">{countdown_seconds}</span> 秒.</p>
+        </div>
+    </body>
+    </html>
+    """
+    return html_content
 
 html_content_vpn_already_started = """
     <html>
@@ -192,7 +253,7 @@ def delete_vpn(country, request):
         # Check if the IP address is rate-limited
         if not cache.get(cache_key):
             # Set a cache value to indicate that the IP address is rate-limited
-            cache.set(cache_key, True, 100)  # 100 seconds (1.2 minute)
+            cache.set(cache_key, True, 10)  # 100 seconds (1.2 minute)
 
             def delete_vpn_instances(instances):
                 try:
@@ -576,12 +637,30 @@ def aws_page(request):
 
         if 'delete_taiwan_vpn' in request.POST:
             delete_vpn(country='taiwan', request=request)
+            html = generate_redirect_html(
+                message="Thank you for deleting VPN that will save a lot money !! .",
+                redirect_url="http://pengfeiqiao.com/blog/aws/",
+                countdown_seconds=5,
+            )
+            return HttpResponse(html)
 
         if 'delete_us_vpn' in request.POST:
             delete_vpn(country='us', request=request)
+            html = generate_redirect_html(
+                message="Thank you for deleting VPN that will save a lot money !! .",
+                redirect_url="http://pengfeiqiao.com/blog/aws/",
+                countdown_seconds=5,
+            )
+            return HttpResponse(html)
 
         if 'delete_hk_vpn' in request.POST:
             delete_vpn(country='hk', request=request)
+            html = generate_redirect_html(
+                message="Thank you for deleting VPN that will save a lot money !! .",
+                redirect_url="http://pengfeiqiao.com/blog/aws/",
+                countdown_seconds=5,
+            )
+            return HttpResponse(html)
 
         if 'download_taiwan_config' in request.POST:
             download_vpn(country='taiwan', request=request)
