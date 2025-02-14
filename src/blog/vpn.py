@@ -579,6 +579,8 @@ def aws_page(request):
 
         if 'start_us_vpn' in request.POST:
             country = 'us'
+            print(get_running_instances(country))
+            print(type(get_running_instances(country)))
             if not get_running_instances(country):
                 html = generate_redirect_html(
                     message="There is a vpn server in current country you can just download from config button",
