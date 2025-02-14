@@ -271,6 +271,7 @@ def download_vpn(country):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     country_ip = get_country_ip(country)
+    print(country_ip)
     from socket import gaierror
     try:
         ssh_client.connect(hostname=country_ip, username='ubuntu', key_filename=f'/home/ubuntu/{country}.pem')
@@ -293,6 +294,7 @@ def download_vpn(country):
     with open(local_path, 'rb') as file:
         response = HttpResponse(file.read(), content_type='application/conf')
         filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+        print(filename)
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
 
