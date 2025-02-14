@@ -118,7 +118,7 @@ def generate_redirect_html(message, redirect_url, countdown_seconds):
     </head>
     <body>
         <div class="container">
-            <p>{message} <span id="countdown">{countdown_seconds}</span> 秒.</p>
+            <p>{message} <span id="countdown">{countdown_seconds}</span> seconds 秒.</p>
         </div>
     </body>
     </html>
@@ -200,13 +200,6 @@ info_vpn_account = {
 
 def create_vpn(country):
     vpn_ec2 = boto3.client('ec2', region_name=info_vpn_account[country]["region_name"])
-    if get_running_instances(country):
-        html = generate_redirect_html(
-            message="There is a vpn server in current country you can just download from config button",
-            redirect_url="http://pengfeiqiao.com/blog/aws/",
-            countdown_seconds=12,
-        )
-        return HttpResponse(html)
     BlockDeviceMappings = [
         {
             'DeviceName': '/dev/sda1',
@@ -556,6 +549,15 @@ def aws_page(request):
 
         if 'start_taiwan_vpn' in request.POST:
             country = 'taiwan'
+
+            if get_running_instances(country):
+                html = generate_redirect_html(
+                    message="There is a vpn server in current country you can just download from config button",
+                    redirect_url="http://pengfeiqiao.com/blog/aws/",
+                    countdown_seconds=12,
+                )
+                return HttpResponse(html)
+
             client_ip, _ = get_client_ip(request)
             if client_ip:
                 # Define a cache key based on the client's IP address
@@ -585,13 +587,13 @@ def aws_page(request):
 
         if 'start_us_vpn' in request.POST:
             country = 'us'
-            # if get_running_instances(country):
-            #     html = generate_redirect_html(
-            #         message="There is a vpn server in current country you can just download from config button",
-            #         redirect_url="http://pengfeiqiao.com/blog/aws/",
-            #         countdown_seconds=10,
-            #     )
-            #     return HttpResponse(html)
+            if get_running_instances(country):
+                html = generate_redirect_html(
+                    message="There is a vpn server in current country you can just download from config button",
+                    redirect_url="http://pengfeiqiao.com/blog/aws/",
+                    countdown_seconds=12,
+                )
+                return HttpResponse(html)
 
             client_ip, _ = get_client_ip(request)
             if client_ip:
@@ -622,6 +624,13 @@ def aws_page(request):
 
         if 'start_hk_vpn' in request.POST:
             country = 'hk'
+            if get_running_instances(country):
+                html = generate_redirect_html(
+                    message="There is a vpn server in current country you can just download from config button",
+                    redirect_url="http://pengfeiqiao.com/blog/aws/",
+                    countdown_seconds=12,
+                )
+                return HttpResponse(html)
             client_ip, _ = get_client_ip(request)
             if client_ip:
                 # Define a cache key based on the client's IP address
