@@ -179,6 +179,7 @@ def create_vpn(country):
 
     )
     print(response)
+    return HttpResponse(html_content)
 
 def start_vpn(country, request):
     client_ip, _ = get_client_ip(request)
