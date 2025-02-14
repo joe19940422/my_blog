@@ -230,7 +230,7 @@ def delete_vpn(country, request):
                     print(f"Error deleting instances: {e}")
 
             # Get all running instances
-            running_instances = get_running_instances()
+            running_instances = get_running_instances(country=country)
             print(running_instances)
             if running_instances is not None:
                 # stop_instances(running_instances)
