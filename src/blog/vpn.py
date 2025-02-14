@@ -99,7 +99,7 @@ html_content_vpn_not_already = """
     """
 
 info_vpn_account = {
-    "taipei": {
+    "taiwan": {
         "region_name": "ap-northeast-1",
         "security_group_ids": "sg-027ae28d7aac002e8",
         "AvailabilityZone": "ap-northeast-1-tpe-1a",
@@ -367,7 +367,7 @@ def aws_page(request):
         # Handle any errors that occur during API call or IP retrieval
         regina_instance_ip = 'unknown'
 
-    taiwan_ip = get_country_ip(country='taipei')
+    taiwan_ip = get_country_ip(country='taiwan')
     us_ip = get_country_ip(country='us')
     hk_ip = get_country_ip(country='hk')
 
@@ -519,7 +519,7 @@ def aws_page(request):
 
 
         if 'start_taiwan_vpn' in request.POST:
-            start_vpn(country='taipei', request=request)
+            start_vpn(country='taiwan', request=request)
 
         if 'start_us_vpn' in request.POST:
             start_vpn(country='us', request=request)
@@ -528,7 +528,7 @@ def aws_page(request):
             start_vpn(country='hk', request=request)
 
         if 'delete_taiwan_vpn' in request.POST:
-            delete_vpn(country='taipei', request=request)
+            delete_vpn(country='taiwan', request=request)
 
         if 'delete_us_vpn' in request.POST:
             delete_vpn(country='us', request=request)
@@ -537,7 +537,7 @@ def aws_page(request):
             delete_vpn(country='hk', request=request)
         #todo
         if 'download_taiwan_config' in request.POST:
-            download_vpn(country='taipei')
+            download_vpn(country='taiwan')
 
         if 'download_us_config' in request.POST:
             download_vpn(country='us')
