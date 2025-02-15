@@ -687,31 +687,31 @@ def aws_page(request):
 
         if 'download_taiwan_config' in request.POST:
             download_vpn(country='taiwan', request=request)
-            timestamp = datetime.now().strftime('%y%m%d%H%M%S')
+            timestamp = datetime.now().strftime('%d%H%M%S')
             local_path = f'/home/ubuntu/fei_taiwan.conf'
             with open(local_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/conf')
-                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+                filename = f"{local_path.split('/')[-1].replace('.conf', '')}_{timestamp}.conf"
                 response['Content-Disposition'] = f'attachment; filename="{filename}"'
                 return response
 
         if 'download_us_config' in request.POST:
             download_vpn(country='us', request=request)
-            timestamp = datetime.now().strftime('%m%d%H%M%S')
+            timestamp = datetime.now().strftime('%d%H%M%S')
             local_path = f'/home/ubuntu/fei_us.conf'
             with open(local_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/conf')
-                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+                filename = f"{local_path.split('/')[-1].replace('.conf', '')}_{timestamp}.conf"
                 response['Content-Disposition'] = f'attachment; filename="{filename}"'
                 return response
 
         if 'download_hk_config' in request.POST:
             download_vpn(country='hk', request=request)
-            timestamp = datetime.now().strftime('%m%d%H%M%S')
+            timestamp = datetime.now().strftime('%d%H%M%S')
             local_path = f'/home/ubuntu/fei_hk.conf'
             with open(local_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/conf')
-                filename = f"{local_path.split('/')[-1].replace('.conf', '')}-{timestamp}.conf"
+                filename = f"{local_path.split('/')[-1].replace('.conf', '')}_{timestamp}.conf"
                 response['Content-Disposition'] = f'attachment; filename="{filename}"'
                 return response
 
