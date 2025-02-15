@@ -697,7 +697,7 @@ def aws_page(request):
 
         if 'download_us_config' in request.POST:
             download_vpn(country='us', request=request)
-            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
+            timestamp = datetime.now().strftime('%m%d%H%M%S')
             local_path = f'/home/ubuntu/fei_us.conf'
             with open(local_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/conf')
@@ -707,7 +707,7 @@ def aws_page(request):
 
         if 'download_hk_config' in request.POST:
             download_vpn(country='hk', request=request)
-            timestamp = datetime.now().strftime('%y%m%d-%H-%M-%S')
+            timestamp = datetime.now().strftime('%m%d%H%M%S')
             local_path = f'/home/ubuntu/fei_hk.conf'
             with open(local_path, 'rb') as file:
                 response = HttpResponse(file.read(), content_type='application/conf')
