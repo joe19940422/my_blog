@@ -59,8 +59,31 @@ function enableButton() {
     <h2 style="color: green;">如果您使用我們的伺服器，您可以查看任何您想要的內容，因為我們是在一個言論自由的網絡，我們的法律遵循新加坡台灣法律，但請記住，請不要將我們的IP分享給其他人（五毛, 小粉紅, 傻屄），否則我們的伺服器將被封殺</h2>
     <h2 style="color: green;">如果您對我們的程式碼如何查看我們的 活躍用戶感興趣 ，請點擊下面的連結 </h2>
     <a href="http://www.pengfeiqiao.com/blog/detail/9/" target="_blank">點擊我</a> 如果您對我們的程式碼如何查看我們的 *** 活躍用戶感興趣 ，請點擊下面的連結
-    <h1 style="color: #0022ff;">OPENVPN</h1>
+    <h1>VPN Apps</h1>
+
+    <p>Here are links to some popular VPN apps for Android:</p>
+
+    <ul>
+        <li>
+            <a href="https://play.google.com/store/apps/details?id=com.wireguard.android">WireGuard</a>
+        </li>
+        <li>
+            <a href="https://play.google.com/store/apps/details?id=de.blinkt.openvpn">OpenVPN for Android</a>
+        </li>
+    </ul>
     
+    <p>Here are links to some popular VPN apps for Iphone:</p>
+
+    <ul>
+        <li>
+            <a href="https://apps.apple.com/us/app/wireguard/id1441195209">WireGuard</a>
+        </li>
+        <li>
+            <a href="https://apps.apple.com/us/app/openvpn-connect-openvpn-app/id590379981">OpenVPN for iPhone</a>
+        </li>
+    </ul>
+    
+    <h1 style="color: #0022ff;">OPENVPN</h1>
     <style>
     h3 {
         text-align: center;
@@ -68,12 +91,11 @@ function enableButton() {
         }
     </style>
     <h3>Singapore vpn 🇸🇬</h3>
-    
     <p style="font-size: 40px;">Vpn type: OpenVPN</p>
+    <p style="font-size: 40px;">Price: 0.02$ /hour</p>
     <p style="font-size: 40px;">openvpn Status: {{ regina_instance_status }}</p>
     <p style="font-size: 40px;">IP Address: {{ regina_instance_ip }}</p>
     <p style="font-size: 40px;">IP Country: Singapore</p>
-    
     <button type="submit" name="download_config_email" id="downloadconfigemail" style="width: 800px; height: 200px; font-size: 48px; background-color: #002480; color: white;">Download OpenVPN config to email(下載配置到email)</button>
     <button type="submit" name="download_config_local" id="downloadconfiglocal" style="width: 800px; height: 200px; font-size: 48px; background-color: #002480; color: white;">Download OpenVPN config to local(下載配置到本地) </button>
     <br>
@@ -82,7 +104,6 @@ function enableButton() {
     <br>
     <button type="submit" name="start_regina_vpn_three_hour" id="startreginavpnthreehour" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">嘗試3小時OpenVPN 價格 0.09 美元</button>
     <button type="submit" name="start_regina_vpn_four_hour" id="startreginavpnfourhour" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">嘗試4小時OpenVPN 價格 0.12 美元</button>
-    <br>
     <button type="submit" name="start_regina_vpn_six_hour" id="startreginavpnsixhour" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">嘗試6小時OpenVPN 價格 0.18 美元</button>
     <button type="submit" name="start_regina_vpn" id="startButton" onclick="startVpnAndRedirect()" style="width: 800px; height: 200px; font-size: 48px; background-color: #008029; color: white;">Start OpenVPN all day ***(沒有限制 0.72美元每天)</button>
     <br>
@@ -95,19 +116,16 @@ function enableButton() {
         }
     </style>
     <h3>Taiwan vpn 🇹🇼</h3>
-    
     <h1 style="color: #830c3d;">Wireguard</h1>
     <p style="font-size: 40px;">Vpn type: Wireguard</p>
     <p style="font-size: 40px;">Price: 0.08$ /hour</p>
     <p style="font-size: 40px;">Taiwan IP Address: {{ taiwan_ip }}</p>
     <p style="font-size: 40px;">IP Country: Taiwan</p>
-    
     <button type="submit" name="start_taiwan_vpn" id="starttaiwanvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Open Taiwan Wireguard vpn</button>
     <button type="submit" name="delete_taiwan_vpn" id="deletetaiwanvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Stop Taiwan Wireguard vpn</button>
     <br>
     <button type="submit" name="download_taiwan_config" id="downloadtaiwanconfig" style="width: 800px; height: 200px; font-size: 48px; background-color: #830c3d; color: white;">Download taiwan Wireguard vpn config</button>
     <br>
-    
     <style>
     h3 {
         text-align: center;
@@ -120,7 +138,6 @@ function enableButton() {
     <p style="font-size: 40px;">Price: 0.02$ /hour</p>
     <p style="font-size: 40px;">hk IP Address: {{ hk_ip }}</p>
     <p style="font-size: 40px;">IP Country: Hong Kong SAR China</p>
-    
     <button type="submit" name="start_hk_vpn" id="starthkvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #a8311b; color: white;">Open HongKong Wireguard vpn</button>
     <button type="submit" name="delete_hk_vpn" id="deletehkvpn" style="width: 800px; height: 200px; font-size: 48px; background-color: #a8311b; color: white;">Stop HongKong Wireguard vpn</button>
     <br>
