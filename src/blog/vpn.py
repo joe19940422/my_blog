@@ -295,7 +295,7 @@ def get_running_instances(country):
 
 def get_country_ip(country):
     running_instances = get_running_instances(country)
-    country_ip = running_instances[0]['PublicIpAddress'] if running_instances != [] else 'no ip'
+    country_ip = running_instances[0]['PublicIpAddress'] if running_instances != [] else 'Not assigned'
     return country_ip
 
 
