@@ -387,6 +387,16 @@ def start_regina_vpn_common(request, regina_ec2_client, regina_instance_status, 
         return HttpResponseForbidden("Unable to determine client IP address.")
 
 def aws_page(request):
+    if get_running_instances(country='taiwan'):
+        vpn_server = 'taiwan server is running'
+    elif get_running_instances(country='us'):
+        vpn_server = 'us server is running'
+    elif get_running_instances(country='hk'):
+        vpn_server = 'hk server is running'
+    elif get_running_instances(country='jp'):
+        vpn_server = 'jp server is running'
+    else:
+        vpn_server = 'no server is running'
     regina_ec2_client = boto3.client('ec2', region_name='ap-southeast-1')
     regina_instance_id = 'i-073e0b3347292a1ac'
     regina_response = regina_ec2_client.describe_instance_status(
@@ -736,5 +746,6 @@ def aws_page(request):
                    'regina_instance_ip': regina_instance_ip,
                    'taiwan_ip': taiwan_ip,
                    "hk_ip": hk_ip,
-                   "us_ip": us_ip
+                   "us_ip": us_ip,
+                   "vpn_server": vpn_server
                    })
