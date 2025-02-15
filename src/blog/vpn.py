@@ -1,3 +1,18 @@
+"""
+price
+hk
+0.005 per In-use public IPv4 address per hour
+$0.0146 per On Demand Linux t3.micro Instance Hour
+
+taipei
+0.005 per In-use public IPv4 address per hour
+$0.068 per On Demand Linux t3.medium Instance Hour
+
+us
+0.005 per In-use public IPv4 address per hour
+0.0138 per On Demand Linux t2.micro Instance Hour
+"""
+
 import boto3
 import json
 
