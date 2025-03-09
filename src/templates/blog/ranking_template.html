@@ -35,5 +35,24 @@
         });
     </script>
 
+    <h2>Ranked Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Flight Date</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ranked_data %}
+                <tr>
+                    <td>{{ row.country }}</td>
+                    <td>{{ row.flight_date|date:"Y-m-d" }}</td>
+                    <td>{{ row.cnt|floatformat }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
