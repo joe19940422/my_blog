@@ -488,7 +488,7 @@ def ranking_view(request):
 
         # Example: Rank countries by total count for a specific date (or the latest date)
         latest_date = df['flight_date'].max()
-        filtered_df = df[df['flight_date'] == latest_date]
+        filtered_df = df[df['flight_date'] == latest_date].drop_duplicates()
 
         ranked_df = filtered_df.sort_values(by='cnt', ascending=False)
 
@@ -502,11 +502,12 @@ def ranking_view(request):
         {'labels': ['Japan', 'Japan', 'Australia', 'Australia', 'Russia', 'Russia', 'Philippines', 'Philippines', 'New Zealand', 'New Zealand', 'South Korea', 'South Korea', 'India', 'India', 'Taiwan', 'Taiwan', 'Vietnam', 'Vietnam', 'Malaysia', 'Malaysia', 'Hong Kong', 'Hong Kong', 'Singapore', 'Singapore', 'Thailand', 'Thailand', 'Kenya', 'Kenya', 'United Arab Emirates', 'United Arab Emirates', 'Morocco', 'Morocco', 'Germany', 'Azerbaijan', 'Azerbaijan', 'Germany', 'Iraq', 'Iraq'], 'values': [Decimal('113'), Decimal('113'), Decimal('81'), Decimal('81'), Decimal('39'), Decimal('39'), Decimal('33'), Decimal('33'), Decimal('28'), Decimal('28'), Decimal('26'), Decimal('26'), Decimal('22'), Decimal('22'), Decimal('20'), Decimal('20'), Decimal('19'), Decimal('19'), Decimal('18'), Decimal('18'), Decimal('11'), Decimal('11'), Decimal('10'), Decimal('10'), Decimal('9'), Decimal('9'), Decimal('8'), Decimal('8'), Decimal('7'), Decimal('7'), Decimal('3'), Decimal('3'), Decimal('2'), Decimal('2'), Decimal('2'), Decimal('2'), Decimal('1'), Decimal('1')]}
 
         """
+        ranked_data = ranked_df.to_dict('records')
         # If you want to return json data to your frontend.
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse(chart_data)
 
-        return render(request, 'blog/ranking_template.html', {'chart_data': json.dumps(chart_data)})
+        return render(request, 'blog/ranking_template.html', {'chart_data': json.dumps(chart_data),'ranked_data': ranked_data, 'latest_date': latest_date})
 
     except Exception as e:
         print(f"Error: {e}")

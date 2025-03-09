@@ -6,8 +6,9 @@
 </head>
 <body>
     <h1>Country Flight Count Ranking</h1>
+    <h2>Flight Date: {{ latest_date|date:"Y-m-d" }}</h2>
     <canvas id="rankingChart"></canvas>
-
+    
     <script>
         const chartData = JSON.parse('{{ chart_data|safe }}');
 
@@ -33,5 +34,25 @@
             }
         });
     </script>
+
+    <h2>Ranked Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Flight Date</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ranked_data %}
+                <tr>
+                    <td>{{ row.country }}</td>
+                    <td>{{ row.flight_date|date:"Y-m-d" }}</td>
+                    <td>{{ row.cnt|floatformat }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
