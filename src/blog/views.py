@@ -495,9 +495,13 @@ def ranking_view(request):
         # Prepare data for chart
         chart_data = {
             'labels': ranked_df['country'].tolist(),
-            'values': ranked_df['cnt'].tolist(),
+            'values': [float(val) for val in ranked_df['cnt'].tolist()],  # Convert Decimal to float
         }
         print(chart_data)
+        """
+        {'labels': ['Japan', 'Japan', 'Australia', 'Australia', 'Russia', 'Russia', 'Philippines', 'Philippines', 'New Zealand', 'New Zealand', 'South Korea', 'South Korea', 'India', 'India', 'Taiwan', 'Taiwan', 'Vietnam', 'Vietnam', 'Malaysia', 'Malaysia', 'Hong Kong', 'Hong Kong', 'Singapore', 'Singapore', 'Thailand', 'Thailand', 'Kenya', 'Kenya', 'United Arab Emirates', 'United Arab Emirates', 'Morocco', 'Morocco', 'Germany', 'Azerbaijan', 'Azerbaijan', 'Germany', 'Iraq', 'Iraq'], 'values': [Decimal('113'), Decimal('113'), Decimal('81'), Decimal('81'), Decimal('39'), Decimal('39'), Decimal('33'), Decimal('33'), Decimal('28'), Decimal('28'), Decimal('26'), Decimal('26'), Decimal('22'), Decimal('22'), Decimal('20'), Decimal('20'), Decimal('19'), Decimal('19'), Decimal('18'), Decimal('18'), Decimal('11'), Decimal('11'), Decimal('10'), Decimal('10'), Decimal('9'), Decimal('9'), Decimal('8'), Decimal('8'), Decimal('7'), Decimal('7'), Decimal('3'), Decimal('3'), Decimal('2'), Decimal('2'), Decimal('2'), Decimal('2'), Decimal('1'), Decimal('1')]}
+
+        """
         # If you want to return json data to your frontend.
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse(chart_data)
