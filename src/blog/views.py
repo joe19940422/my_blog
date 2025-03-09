@@ -507,7 +507,7 @@ def ranking_view(request):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse(chart_data)
 
-        return render(request, 'blog/ranking_template.html', {'chart_data': json.dumps(chart_data),'ranked_data': ranked_data, 'latest_date': latest_date})
+        return render(request, 'blog/ranking_template.html', {'chart_data': json.dumps(chart_data), 'latest_date': latest_date})
 
     except Exception as e:
         print(f"Error: {e}")
