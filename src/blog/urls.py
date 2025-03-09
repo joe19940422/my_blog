@@ -31,6 +31,6 @@ urlpatterns = [
     path('taiwan-show/', views.taiwan_show, name='taiwan_show'),
     # path('aws/start/', views.aws_page, name='start_instance'),
     # path('aws/stop', views.aws_page, name='stop_instance'),
-    path('ranking/', views.ranking_view, name='flight'),
+    path('flight/', views.ranking_view, name='flight'),
 ]
 
