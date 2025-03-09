@@ -462,3 +462,48 @@ def wedding_show(request):
 def taiwan_show(request):
     return render(request, 'blog/picture.html', {
     })
+
+
+import pandas as pd
+import awswrangler as wr
+from django.shortcuts import render
+from django.http import JsonResponse
+import json
+
+def ranking_view(request):
+    try:
+        # Replace with your S3 bucket and key
+        bucket = 'snowflake-flight'
+        key = 'mart/arrival_country_ranking/data_0_0_0.snappy.parquet'
+        s3_path = f's3://{bucket}/{key}'
+
+        # Read Parquet data using awswrangler
+        df = wr.s3.read_parquet(s3_path)
+
+        # Rename columns for clarity
+        df.columns = ['country', 'flight_date', 'cnt']
+
+        # Convert flight_date to datetime if needed
+        df['flight_date'] = pd.to_datetime(df['flight_date'])
+
+        # Example: Rank countries by total count for a specific date (or the latest date)
+        latest_date = df['flight_date'].max()
+        filtered_df = df[df['flight_date'] == latest_date]
+
+        ranked_df = filtered_df.sort_values(by='cnt', ascending=False)
+
+        # Prepare data for chart
+        chart_data = {
+            'labels': ranked_df['country'].tolist(),
+            'values': ranked_df['cnt'].tolist(),
+        }
+
+        # If you want to return json data to your frontend.
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse(chart_data)
+
+        return render(request, 'blog/ranking_template.html', {'chart_data': json.dumps(chart_data)})
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return render(request, 'blog/error_template.html', {'error_message': str(e)})
