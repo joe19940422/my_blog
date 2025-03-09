@@ -497,7 +497,7 @@ def ranking_view(request):
             'labels': ranked_df['country'].tolist(),
             'values': ranked_df['cnt'].tolist(),
         }
-
+        print(chart_data)
         # If you want to return json data to your frontend.
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse(chart_data)
