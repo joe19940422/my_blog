@@ -491,7 +491,7 @@ def ranking_view(request):
         filtered_df = df[df['flight_date'] == latest_date].drop_duplicates()
 
         ranked_df = filtered_df.sort_values(by='cnt', ascending=False)
-
+        ranked_df = ranked_df.head(12)
         # Prepare data for chart
         chart_data = {
             'labels': ranked_df['country'].tolist(),
